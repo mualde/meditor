@@ -7,5 +7,5 @@ https://mualde.com/projeler/meditor/
 
 
 
-&gt;div id="editor" contenteditable="true" placeholder="text here"lt;&gt/div&lt;
+&lt;div id="editor" contenteditable="true" placeholder="text here"&gt;&lt;/div&gt;
 <script src="meditor/meditor.js"></script>
