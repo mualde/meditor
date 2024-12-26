@@ -1,0 +1,729 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Georgia&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Verdana&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Impact&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Droid+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Slabo+27px&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bitter&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredericka+the+Great&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Zilla+Slab&display=swap');
+
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css');
+
+
+/* baslik Bölümü -------------------------------------------------------------------*/
+#header-menu {
+    display: none;
+	scrollbar-width: thin;
+    position: absolute;
+    max-height: 400px;
+    overflow-y: auto;
+    background: linear-gradient(135deg, #f2f2f2, #e6e6e6); /* Şık renk geçişi */
+    border-radius: 12px; /* Köşeleri yuvarlatma */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Daha hafif gölge efekti */
+    z-index: 1;
+    padding: 12px;
+    width: 200px; /* Menü genişliğini biraz daha artırdık */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    flex-direction: column; /* Butonları dikey sıraya diziyoruz */
+    justify-content: flex-start; /* Butonları üstten hizalıyoruz */
+    transition: all 0.3s ease-in-out; /* Menü açılırken yumuşak animasyon */
+	border: 1px solid rgba(0, 123, 255, 0.2);;
+
+}
+
+/* Menü öğeleri */
+#header-menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#header-menu li {
+	user-select: none; 
+    padding: 10px;
+    margin: 5px 0;
+    cursor: pointer;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 16px;
+    text-align: left;
+    border-radius: 8px; /* Butonların köşelerini yuvarlayalım */
+    transition: background-color 0.3s ease, transform 0.2s ease-in-out; /* Hover efektleri */
+    text-decoration: none;
+    color: #333; /* Koyu gri metin rengi */
+    display: block;
+    padding: 5px;
+}
+
+/* Butonlar üzerine gelindiğinde */
+#header-menu li:hover {
+    background-color: rgba(0, 123, 255, 0.1); /* Daha hafif mavi renk */
+    transform: scale(1.05); /* Hover ile butonları büyütme */
+}
+
+
+/* Başlık stilleri */
+.header1 {
+    font-size: 30px;
+    font-weight: 700;
+    color: #2c3e50; /* Başlık rengi */
+}
+
+.header2 {
+    font-size: 26px;
+    font-weight: 600;
+    color: #2c3e50; /* Daha açık bir başlık rengi */
+}
+
+.header3 {
+    font-size: 22px;
+    font-weight: 500;
+    color: #2c3e50; /* Orta seviye başlık rengi */
+}
+
+.header4 {
+    font-size: 18px;
+    font-weight: 400;
+    color: #2c3e50; /* Daha soft bir başlık rengi */
+}
+/* baslik Bölümü son-------------------------------------------------------------------*/
+
+
+/* resim Bölümü baş----------------------------------------------------------------------*/
+input[type="url"], input[type="file"] {
+    width: 90%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+input[type="text"],input[type="number"], select{
+	width: 60px;
+}
+
+
+/* Sağ tıklama menüsü */
+.context-menu {
+	position: absolute;
+	display: none;
+	background: white;
+	border: 1px solid #ccc;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	z-index: 1000;
+	padding: 10px;
+	border-radius: 5px;
+	width: 200px;
+}
+
+
+.rdaction {
+justify-content: space-between;
+margin-right: auto;  /* "Uygula" butonunu sola yaslar */
+margin-left: auto;   /* "İptal Et" butonunu sağa yaslar */
+}
+/* resim Bölümü son-------------------------------------------------------------------*/
+
+
+/* table Bölümü baş-------------------------------------------------------------------*/
+table td {
+resize: both;
+overflow: auto;
+}
+
+table td:last-child {
+resize: none;
+}
+
+.table-cell {
+    width: 15px;
+    height: 15px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+}
+
+.table-cell.selected {
+    background-color: #007bff;
+    border-color: #0056b3;
+    color: white;
+}
+
+.sagtusmenu {
+    position: absolute;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.3); /* Hafif saydam beyaz arka plan */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px; /* Butonlar arası boşluk */
+    max-width: 300px; /* Genişlik sınırı */
+    margin: 0 auto; /* Ortalamak için */
+    backdrop-filter: blur(10px); /* Arka planı bulanıklaştırır */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Hafif gölge */
+	z-index:999999;
+}
+
+
+.button-group button {
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px; /* İkon ile metin arasındaki boşluk */
+    font-size: 14px;
+    transition: background 0.3s;
+    width: 100%; /* Düğmeleri esnek yapar */
+    justify-content: center; /* İkon ve metni ortalar */
+}
+
+.button-group button:hover {
+    background: #0056b3;
+}
+
+.button-group button i {
+    font-size: 16px; /* İkon boyutu */
+}
+
+
+
+
+
+
+/* table Bölümü son-------------------------------------------------------------------*/
+
+
+/* renkci Bölümü baş------------------------------------------------------------------- */
+#font-color-menu {
+    display: none;
+    position: absolute;
+    max-height: 300px;
+    overflow-y: auto;
+    background: linear-gradient(135deg, #f2f2f2, #e6e6e6); /* Şık renk geçişi */
+    border-radius: 12px; /* Köşeleri yuvarlatma */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 2;
+    padding: 12px;
+    width: 120px; /* Menü genişliği biraz daha geniş */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    flex-direction: column;
+    justify-content: flex-start;
+    transition: all 0.3s ease-in-out;
+	border: 1px solid rgba(0, 123, 255, 0.2);;
+}
+
+.color-picker-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px; /* Aralarındaki mesafeyi ayarlıyoruz */
+}
+
+.color-picker-item i {
+    font-size: 18px;
+    color: #333;
+    margin-right: 10px;
+}
+
+#font-color-menu input[type="color"] {
+    width: 70px;
+    height: 30px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#font-color-menu input[type="color"]:focus {
+    outline: none;
+    box-shadow: 0 0 6px rgba(0, 123, 255, 0.5);
+}
+
+#font-color-menu button {
+    text-align: center;
+    width: 100%;
+    padding: 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+#font-color-menu button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+#font-color-menu button:active {
+    background-color: #004085;
+    transform: translateY(0);
+}
+
+#font-color-menu button:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.7);
+}
+/* renkci Bölümü son------------------------------------------------------------------- */
+
+
+/* fontfamily Bölümü baş------------------------------------------------------------------- */
+#font-family-menu {
+    display: none;
+	scrollbar-width: thin;
+    position: absolute;
+    max-height: 500px;
+    overflow-y: auto;
+    background: linear-gradient(135deg, #f2f2f2, #e6e6e6); /* Şık bir renk geçişi */
+    border-radius: 10px; /* Köşeleri yuvarlak yapar */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* Daha belirgin gölge efekti */
+    z-index: 1;
+    padding: 10px;
+    width: 200px; /* Menü genişliğini ayarladık */
+    font-family: Arial, sans-serif;
+    flex-direction: column; /* Butonları dikey sıraya diziyoruz */
+    justify-content: flex-end; /* Butonları alt kısma hizalıyoruz */
+	border: 1px solid rgba(0, 123, 255, 0.2);
+}
+#font-family-menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+#font-family-menu li {
+	user-select: none; 
+    padding: 10px;
+    margin: 5px 0;
+    cursor: pointer;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 16px;
+    text-align: left;
+    border-radius: 8px; /* Butonların köşelerini yuvarlayalım */
+    transition: background-color 0.3s ease, transform 0.2s ease-in-out; /* Hover efektleri */
+    text-decoration: none;
+    color: #333; /* Koyu gri metin rengi */
+    display: block;
+    padding: 5px;
+}
+#font-family-menu li{
+    text-decoration: none;
+    color: #333; /* Koyu gri metin rengi */
+    display: block;
+    padding: 5px;
+}
+#font-family-menu li:hover {
+    background-color: rgba(0, 123, 255, 0.1); /* Daha hafif mavi renk */
+    transform: scale(1.05); /* Hover ile butonları büyütme */
+}
+/* fontfamily Bölümü son------------------------------------------------------------------- */
+
+
+
+
+/* fontsize Bölümü baş------------------------------------------------------------------- */
+#font-size-menu {
+    display: none;
+	scrollbar-width: thin;
+    position: absolute;
+    max-height: 500px;
+    overflow-y: auto;
+    background: linear-gradient(135deg, #f2f2f2, #e6e6e6); /* Şık bir renk geçişi */
+    border-radius: 10px; /* Köşeleri yuvarlak yapar */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* Daha belirgin gölge efekti */
+    z-index: 1;
+    padding: 10px;
+    width: 200px; /* Menü genişliğini ayarladık */
+    font-family: Arial, sans-serif;
+    flex-direction: column; /* Butonları dikey sıraya diziyoruz */
+    justify-content: flex-end; /* Butonları alt kısma hizalıyoruz */
+	border: 1px solid rgba(0, 123, 255, 0.2);
+}
+#font-size-menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+#font-size-menu li {
+	user-select: none; 
+    padding: 10px;
+    margin: 5px 0;
+    cursor: pointer;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 16px;
+    text-align: left;
+    border-radius: 8px; /* Butonların köşelerini yuvarlayalım */
+    transition: background-color 0.3s ease, transform 0.2s ease-in-out; /* Hover efektleri */
+    text-decoration: none;
+    color: #333; /* Koyu gri metin rengi */
+    display: block;
+    padding: 5px;
+}
+#font-size-menu li{
+    text-decoration: none;
+    color: #333; /* Koyu gri metin rengi */
+    display: block;
+    padding: 5px;
+}
+#font-size-menu li:hover {
+    background-color: rgba(0, 123, 255, 0.1); /* Daha hafif mavi renk */
+    transform: scale(1.05); /* Hover ile butonları büyütme */
+}
+.secilenmetin {
+    background-color: rgba(255, 165, 0, 0.5);  /* Seçili metnin arka planı */
+}
+/* fontsize Bölümü son------------------------------------------------------------------- */
+
+
+.container {
+    display: flex;
+    flex-wrap: wrap;           /* Öğelerin alt satıra geçmesini sağlar */
+    justify-content: center;   /* Yatayda ortalama */
+    align-items: center;
+	gap:10px;
+}
+
+
+#tagnamebox {
+
+    padding: 1px 5px;
+    margin: 0;
+    left: 10px; /* Parent div'in sol kenarına olan uzaklık */
+    bottom: 10px; /* Parent div'in alt kenarına olan uzaklık */
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    font-size: 10px;
+    border-radius: 4px;
+    pointer-events: none;
+}
+
+/* Minimalist ve Şık Toolbar */
+#toolbar {
+	width:100%;
+	padding-top:20px;
+	padding-bottom:10px;
+	min-height:50px;
+	margin: auto;
+	margin-top:20px;
+    background-color: #fff;  /* Beyaz arka plan */
+    color: #333;  /* Koyu gri metin rengi */
+    border-radius: 5px;
+    display: flex;
+    gap: 8px;
+    border: 1px solid #ddd;  /* Açık gri kenarlık */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  /* Hafif gölge efekti */
+    font-family: 'Arial', sans-serif;
+    justify-content: center;  /* Butonları yatayda ortalar */
+    align-items: center;
+    flex-wrap: wrap;  /* Küçük ekranlarda butonlar alt satıra kayar */
+}
+
+/* Butonlar için şık ve minimalist tasarım */
+#toolbar button {
+    background-color: #fff;  /* Beyaz buton */
+    color: #333;  /* Koyu metin rengi */
+    border: 1px solid #ccc;  /* Açık gri kenarlık */
+    padding: 6px 10px;
+    border-radius: 3px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: all 0.2s ease-in-out;  /* Buton animasyonu */
+    box-sizing: border-box;  /* Kenarlık ve padding'in alanı daraltmasını sağlar */
+}
+
+/* Buton Hover Durumu (Hafif parlama efekti) */
+#toolbar button:hover {
+    background-color: #f1f1f1;  /* Hoverda çok hafif gri arka plan */
+    border-color: #bbb;  /* Kenarlık daha belirgin olur */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  /* Hafif gölge ekler */
+}
+
+/* Buton Aktif Durumu (Hafif tıklanma efekti) */
+#toolbar button:active {
+    background-color: #e0e0e0;  /* Daha koyu gri arka plan */
+    border-color: #aaa;  /* Kenarlık rengi koyulaşır */
+    transform: scale(0.98);  /* Buton küçükçe küçülür */
+}
+
+/* İkonlar için düzenlemeler */
+#toolbar button i {
+    font-size: 16px;
+    margin-right: 8px;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+/* Hover durumunda ikonların büyümesi */
+#toolbar button:hover i {
+    transform: scale(1.1);  /* Hoverda ikonlar büyür */
+    color: #0078d4;  /* Metalik mavi ikon rengi */
+}
+
+/* Küçük ekranlarda butonların alt satıra kayması */
+@media (max-width: 768px) {
+    #toolbar {
+        /*flex-direction: column;*/
+        /*justify-content: flex-start;*/  /* Butonlar dikeyde sıralanır */
+    }
+}
+
+/* Toolbar Focus Durumu (Hafif parlama) */
+#toolbar button:focus {
+    outline: none;
+    border-color: #005f8f;  /* Mavi kenarlık rengi */
+    box-shadow: 0 0 6px 2px rgba(0, 95, 143, 0.6);  /* Hafif mavi parlama */
+}
+
+/* İkonları butonla hizalamak */
+.toolbar button i {
+	margin-right: 5px;
+	font-size: 20px;
+}
+
+/* Hover ve aktif durum */
+.toolbar button:hover {
+	background-color: #0056b3;
+}
+
+.toolbar button:active {
+	background-color: #004085;
+}
+
+#editor {
+	display:block;
+	margin-top:20px;
+	padding:10px;
+	border: 1px solid #ddd;
+	min-height: 800px;
+	background-color: #fff;
+	border-radius: 8px;
+	resize: both;
+	overflow: auto;
+}
+#editor i {
+	user-select: none;
+}
+#sourceCode {
+	margin-top:20px;
+	padding:10px;
+	border: 1px solid #ddd;
+	min-height: 800px;
+	background-color: #fff;
+	border-radius: 8px;
+	resize: both;
+	overflow: auto;
+	font-family: courier new;
+}
+/* kaynak Bölümü baş------------------------------------------------------------------- */
+#sourceCode {
+	display: none;
+	margin-top:20px;
+	padding:10px;
+	border: 1px solid #ddd;
+	min-height: 300px;
+	background-color: #fff;
+	font-size: 16px;
+	line-height: 1.6;
+	border-radius: 8px;
+	resize: both;
+	overflow: auto;
+}
+/* kaynak Bölümü son------------------------------------------------------------------- */
+
+/* tamekran Bölümü baş------------------------------------------------------------------- */
+.tamekraneditor {
+    z-index: 9999;  /* Diğer öğelerin önünde olmasını sağlar */
+    width: 100%; /* Tam genişlik */ 
+    height: 100vh;  /* Ekranın tamamı kadar yüksekliği */
+    position: fixed;  /* Sayfada sabit konumlandırma (tam ekran için fixed kullanılmalı) */
+    top: 80px;  /* Ekranın üst kısmına hizalama */
+    left: 0;  /* Ekranın sol kısmına hizalama */
+    margin: 0;  /* Margini sıfırlıyoruz (tam ekran modunda önemli) */
+    background-color: white;  /* Arka plan rengi (isteğe bağlı) */
+    box-sizing: border-box;  /* Padding ve border'ı genişlik ve yüksekliğe dahil et */
+}
+
+/* Tam ekran toolbar stili */
+.tamekrantoolbar {
+    z-index: 9999;  /* Diğer öğelerin önünde olmasını sağlar */
+    width: 100%;  /* Tam genişlik */
+    position: fixed;  /* Sayfada sabit konumlandırma (tam ekran için fixed kullanılmalı) */
+    top: 0;  /* Ekranın üst kısmına hizalama */
+    left: 0;  /* Ekranın sol kısmına hizalama */
+    margin: 0;  /* Margini sıfırlıyoruz (tam ekran modunda önemli) */
+    background-color: white;  /* Arka plan rengi (isteğe bağlı) */
+    box-sizing: border-box;  /* Padding ve border'ı genişlik ve yüksekliğe dahil et */
+}
+/* tamekran Bölümü son------------------------------------------------------------------- */
+
+td.selectedcell:before {
+    content: ' ';
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    border: 3px solid rgb(74, 134, 232);
+    pointer-events: none;
+    z-index: -1;
+}
+.selectedbtn {
+    background-color: lightblue !important;
+}
+.selected-text {
+	background-color: #c0c0c0 !important;
+}
+
+/* Modal için stil */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(5px); /* Blur efekti */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+	user-select: none; /* Metin seçimi engellenir */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none;    /* Firefox */
+    -ms-user-select: none;     /* Eski Internet Explorer */
+}
+
+.modal-content {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 500px;
+    width: 100%;
+    animation: slideIn 0.3s ease-out;
+    text-align: center; /* Yazıları ortalar */
+}
+.modal-content input[type='color']{
+	width:60px;
+}
+
+.modal-header {
+    background-color: #2e2e2e;
+    color: white;
+    padding: 10px;
+    border-radius: 5px 5px 0 0;
+    text-align: center; /* Başlığı ortalar */
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 0;
+    text-align: center; /* İçeriği ortalar */
+}
+
+.mb-3 {
+    border: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form-control {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 100%;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: space-between; /* Butonları iki yana yaslar */
+    gap: 10px;
+    padding-top: 15px;
+    width: 100%; /* Modal-footer genişliğini ayarlıyoruz */
+    margin-top: 15px;
+}
+
+.btn {
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Buton içeriğini ortalar */
+    width: 35%; /* Butonları daha düzgün hizalamak için genişliği ayarlıyoruz */
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+/* İkon hover efekti */
+.modal button:hover {
+    transform: scale(1.1); /* Hoverda ikonlar büyür */
+    color: #0078d4; /* Metalik mavi ikon rengi */
+}
+
+/* Animasyon */
+@keyframes slideIn {
+    from {
+        transform: translateY(-30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.clearStil{
+	all: revert;
+}
