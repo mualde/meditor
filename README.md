@@ -3,6 +3,8 @@ Mualde Editor, meditor, çok amaçlı yetenekli geliştirilebilir bir metin edit
 
 <a href="https://mualde.com/projeler/meditor/" target="_blank">https://mualde.com/projeler/meditor/</a>
 
+AdGuard Çalışmasını engelliyor
+
 Örnek Kullanım
 
 
