@@ -441,6 +441,15 @@ resize: none;
     flex-wrap: wrap;  /* Küçük ekranlarda butonlar alt satıra kayar */
 }
 
+#toolbar, #medya-container, #kaydet-container, #highlight-container {
+    display: flex;
+    flex-wrap: wrap;           /* Öğelerin alt satıra geçmesini sağlar */
+    justify-content: center;   /* Yatayda ortalama */
+    align-items: center;
+	gap:10px;
+}
+
+
 /* Butonlar için şık ve minimalist tasarım */
 #toolbar button {
     background-color: #fff;  /* Beyaz buton */
