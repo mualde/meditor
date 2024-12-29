@@ -7,7 +7,7 @@ function AddHeaderBtn() {
         <button id="headerBtn" title="Başlık Ekle" onclick="openHeaderMenu();">
             <i class="fa-solid fa-heading"></i>
         </button>
-        <div id="header-menu" class="dropdown-menu">
+        <div id="header-menu" style="display:none">
             <ul>
 			    <li><span class="paragraph" onclick="applyParagraph()">Paragraf Uygula</span></li>
                 <li><span class="header1" onclick="applyHeader('h1')">H1 Uygula</span></li>
