@@ -8,7 +8,7 @@ function AddFamilyBtn() {
             <i class="fa-solid fa-font"></i>
             <span id="font-family-name" style="width:100px;border: 1px solid gray;white-space: nowrap;overflow: hidden; text-overflow: ellipsis;">Arial</span>
         </button>
-        <div id="font-family-menu" class="dropdown-menu">
+        <div id="font-family-menu" style="display:none">
             <ul>
                 <li onclick="applyFontFamily(this.style.fontFamily)" style="font-family: 'Arial', sans-serif;">Arial</li>
                 <li onclick="applyFontFamily(this.style.fontFamily)" style="font-family: 'Roboto', sans-serif;">Roboto</li>
