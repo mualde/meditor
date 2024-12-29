@@ -9,7 +9,7 @@ function AddSizeBtn() {
             <input id="font-size-manuel" type="text" style="width:70px;text-align:center;" onclick="this.value=''" onblur="this.value=currentSize+'pt'" onchange="updateFontSize(this.value.replace(/[^0-9]/g, ''));">
             <input id="font-size-plus" type="button" title="Yazı Tipi Boyutunu Büyüt" value="+" onclick="applyFontSize(parseInt(this.previousElementSibling.value)+2+'pt');">
         </button>
-        <div id="font-size-menu" class="dropdown-menu">
+        <div id="font-size-menu" style="display:none">
             <ul>
 				<li onclick="applyFontSize(this.style.fontSize)" style="font-size:12pt;">12pt</li>
 				<li onclick="applyFontSize(this.style.fontSize)" style="font-size:18pt;">18pt</li>
