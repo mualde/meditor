@@ -7,6 +7,7 @@ function AddfullscreenBtn() {
 };
 
 function toggleFullscreen() {
+	var currentBackground = editor.style.backgroundColor;
 	if (!editor.classList.contains('tamekraneditor')) {
 		
 		toolbar.style.zIndex = '999';
@@ -15,7 +16,6 @@ function toggleFullscreen() {
 		toolbar.style.top = '0';
 		toolbar.style.left = '0';
 		toolbar.style.margin = '0';
-		toolbar.style.backgroundColor = 'white';
 		toolbar.style.boxSizing = 'border-box';		
 		
 		editor.style.zIndex = '99';
@@ -25,14 +25,10 @@ function toggleFullscreen() {
 		editor.style.top = window.getComputedStyle(toolbar).height;
 		editor.style.left = '0';
 		editor.style.margin = '0';
-		editor.style.backgroundColor = 'white';
 		editor.style.boxSizing = 'border-box';
 
 		
-		
-		
-		
-		
+
 		sourceCode = document.getElementById("sourceCode");
 		sourceCode.style.zIndex = '99';
 		sourceCode.style.width = '100%';
@@ -41,7 +37,6 @@ function toggleFullscreen() {
 		sourceCode.style.top = window.getComputedStyle(toolbar).height;
 		sourceCode.style.left = '0';
 		sourceCode.style.margin = '0';
-		sourceCode.style.backgroundColor = 'white';
 		sourceCode.style.boxSizing = 'border-box';
 
 
@@ -53,6 +48,7 @@ function toggleFullscreen() {
 		sourceCode.classList.add('tamekrankaynak');
 	} else {
 		editor.style = '';  // Tüm stilleri sıfırla
+		editor.style.backgroundColor = currentBackground;
 		toolbar.style = '';  // Tüm stilleri sıfırla
 		sourceCode.style = '';  // Tüm stilleri sıfırla
 
