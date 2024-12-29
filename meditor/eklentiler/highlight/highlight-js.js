@@ -31,7 +31,6 @@ function AddVurgularBtn() {
         // Highlight kapsayıcısını oluştur
         const highlightContainer = document.createElement('div');
         highlightContainer.id = 'highlight-container';
-        highlightContainer.className = 'container'; // İsteğe bağlı CSS sınıfı
 		
 		//element.setAttribute('onclick', 'calistir()');
 
