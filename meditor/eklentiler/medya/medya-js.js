@@ -2,7 +2,6 @@ function AddImageBtn() {
     // Yeni image-container HTML yapısını oluşturuyoruz
     const imageContainer = document.createElement('div');
     imageContainer.id = 'medya-container';
-    imageContainer.className = 'container';
     imageContainer.innerHTML = `
         <button id="resimBtn" title="Resim Ekle" onclick="openModal('resimModal')">
             <i class="fa-solid fa-image"></i>
