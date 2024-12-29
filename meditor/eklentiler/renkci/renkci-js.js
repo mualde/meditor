@@ -7,7 +7,7 @@ function AddColorBtn() {
 		<button id="colorBtn" title="Renk Ekle" onclick="openColorMenu();">
 			<i class="fa-solid fa-palette"></i>
 		</button>
-		<div id="font-color-menu">
+		<div id="font-color-menu" style="display:none">
 			<!-- Metin rengi ikonu ve renk seçici -->
 			<div class="color-picker-item">
 				<i class="fa-solid fa-pen" title="Metin Rengi"></i>
