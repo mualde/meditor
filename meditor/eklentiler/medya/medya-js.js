@@ -307,11 +307,13 @@ editor.oncontextmenu = function (e) {
         e.preventDefault();
         currentImage = e.target;
         document.getElementById('editWidth').value = currentImage.offsetWidth || '';
-		document.getElementById('editWidthType').value = currentImage.style.width.match(/[a-zA-Z%]+/)[0], document.getElementById('editWidthType').dispatchEvent(new Event('change'));
+	document.getElementById('editWidthType').value = currentImage.style.width.match(/[a-zA-Z%]+/)[0], document.getElementById('editWidthType').dispatchEvent(new Event('change'));
         document.getElementById('editHeight').value = currentImage.offsetHeight || '';
-		document.getElementById('editHeightType').value = currentImage.style.height.match(/[a-zA-Z%]+/)[0], document.getElementById('editHeightType').dispatchEvent(new Event('change'));
+	if(currentImage.style.height){
+	    document.getElementById('editHeightType').value = currentImage.style.height.match(/[a-zA-Z%]+/)[0], document.getElementById('editHeightType').dispatchEvent(new Event('change'));
+	}
         document.getElementById('editTitle').value = currentImage.title || '';
-		document.getElementById('editAlign').value = currentImage.style.margin === '0px' ? 'left' : currentImage.style.margin === '0px auto' ? 'center' : currentImage.style.margin === '0px 0px 0px auto' ? 'right' : 'center';
+	document.getElementById('editAlign').value = currentImage.style.margin === '0px' ? 'left' : currentImage.style.margin === '0px auto' ? 'center' : currentImage.style.margin === '0px 0px 0px auto' ? 'right' : 'center';
 		if (Math.abs(toolbarWidthPercentage - 100) < tolerance) {
 			resimDuzenle.style.position = 'fixed';
 			resimDuzenle.style.top = `${event.clientY}px`;  // Y koordinatını ayarla
