@@ -735,3 +735,10 @@ td.selectedcell:before {
 .clearStil{
 	all: revert;
 }
+
+.resim-in-editor{
+	resize: both;
+	overflow: auto;
+	border: 2px white solid;
+	overflow: hidden;
+}
