@@ -175,15 +175,16 @@ includeCSS('meditor/css/style.css');
 
 function includeCSS(cssFile) {
     const link = document.createElement('link');
+	var baseURL = "https://cdn.jsdelivr.net/gh/Mualde/meditor/";
     link.rel = 'stylesheet';
-    link.href = cssFile;
+    link.href = baseURL + cssFile;
     document.head.appendChild(link);
 }
 
 function includeJS(file, callback) {
-    var baseURL = "https://cdn.jsdelivr.net/gh/Mualde/meditor/"; // GitHub'daki temel URL
+    var baseURL = "https://cdn.jsdelivr.net/gh/Mualde/meditor/";
     var script = document.createElement('script');
-    script.src = baseURL + file; // Temel URL ile dosya yolunu birleştir
+    script.src = baseURL + file;
     script.type = 'text/javascript';
     script.onload = callback;
     script.onerror = function () {
