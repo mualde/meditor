@@ -181,7 +181,7 @@ function includeCSS(cssFile) {
 }
 
 function includeJS(file, callback) {
-    var baseURL = "https://cdn.jsdelivr.net/gh/Mualde/meditor"; // GitHub'daki temel URL
+    var baseURL = "https://cdn.jsdelivr.net/gh/Mualde/meditor/"; // GitHub'daki temel URL
     var script = document.createElement('script');
     script.src = baseURL + file; // Temel URL ile dosya yolunu birleştir
     script.type = 'text/javascript';
