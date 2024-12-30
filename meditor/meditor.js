@@ -180,17 +180,16 @@ function includeCSS(cssFile) {
     document.head.appendChild(link);
 }
 
-function includeJS(src, callback) {
-    const script = document.createElement('script');
-	var baseURL = "https://raw.githubusercontent.com/Mualde/meditor/main/"; // GitHub'daki temel URL
-
-    script.src = src;
+function includeJS(file, callback) {
+    var baseURL = "https://cdn.jsdelivr.net/gh/Mualde/meditor"; // GitHub'daki temel URL
+    var script = document.createElement('script');
+    script.src = baseURL + file; // Temel URL ile dosya yolunu birleştir
     script.type = 'text/javascript';
-    script.onload = callback; // Dosya yüklendiğinde çalışacak işlev
+    script.onload = callback;
     script.onerror = function () {
-        console.error(`Dosya yüklenemedi: ${src}`);
+        console.error("Dosya yüklenemedi: " + script.src);
     };
-    document.body.appendChild(script); // Script'i body'nin sonuna ekliyoruz
+    document.head.appendChild(script);
 }
 
 
