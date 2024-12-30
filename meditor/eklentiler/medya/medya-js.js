@@ -89,12 +89,20 @@ function AddImageBtn() {
 			<div id="dragHandle" class="drag-handle" style="width:100%;text-align:center">
 				<i class="fas fa-arrows-alt"></i> Resim Ayarı Menüsü <i class="fas fa-arrows-alt"></i> 
 			</div>
-			<label for="editWidth">Genişlik (px):</label><input type="number" id="editWidth" placeholder="Auto" value="30" title="Genişlik">
+			<label for="editWidth">Genişlik: </label><input type="number" id="editWidth" placeholder="Auto" value="30" title="Genişlik">
+			<select id="editWidthType" title="widthtype" style="width:50px" onchange="if (this.value === '%') {if(this.previousElementSibling.value > 100){this.previousElementSibling.value = '100';}; this.previousElementSibling.max ='100'}else{this.previousElementSibling.max = null}">
+				<option value="px"selected>Px</option>
+				<option value="%" >%</option>
+			</select>
 			<div style="width:100%"></div>
 			<label for="editHeight">Yükseklik (px):</label><input type="number" id="editHeight" placeholder="Auto" value="30" title="Yükseklik">
+			<select id="editHeightType" title="widthtype" style="width:50px" onchange="if (this.value === '%') {if(this.previousElementSibling.value > 100){this.previousElementSibling.value = '100';}; this.previousElementSibling.max ='100'}else{this.previousElementSibling.max = null}">
+				<option value="px"selected>Px</option>
+				<option value="%" >%</option>
+			</select>
 			<div style="width:100%"></div>
 			<label for="editAlign">Hizalama:</label>
-			<select id="editAlign" title="Hiza">
+			<select id="editAlign" title="Hiza" style="width:80px">
 				<option value="left">Sol</option>
 				<option value="center">Ortala</option>
 				<option value="right">Sağ</option>
@@ -111,12 +119,20 @@ function AddImageBtn() {
 			<div id="dragHandle" class="drag-handle" style="width:100%;text-align:center">
 				<i class="fas fa-arrows-alt"></i> Video Ayarı Menüsü <i class="fas fa-arrows-alt"></i> 
 			</div>
-			<label for="editVideoWidth">Genişlik (px):</label><input type="number" id="editVideoWidth" placeholder="Auto" value="560" title="Genişlik">
+			<label for="editVideoWidth">Genişlik: </label><input type="number" id="editVideoWidth" placeholder="Auto" value="560" title="Genişlik">
+			<select id="editVideoWidthType" title="widthtype" style="width:50px" onchange="if (this.value === '%') {if(this.previousElementSibling.value > 100){this.previousElementSibling.value = '100';}; this.previousElementSibling.max ='100'}else{this.previousElementSibling.max = null}">
+				<option value="px"selected>Px</option>
+				<option value="%" >%</option>
+			</select>
 			<div style="width:100%"></div>
-			<label for="editVideoHeight">Yükseklik (px):</label><input type="number" id="editVideoHeight" placeholder="Auto" value="315" title="Yükseklik">
+			<label for="editVideoHeight">Yükseklik: </label><input type="number" id="editVideoHeight" placeholder="Auto" value="315" title="Yükseklik">
+			<select id="editVideoHeightType" title="heighttype" style="width:50px"onchange="if (this.value === '%') {if(this.previousElementSibling.value > 100){this.previousElementSibling.value = '100';}; this.previousElementSibling.max ='100'}else{this.previousElementSibling.max = null}">
+				<option value="px"selected>Px</option>
+				<option value="%" >%</option>
+			</select>
 			<div style="width:100%"></div>
 			<label for="editVideoAlign">Hizalama:</label>
-			<select id="editVideoAlign" title="Hiza">
+			<select id="editVideoAlign" title="Hiza" style="width:80px">
 				<option value="left">Sol</option>
 				<option value="center" selected>Ortala</option>
 				<option value="right">Sağ</option>
@@ -185,12 +201,14 @@ let currentImage = null;
 
 function updateImage() {
     const width = document.getElementById('editWidth').value;
+    const widthtype = document.getElementById('editWidthType').value;
     const height = document.getElementById('editHeight').value;
+    const heighttype = document.getElementById('editHeightType').value;
     const title = document.getElementById('editTitle').value;
     const align = document.getElementById('editAlign').value;
     if (currentImage) {
-        currentImage.style.width = width ? `${width}px` : '250px';
-        currentImage.style.height = height ? `${height}px` : '';
+        currentImage.style.width = width ? `${width}${widthtype}` : '250px';
+        currentImage.style.height = height ? `${height}${heighttype}` : '';
         currentImage.title = title ? title : 'Resim';
         currentImage.style.margin = align === 'center' ? '0 auto' : align === 'right' ? '0 0 0 auto' : '0';
         currentImage.style.display = 'block';
@@ -262,17 +280,16 @@ function resetImageForm() {
 	
 }
 
-
-
-
 editor.oncontextmenu = function (e) {
 	const toolbarWidthPercentage = (parseFloat(window.getComputedStyle(toolbar).width) / window.innerWidth) * 100;
 	const tolerance = 0.5; 
     if (e.ctrlKey && e.target.tagName === 'IFRAME') {
         e.preventDefault();
         currentVideo = e.target;
-        document.getElementById('editVideoWidth').value = currentVideo.style.width.replace('px', '');
-        document.getElementById('editVideoHeight').value = currentVideo.style.height.replace('px', '');
+        document.getElementById('editVideoWidth').value = currentVideo.style.width.replace('px', '').replace('%', '');
+        document.getElementById('editVideoWidthType').value = currentVideo.style.width.match(/[a-zA-Z%]+/)[0], document.getElementById('editVideoWidthType').dispatchEvent(new Event('change'));
+        document.getElementById('editVideoHeight').value = currentVideo.style.height.replace('px', '').replace('%', '');
+		document.getElementById('editVideoHeightType').value = currentVideo.style.height.match(/[a-zA-Z%]+/)[0], document.getElementById('editVideoHeightType').dispatchEvent(new Event('change'));
         document.getElementById('editVideoTitle').value = currentVideo.title || '';
 		document.getElementById('editAlign').value = currentVideo.style.margin === '0px' ? 'left' : currentVideo.style.margin === '0px auto' ? 'center' : currentVideo.style.margin === '0px 0px 0px auto' ? 'right' : 'center';
 		if (Math.abs(toolbarWidthPercentage - 100) < tolerance) {
@@ -290,7 +307,9 @@ editor.oncontextmenu = function (e) {
         e.preventDefault();
         currentImage = e.target;
         document.getElementById('editWidth').value = currentImage.offsetWidth || '';
+		document.getElementById('editWidthType').value = currentImage.style.width.match(/[a-zA-Z%]+/)[0], document.getElementById('editWidthType').dispatchEvent(new Event('change'));
         document.getElementById('editHeight').value = currentImage.offsetHeight || '';
+		document.getElementById('editHeightType').value = currentImage.style.height.match(/[a-zA-Z%]+/)[0], document.getElementById('editHeightType').dispatchEvent(new Event('change'));
         document.getElementById('editTitle').value = currentImage.title || '';
 		document.getElementById('editAlign').value = currentImage.style.margin === '0px' ? 'left' : currentImage.style.margin === '0px auto' ? 'center' : currentImage.style.margin === '0px 0px 0px auto' ? 'right' : 'center';
 		if (Math.abs(toolbarWidthPercentage - 100) < tolerance) {
@@ -364,14 +383,16 @@ function resetVideoForm() {
 
 function updateVideo() {
     const width = document.getElementById('editVideoWidth').value;
+    const widthtype = document.getElementById('editVideoWidthType').value;
     const height = document.getElementById('editVideoHeight').value;
+    const heighttype = document.getElementById('editVideoHeightType').value;
     const title = document.getElementById('editVideoTitle').value;
     const align = document.getElementById('editVideoAlign').value;
 
     if (currentVideo) {
         // Genişlik ve yükseklik ayarlama
-        currentVideo.style.width = width ? `${width}px` : '250px';
-        currentVideo.style.height = height ? `${height}px` : '';
+        currentVideo.style.width = width ? `${width}${widthtype}` : '250px';
+        currentVideo.style.height = height ? `${height}${heighttype}` : '';
         
         // Başlık ayarlama
         currentVideo.title = title ? title : 'Video';
