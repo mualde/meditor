@@ -47,8 +47,8 @@ function AddTableBtn() {
 					</div>
 				</div>
 				<div class="modal-footer">
-						<button class="btn" onclick="createTable()">Tablo Oluştur</button>
-						<button class="btn btn-secondary cancelButton" onclick="cancelModal();">İptal Et</button>
+					<button onclick="createTable()">Tablo Oluştur</button>
+					<button onclick="cancelModal();">İptal Et</button>
 				</div>
 			</div>
 		</div>
@@ -93,8 +93,8 @@ function AddTableBtn() {
 					</div>
 				</div>
 				<div class="modal-footer">
-						<button class="btn" onclick="updateTable()">Tabloyu Güncelle</button>
-						<button class="btn btn-secondary cancelButton" onclick="cancelModal();">İptal Et</button>
+					<button onclick="updateTable()">Güncelle</button>
+					<button onclick="cancelModal();">İptal Et</button>
 				</div>
 			</div>
 		</div>
@@ -131,8 +131,8 @@ function AddTableBtn() {
 					<br>
 				</div>
 				<div class="modal-footer">
-						<button onclick="updateCell()">Hücreyi Güncelle</button>
-						<button type="button" class="btn btn-secondary cancelButton" onclick="cancelModal();">İptal Et</button>
+					<button onclick="updateCell()">Hücreyi Güncelle</button>
+					<button onclick="cancelModal();">İptal Et</button>
 				</div>
 			</div>
 		</div>
@@ -383,7 +383,7 @@ function getDataFromCell() {
 	const textColorMatch = style.match(/(?:^|;)\s*color:\s*([^;]+)/);document.getElementById('edit-cell-text-color').value = textColorMatch ? rgbToHex(textColorMatch[1]) : '#000000';
 	const fontSizeMatch = style.match(/(?:^|;)\s*font-size:\s*([^;]+)/);document.getElementById('edit-cell-font-size').value = fontSizeMatch ? parseInt(fontSizeMatch[1]) : 14;
 	const borderWidthMatch = style.match(/(?:^|;)\s*border-width:\s*([^;]+)/);document.getElementById('edit-cell-border-width').value = borderWidthMatch ? parseInt(borderWidthMatch[1]) : 1;
-	const borderColorMatch = style.match(/(?:^|;)\s*border-color:\s*([^;]+)/);document.getElementById('edit-cell-border-color').value = borderColorMatch ? rgbToHex(borderColorMatch[1]) : '#000000';
+	const borderColorMatch = style.match(/border:\s*\d+px\s+\w+\s+(rgb\([^)]+\)|#[a-fA-F0-9]{3,6});?/);document.getElementById('edit-cell-border-color').value = borderColorMatch ? rgbToHex(borderColorMatch[1]) : '#000000';
 }
 function updateCell() {
     const selectedCells = document.querySelectorAll('.selectedcell');

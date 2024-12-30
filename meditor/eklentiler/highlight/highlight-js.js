@@ -30,8 +30,7 @@ function AddVurgularBtn() {
     if (toolbar) {
         // Highlight kapsayıcısını oluştur
         const highlightContainer = document.createElement('div');
-        highlightContainer.id = 'highlight-container';
-		
+        highlightContainer.id = 'highlight-container';		
 		//element.setAttribute('onclick', 'calistir()');
 
 		

@@ -35,16 +35,15 @@ function AddImageBtn() {
 							<option value="center" selected>Orta</option>
 							<option value="right">Sağ</option>
 						</select>
-						<i class="fa-solid fa-circle-info"></i><input type="text" id="imageTitle" placeholder="Alt Bilgisi" style="width: 120px" title="Alt Bilgi">
 						<i class="fa-solid fa-arrows-left-right"></i><input type="number" id="imageWidth" value="250" min="1" max="1024" placeholder="pc" style="width:70px" title="Genişlik">
 						<i class="fa-solid fa-arrows-up-down"></i><input type="number" id="imageHeight" value="" min="1" max="2048" placeholder="Auto" style="width:70px" title="Yükseklik">
-
+						<br>
+						<i class="fa-solid fa-circle-info"></i><input type="text" id="imageTitle" placeholder="Alt Bilgisi" style="width: 76%" title="Alt Bilgi">
 					</div>
-
 				</div>
 				<div class="modal-footer">
-						<button class="btn" onclick="insertImage()">Editöre Ekle</button>
-						<button class="btn" onclick="resetImageForm()">İptal Et</button>
+					<button onclick="insertImage()">Resim Ekle</button>
+					<button onclick="resetImageForm()">İptal Et</button>
 				</div>
 			</div>
 		</div>
@@ -73,15 +72,17 @@ function AddImageBtn() {
 							<option value="center" selected>Orta</option>
 							<option value="right">Sağ</option>
 						</select>
-						<i class="fa-solid fa-circle-info"></i><input type="text" id="videoTitle" placeholder="Video Başlığı" style="width: 120px" title="Başlık">
 						<i class="fa-solid fa-arrows-left-right"></i><input type="number" id="videoWidth" value="560" min="1" max="1024" placeholder="Genişlik" style="width:70px" title="Genişlik">
 						<i class="fa-solid fa-arrows-up-down"></i><input type="number" id="videoHeight" value="315" min="1" max="2048" placeholder="Yükseklik" style="width:70px" title="Yükseklik">
+						<br>
+						<i class="fa-solid fa-circle-info"></i><input type="text" id="videoTitle" placeholder="Video Başlığı" style="width: 76%" title="Başlık">
+
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button class="btn" onclick="previewVideo()">Önizleme Yap</button>
-					<button class="btn" onclick="insertVideo()">Editöre Ekle</button>
-					<button class="btn" onclick="resetVideoForm()">İptal Et</button>
+					<button onclick="previewVideo()">Önizleme Yap</button>
+					<button onclick="insertVideo()">Video Ekle</button>
+					<button onclick="resetVideoForm()">İptal Et</button>
 				</div>
 			</div>
 		</div>
@@ -112,6 +113,7 @@ function AddImageBtn() {
 			<input type="text" id="editTitle" placeholder="Title bilgisi girin" style="width:100px" title="Title Bilgi">
 			<div class="modal-footer">
 				<button onclick="updateImage()">Güncelle</button>
+				<button onclick="deleteImage()">Resmi Kaldır</button>
 				<button onclick="this.parentNode.parentNode.style.display='none'">Kapat</button>
 			</div>
 		</div>
@@ -142,6 +144,7 @@ function AddImageBtn() {
 			<input type="text" id="editVideoTitle" placeholder="Başlık girin" style="width:100px" title="Video Başlığı">
 			<div class="modal-footer">
 				<button onclick="updateVideo()">Güncelle</button>
+				<button onclick="deleteVideo()">Videoyu Kaldır</button>
 				<button onclick="this.parentNode.parentNode.style.display='none'">Kapat</button>
 			</div>
 		</div>
@@ -198,6 +201,20 @@ function AddImageBtn() {
 let currentImage = null;
 
 
+function deleteImage(){
+	if(currentImage){
+		currentImage.parentNode.remove();
+	}
+	resimDuzenle.style.display = 'none';
+}
+
+function deleteVideo(){
+	if(currentVideo){
+		currentVideo.remove();
+	}
+	videoDuzenle.style.display = 'none';
+}
+
 
 function updateImage() {
     const width = document.getElementById('editWidth').value;
@@ -207,10 +224,10 @@ function updateImage() {
     const title = document.getElementById('editTitle').value;
     const align = document.getElementById('editAlign').value;
     if (currentImage) {
-        currentImage.style.width = width ? `${width}${widthtype}` : '250px';
-        currentImage.style.height = height ? `${height}${heighttype}` : '';
+        currentImage.parentNode.style.width = width ? `${width}${widthtype}` : '250px';
+        currentImage.parentNode.style.height = height ? `${height}${heighttype}` : '';
         currentImage.title = title ? title : 'Resim';
-        currentImage.style.margin = align === 'center' ? '0 auto' : align === 'right' ? '0 0 0 auto' : '0';
+        currentImage.parentNode.style.margin = align === 'center' ? '0 auto' : align === 'right' ? '0 0 0 auto' : '0';
         currentImage.style.display = 'block';
     }
 
@@ -260,8 +277,12 @@ function insertImage() {
 
     // Resmi oluşturup, özelliklerini ayarla ve imlecin bulunduğu öğeye ekle
     function finalizeImage(img, width, height, align, title) {
-		let imgHTML = `<img src="${img.src}" title="${title}" style="width: ${width}px; height:${height}; margin:${align === "center" ? "0 auto" : align === "left" ? "0" : "0 0 0 auto"};">`;
-		document.execCommand('insertHTML', false, imgHTML);
+	let imgHTML = `
+	  <div class="resim-in-editor" style="width: ${width}px; height: ${height}px; margin: ${align === "center" ? "0 auto;" : align === "left" ? "0;" : "0 0 0 auto;"}">
+		<img src="${img.src}" title="${title}" style="width: 100%; height: 100%;">
+	  </div>
+	`;		
+	document.execCommand('insertHTML', false, imgHTML);
     }
     resetImageForm();
 }
@@ -307,13 +328,12 @@ editor.oncontextmenu = function (e) {
         e.preventDefault();
         currentImage = e.target;
         document.getElementById('editWidth').value = currentImage.offsetWidth || '';
-	document.getElementById('editWidthType').value = currentImage.style.width.match(/[a-zA-Z%]+/)[0], document.getElementById('editWidthType').dispatchEvent(new Event('change'));
-        document.getElementById('editHeight').value = currentImage.offsetHeight || '';
-	if(currentImage.style.height){
-	    document.getElementById('editHeightType').value = currentImage.style.height.match(/[a-zA-Z%]+/)[0], document.getElementById('editHeightType').dispatchEvent(new Event('change'));
-	}
-        document.getElementById('editTitle').value = currentImage.title || '';
-	document.getElementById('editAlign').value = currentImage.style.margin === '0px' ? 'left' : currentImage.style.margin === '0px auto' ? 'center' : currentImage.style.margin === '0px 0px 0px auto' ? 'right' : 'center';
+		document.getElementById('editWidthType').value = currentImage.parentNode.style.width.match(/[a-zA-Z%]+/)[0], document.getElementById('editWidthType').dispatchEvent(new Event('change'));
+        document.getElementById('editHeight').value = currentImage.parentNode.offsetHeight || '';
+		if(currentImage.parentNode.style.height){
+		    document.getElementById('editHeightType').value = currentImage.parentNode.style.height.match(/[a-zA-Z%]+/)[0], document.getElementById('editHeightType').dispatchEvent(new Event('change'));
+        }        document.getElementById('editTitle').value = currentImage.title || '';
+		document.getElementById('editAlign').value = currentImage.parentNode.style.margin === '0px' ? 'left' : currentImage.style.margin === '0px auto' ? 'center' : currentImage.style.margin === '0px 0px 0px auto' ? 'right' : 'center';
 		if (Math.abs(toolbarWidthPercentage - 100) < tolerance) {
 			resimDuzenle.style.position = 'fixed';
 			resimDuzenle.style.top = `${event.clientY}px`;  // Y koordinatını ayarla

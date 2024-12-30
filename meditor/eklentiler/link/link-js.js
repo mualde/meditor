@@ -24,8 +24,8 @@ function AddLinkBtn() {
 			  </div>
 			</div>
 			<div class="modal-footer">
-				<button class="btn btn-primary" id="applyLink" onclick="InsertLink();">Uygula</button>
-				<button class="btn btn-secondary cancelButton" onclick="closeModal();">İptal Et</button>
+				<button onclick="InsertLink();">Uygula</button>
+				<button onclick="closeModal();">İptal Et</button>
 			</div>
 		  </div>
 		 </div>
@@ -49,9 +49,9 @@ function AddLinkBtn() {
 			  </div>
 			</div>
 			<div class="modal-footer">
-				<button class="btn" id="updateLink" onclick="UpdateLink();">Güncelle</button>
-				<button class="btn" id="removeLink" onclick="kaldirLink();">Linki Kaldır</button>
-				<button class="btn" id="cancelLink" onclick="closeModal()">İptal</button>
+				<button onclick="UpdateLink();">Güncelle</button>
+				<button onclick="kaldirLink();">Linki Kaldır</button>
+				<button onclick="closeModal()">İptal</button>
 			</div>
 		  </div>
 		 </div>
