@@ -182,6 +182,8 @@ function includeCSS(cssFile) {
 
 function includeJS(src, callback) {
     const script = document.createElement('script');
+	var baseURL = "https://raw.githubusercontent.com/Mualde/meditor/main/"; // GitHub'daki temel URL
+
     script.src = src;
     script.type = 'text/javascript';
     script.onload = callback; // Dosya yüklendiğinde çalışacak işlev
