@@ -18,17 +18,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
     }
     if (toolbar) {	
-		includeJS('meditor/eklentiler/baslik/baslik-js.js', function () {AddHeaderBtn();});
-		includeJS('meditor/eklentiler/fontsize/fontsize-js.js', function () {AddSizeBtn();});
-		includeJS('meditor/eklentiler/fontfamily/fontfamily-js.js', function () {AddFamilyBtn();});
-		includeJS('meditor/eklentiler/renkci/renkci-js.js', function () {AddColorBtn();});
-		includeJS('meditor/eklentiler/table/table-js.js', function () {AddTableBtn();});
-		includeJS('meditor/eklentiler/medya/medya-js.js', function () {AddImageBtn();});
-		includeJS('meditor/eklentiler/link/link-js.js', function () {AddLinkBtn();});
-		includeJS('meditor/eklentiler/kaynak/kaynak-js.js', function () {AddKaynakBtn();});
-		includeJS('meditor/eklentiler/tamekran/tamekran-js.js', function () {AddfullscreenBtn();});
-		includeJS('meditor/eklentiler/kaydet/kaydet-js.js', function () {AddkaydetBtn();});
-		includeJS('meditor/eklentiler/highlight/highlight-js.js', function () {AddVurgularBtn();});
+		includeJS('eklentiler/baslik/baslik-js.js', function () {AddHeaderBtn();});
+		includeJS('eklentiler/fontsize/fontsize-js.js', function () {AddSizeBtn();});
+		includeJS('eklentiler/fontfamily/fontfamily-js.js', function () {AddFamilyBtn();});
+		includeJS('eklentiler/renkci/renkci-js.js', function () {AddColorBtn();});
+		includeJS('eklentiler/table/table-js.js', function () {AddTableBtn();});
+		includeJS('eklentiler/medya/medya-js.js', function () {AddImageBtn();});
+		includeJS('eklentiler/link/link-js.js', function () {AddLinkBtn();});
+		includeJS('eklentiler/kaynak/kaynak-js.js', function () {AddKaynakBtn();});
+		includeJS('eklentiler/tamekran/tamekran-js.js', function () {AddfullscreenBtn();});
+		includeJS('eklentiler/kaydet/kaydet-js.js', function () {AddkaydetBtn();});
+		includeJS('eklentiler/highlight/highlight-js.js', function () {AddVurgularBtn();});
     }
 });
 
@@ -171,7 +171,7 @@ function iVeriTopla(){
 
 }
 
-includeCSS('meditor/css/style.css');
+includeCSS('css/style.css');
 
 function includeCSS(cssFile) {
     const link = document.createElement('link');
