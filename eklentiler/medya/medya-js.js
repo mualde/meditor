@@ -280,7 +280,7 @@ function insertImage() {
 	 function finalizeImage(img, width, height, align, title) {
         const imageDiv = document.createElement('div');
         imageDiv.classList.add('resim-in-editor');
-	imageDiv.contentEditable = 'false';
+        imageDiv.contentEditable = 'false';
         imageDiv.style.width = `${width}px`;
         imageDiv.style.height = `${height}px`;
         imageDiv.style.margin = align === "center" ? "0 auto" : align === "left" ? "0" : "0 0 0 auto";
@@ -457,7 +457,9 @@ function butonservisi(imageDiv){
 			if (existingBox) return;
 	
 			const bottomRightButton = document.createElement('button');
+			bottomRightButton.id = 'bottomRightButton';
 			bottomRightButton.innerHTML = '⏎';
+			bottomRightButton.style.border = 'none';
 			bottomRightButton.style.cursor = 'pointer';
 			bottomRightButton.style.fontSize = '16px';
 			bottomRightButton.style.position = 'absolute';
@@ -465,33 +467,39 @@ function butonservisi(imageDiv){
 			bottomRightButton.style.right = '5px';
 	
 			const topLeftButton = document.createElement('button');
+			topLeftButton.id = 'topLeftButton';
 			topLeftButton.innerHTML = '⏎';
+			topLeftButton.style.border = 'none';
 			topLeftButton.style.cursor = 'pointer';
 			topLeftButton.style.fontSize = '16px';
 			topLeftButton.style.position = 'absolute';
-			topLeftButton.style.top = '0';
-			topLeftButton.style.left = '0';
+			topLeftButton.style.top = '5px';
+			topLeftButton.style.left = '5px';
 	
 			const topRightButton = document.createElement('button');
+			topRightButton.id = 'topRightButton';
 			topRightButton.innerHTML = '✖';
+			topRightButton.style.border = 'none';
 			topRightButton.style.cursor = 'pointer';
 			topRightButton.style.fontSize = '16px';
 			topRightButton.style.position = 'absolute';
-			topRightButton.style.top = '0';
-			topRightButton.style.right = '0';
+			topRightButton.style.top = '5px';
+			topRightButton.style.right = '5px';
 	
 			const bottomLeftButton = document.createElement('button');
+			bottomLeftButton.id = 'bottomLeftButton';
 			bottomLeftButton.innerHTML = '⚙️';
+			bottomLeftButton.style.border = 'none';
 			bottomLeftButton.style.cursor = 'pointer';
 			bottomLeftButton.style.fontSize = '16px';
 			bottomLeftButton.style.position = 'absolute';
-			bottomLeftButton.style.bottom = '0';
-			bottomLeftButton.style.left = '0';
+			bottomLeftButton.style.bottom = '5px';
+			bottomLeftButton.style.left = '5px';
 	
-			imageDiv.appendChild(topRightButton);
-			imageDiv.appendChild(bottomLeftButton);
-			imageDiv.appendChild(topLeftButton);
-			imageDiv.appendChild(bottomRightButton);
+			if (!document.getElementById('topRightButton')) {imageDiv.appendChild(topRightButton);}
+			if (!document.getElementById('bottomLeftButton')) {imageDiv.appendChild(bottomLeftButton);}
+			if (!document.getElementById('topLeftButton')) {imageDiv.appendChild(topLeftButton);}
+			if (!document.getElementById('bottomRightButton')) {imageDiv.appendChild(bottomRightButton);}
 	
 			topRightButton.addEventListener('click', function(event) {
 				imageDiv.remove();
@@ -501,7 +509,7 @@ function butonservisi(imageDiv){
 				const newParagraph = document.createElement('p');
 				newParagraph.innerHTML = '&nbsp;';
 				imageDiv.parentNode.insertBefore(newParagraph, imageDiv.nextSibling);
-				newParagraph.focus();
+				moveCursorToEnd(newParagraph);
 				event.stopPropagation();
 			});
 	
@@ -509,7 +517,7 @@ function butonservisi(imageDiv){
 				const newParagraph = document.createElement('p');
 				newParagraph.innerHTML = '&nbsp;';
 				imageDiv.parentNode.insertBefore(newParagraph, imageDiv);
-				newParagraph.focus();
+				moveCursorToEnd(newParagraph);
 				event.stopPropagation();
 			});
 
@@ -546,3 +554,4 @@ function butonservisi(imageDiv){
 
 
 }
+
