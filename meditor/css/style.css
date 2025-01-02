@@ -739,6 +739,7 @@ td.selectedcell:before {
 .resim-in-editor{
 	resize: both;
 	overflow: auto;
-	border: 2px white solid;
+	border: 1px solid #00000000;
 	overflow: hidden;
+	position: relative;
 }
