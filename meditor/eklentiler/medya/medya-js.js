@@ -157,6 +157,7 @@ function AddImageBtn() {
     if (toolbar) {
         // table-container'ı toolbar içerisine ekliyoruz
         toolbar.appendChild(imageContainer);
+
     }
 	var resimBtnCon = document.getElementById('medya-container');
 	var resimBtn = document.getElementById('resimBtn');
@@ -275,18 +276,27 @@ function insertImage() {
     }
 
 
-    // Resmi oluşturup, özelliklerini ayarla ve imlecin bulunduğu öğeye ekle
-    function finalizeImage(img, width, height, align, title) {
-	let imgHTML = `
-	  <div class="resim-in-editor" style="width: ${width}px; height: ${height}px; margin: ${align === "center" ? "0 auto;" : align === "left" ? "0;" : "0 0 0 auto;"}">
-		<img src="${img.src}" title="${title}" style="width: 100%; height: 100%;">
-	  </div>
-	`;		
-	document.execCommand('insertHTML', false, imgHTML);
+     // Resmi oluşturup, özelliklerini ayarla ve imlecin bulunduğu öğeye ekle
+	 function finalizeImage(img, width, height, align, title) {
+        const imageDiv = document.createElement('div');
+        imageDiv.classList.add('resim-in-editor');
+        imageDiv.style.width = `${width}px`;
+        imageDiv.style.height = `${height}px`;
+        imageDiv.style.margin = align === "center" ? "0 auto" : align === "left" ? "0" : "0 0 0 auto";
+
+        const image = document.createElement('img');
+        image.src = img.src;
+        image.title = title;
+        image.style.width = '100%';
+        image.style.height = '100%';
+
+        imageDiv.appendChild(image);
+        savedSelection.insertNode(imageDiv); // Resmi eklediğiniz alanı belirleyin (örneğin editor alanı)
+
+        butonservisi(imageDiv); // Yeni eklenen div'e event listener ekle
     }
     resetImageForm();
 }
-
 
 function resetImageForm() {
 	document.getElementById('imageUrl').value = '';
@@ -298,7 +308,6 @@ function resetImageForm() {
 	document.getElementById('imageHeight').value = '';
 	document.getElementById('imageAlign').value = 'center';
 	document.getElementById('resimModal').style.display = 'none';
-	
 }
 
 editor.oncontextmenu = function (e) {
@@ -432,4 +441,107 @@ function updateVideo() {
     }
 
     videoDuzenle.style.display = 'none';
+}
+
+
+
+const imagesDivs = document.getElementsByClassName('resim-in-editor');
+Array.from(imagesDivs).forEach(imageDiv => {
+	butonservisi(imageDiv);
+});
+
+function butonservisi(imageDiv){
+		imageDiv.addEventListener('click', function(event) {
+			const existingBox = imageDiv.querySelector('.hover-box');
+			if (existingBox) return;
+	
+			const bottomRightButton = document.createElement('button');
+			bottomRightButton.innerHTML = '⏎';
+			bottomRightButton.style.cursor = 'pointer';
+			bottomRightButton.style.fontSize = '16px';
+			bottomRightButton.style.position = 'absolute';
+			bottomRightButton.style.bottom = '5px';
+			bottomRightButton.style.right = '5px';
+	
+			const topLeftButton = document.createElement('button');
+			topLeftButton.innerHTML = '⏎';
+			topLeftButton.style.cursor = 'pointer';
+			topLeftButton.style.fontSize = '16px';
+			topLeftButton.style.position = 'absolute';
+			topLeftButton.style.top = '0';
+			topLeftButton.style.left = '0';
+	
+			const topRightButton = document.createElement('button');
+			topRightButton.innerHTML = '✖';
+			topRightButton.style.cursor = 'pointer';
+			topRightButton.style.fontSize = '16px';
+			topRightButton.style.position = 'absolute';
+			topRightButton.style.top = '0';
+			topRightButton.style.right = '0';
+	
+			const bottomLeftButton = document.createElement('button');
+			bottomLeftButton.innerHTML = '⚙️';
+			bottomLeftButton.style.cursor = 'pointer';
+			bottomLeftButton.style.fontSize = '16px';
+			bottomLeftButton.style.position = 'absolute';
+			bottomLeftButton.style.bottom = '0';
+			bottomLeftButton.style.left = '0';
+	
+			imageDiv.appendChild(topRightButton);
+			imageDiv.appendChild(bottomLeftButton);
+			imageDiv.appendChild(topLeftButton);
+			imageDiv.appendChild(bottomRightButton);
+	
+			topRightButton.addEventListener('click', function(event) {
+				imageDiv.remove();
+			});
+	
+			bottomRightButton.addEventListener('click', function(event) {
+				const newParagraph = document.createElement('p');
+				newParagraph.innerHTML = '&nbsp;';
+				imageDiv.parentNode.insertBefore(newParagraph, imageDiv.nextSibling);
+				newParagraph.focus();
+				event.stopPropagation();
+			});
+	
+			topLeftButton.addEventListener('click', function(event) {
+				const newParagraph = document.createElement('p');
+				newParagraph.innerHTML = '&nbsp;';
+				imageDiv.parentNode.insertBefore(newParagraph, imageDiv);
+				newParagraph.focus();
+				event.stopPropagation();
+			});
+
+			bottomLeftButton.addEventListener('click', function(event) {
+				// Sağ tıklama olayını oluştur
+				const rightClickEvent = new MouseEvent('contextmenu', {
+					bubbles: true, // Olayın kabarcıklanmasını sağlar
+					cancelable: true, // Olayın iptal edilebilir olmasını sağlar
+					view: window, // Olayın görüntüleme penceresi
+					button: 2, // Sağ tıklama butonu (2 = sağ tıklama)
+					ctrlKey: true // Ctrl tuşunun basılı olduğu durumu simüle et
+				});
+				// Resme sağ tıklama olayını tetikle
+				imageDiv.querySelector('img').dispatchEvent(rightClickEvent);
+			});
+
+
+			
+	
+			// Kutucuğun dışında bir yere tıklanırsa kaldır
+			document.addEventListener('click', function handleClickOutside(event) {
+				if (!imageDiv.contains(event.target)) {
+					topRightButton.remove();
+					bottomLeftButton.remove();
+					topLeftButton.remove();
+					bottomRightButton.remove();
+					document.removeEventListener('click', handleClickOutside);
+				}
+			});
+		});
+		
+
+
+
+
 }
