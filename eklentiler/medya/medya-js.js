@@ -280,6 +280,7 @@ function insertImage() {
 	 function finalizeImage(img, width, height, align, title) {
         const imageDiv = document.createElement('div');
         imageDiv.classList.add('resim-in-editor');
+	imageDiv.contentEditable = 'false';
         imageDiv.style.width = `${width}px`;
         imageDiv.style.height = `${height}px`;
         imageDiv.style.margin = align === "center" ? "0 auto" : align === "left" ? "0" : "0 0 0 auto";
