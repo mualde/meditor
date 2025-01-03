@@ -157,12 +157,11 @@ function AddImageBtn() {
     if (toolbar) {
         // table-container'ı toolbar içerisine ekliyoruz
         toolbar.appendChild(imageContainer);
-
 		toolbar.addEventListener('mouseover', function(){
-			document.getElementById('topLeftButton').remove();
-			document.getElementById('topRightButton').remove();
-			document.getElementById('bottomRightButton').remove();
-			document.getElementById('bottomLeftButton').remove();
+			if (document.getElementById('topRightButton')) {document.getElementById('topRightButton').remove();}
+			if (document.getElementById('bottomLeftButton')) {document.getElementById('bottomLeftButton').remove();}
+			if (document.getElementById('topLeftButton')) {document.getElementById('topLeftButton').remove();}
+			if (document.getElementById('bottomRightButton')) {document.getElementById('bottomRightButton').remove();}
 		});
     }
 	var resimBtnCon = document.getElementById('medya-container');
@@ -461,7 +460,7 @@ function butonservisi(imageDiv){
 	imageDiv.addEventListener('click', function(event) {
 		const existingBox = imageDiv.querySelector('.hover-box');
 		if (existingBox) return;
-	
+
 		const bottomRightButton = document.createElement('button');
 		bottomRightButton.id = 'bottomRightButton';
 		bottomRightButton.innerHTML = '⏎';
@@ -471,7 +470,7 @@ function butonservisi(imageDiv){
 		bottomRightButton.style.position = 'absolute';
 		bottomRightButton.style.bottom = '5px';
 		bottomRightButton.style.right = '5px';
-	
+
 		const topLeftButton = document.createElement('button');
 		topLeftButton.id = 'topLeftButton';
 		topLeftButton.innerHTML = '⏎';
@@ -481,7 +480,7 @@ function butonservisi(imageDiv){
 		topLeftButton.style.position = 'absolute';
 		topLeftButton.style.top = '5px';
 		topLeftButton.style.left = '5px';
-	
+
 		const topRightButton = document.createElement('button');
 		topRightButton.id = 'topRightButton';
 		topRightButton.innerHTML = '✖';
@@ -491,7 +490,7 @@ function butonservisi(imageDiv){
 		topRightButton.style.position = 'absolute';
 		topRightButton.style.top = '5px';
 		topRightButton.style.right = '5px';
-	
+
 		const bottomLeftButton = document.createElement('button');
 		bottomLeftButton.id = 'bottomLeftButton';
 		bottomLeftButton.innerHTML = '⚙️';
@@ -501,16 +500,16 @@ function butonservisi(imageDiv){
 		bottomLeftButton.style.position = 'absolute';
 		bottomLeftButton.style.bottom = '5px';
 		bottomLeftButton.style.left = '5px';
-	
+
 		if (!document.getElementById('topRightButton')) {imageDiv.appendChild(topRightButton);}
 		if (!document.getElementById('bottomLeftButton')) {imageDiv.appendChild(bottomLeftButton);}
 		if (!document.getElementById('topLeftButton')) {imageDiv.appendChild(topLeftButton);}
 		if (!document.getElementById('bottomRightButton')) {imageDiv.appendChild(bottomRightButton);}
-	
+
 		topRightButton.addEventListener('click', function(event) {
 			imageDiv.remove();
 		});
-	
+
 		bottomRightButton.addEventListener('click', function(event) {
 			const newParagraph = document.createElement('p');
 			newParagraph.innerHTML = '&nbsp;';
@@ -518,7 +517,7 @@ function butonservisi(imageDiv){
 			moveCursorToEnd(newParagraph);
 			event.stopPropagation();
 		});
-	
+
 		topLeftButton.addEventListener('click', function(event) {
 			const newParagraph = document.createElement('p');
 			newParagraph.innerHTML = '&nbsp;';
@@ -526,7 +525,7 @@ function butonservisi(imageDiv){
 			moveCursorToEnd(newParagraph);
 			event.stopPropagation();
 		});
-	
+
 		bottomLeftButton.addEventListener('click', function(event) {
 			// Sağ tıklama olayını oluştur
 			const rightClickEvent = new MouseEvent('contextmenu', {
@@ -539,7 +538,7 @@ function butonservisi(imageDiv){
 			// Resme sağ tıklama olayını tetikle
 			imageDiv.querySelector('img').dispatchEvent(rightClickEvent);
 		});
-
+		
 		// Kutucuğun dışında bir yere tıklanırsa kaldır
 		document.addEventListener('click', function handleClickOutside(event) {
 			if (!imageDiv.contains(event.target)) {
