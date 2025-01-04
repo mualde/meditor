@@ -743,3 +743,11 @@ td.selectedcell:before {
 	overflow: hidden;
 	position: relative;
 }
+.video-in-editor{
+	resize: both;
+	overflow: auto;
+	border: 1px solid #00000000;
+	overflow: hidden;
+    position: relative;
+	Padding:15px 0 15px 0;
+}
