@@ -23,7 +23,13 @@ function AddTableBtn() {
 						<br>
 						<i class="fa-solid fa-table-columns"></i><input type="number" id="table-rows" min="1" value="3" style="width:50px" title="Sütun Sayısı">
 						<i class="fa-solid fa-bars"></i><input type="number" id="table-cols" min="1" value="3" style="width:50px" title="Satır Sayısı">
-						<i class="fa-solid fa-arrows-left-right-to-line"></i><input type="number" id="table-width" value="400" style="width:80px" title="Tablu Genişliği">
+						<i class="fa-solid fa-arrows-left-right-to-line"></i>
+                        <input type="number" id="table-width" value="400" style="width:80px" title="Tablu Genişliği">
+                        <select id="table-width-type" title="widthtype" style="width:50px" onchange="if (this.value === '%') {if(this.previousElementSibling.value > 100){this.previousElementSibling.value = '100';}; this.previousElementSibling.max ='100'}else{this.previousElementSibling.max = null}">
+                            <option value="px" selected>Px</option>
+                            <option value="%">%</option>
+                        </select>
+
 						<i class="fa-solid fa-text-width"></i>
 						<select id="table-alignment" style="width:70px" title="Bulunduğu Yer">
 							<option value="center">Orta</option>
@@ -69,7 +75,13 @@ function AddTableBtn() {
 						<br>
 						<i class="fa-solid fa-table-columns"></i><input type="number" id="edit-table-rows" min="1" value="3" style="width:50px" title="Sütun Sayısı">
 						<i class="fa-solid fa-bars"></i><input type="number" id="edit-table-cols" min="1" value="3" style="width:50px" title="Satır Sayısı">
-						<i class="fa-solid fa-arrows-left-right-to-line"></i><input type="number" id="edit-table-width" value="600" style="width:80px" title="Tablu Genişliği">
+						<i class="fa-solid fa-arrows-left-right-to-line"></i>
+                        <input type="number" id="edit-table-width" value="600" style="width:80px" title="Tablu Genişliği">
+                        <select id="edit-table-width-type" title="widthtype" style="width:50px" onchange="if (this.value === '%') {if(this.previousElementSibling.value > 100){this.previousElementSibling.value = '100';}; this.previousElementSibling.max ='100'}else{this.previousElementSibling.max = null}">
+                            <option value="px" selected>Px</option>
+                            <option value="%">%</option>
+                        </select>
+
 						<i class="fa-solid fa-text-width"></i>
 						<select id="edit-table-alignment" style="width:70px" title="Bulunduğu Yer">
 							<option value="center">Orta</option>
@@ -98,7 +110,6 @@ function AddTableBtn() {
 				</div>
 			</div>
 		</div>
-		
 		
 		<div id="editCellModal" class="modal" style="display:none">
 			<div id="modal-content" class="modal-content">
@@ -174,13 +185,18 @@ function AddTableBtn() {
 		</div>
     `;
 
-    if (toolbar) {toolbar.appendChild(tableContainer);}
-	var tableBtnCon = document.getElementById('table-container');
-	var tableBtn = document.getElementById('tableBtn');
+    if (toolbar) {
+        toolbar.appendChild(tableContainer);
+        toolbar.addEventListener('mouseover', function(){
+            if (document.getElementById('topRightButtonTable')) {document.getElementById('topRightButtonTable').remove();}
+            if (document.getElementById('bottomLeftButtonTable')) {document.getElementById('bottomLeftButtonTable').remove();}
+            if (document.getElementById('topLeftButtonTable')) {document.getElementById('topLeftButtonTable').remove();}
+            if (document.getElementById('bottomRightButtonTable')) {document.getElementById('bottomRightButtonTable').remove();}
+        });
+    }
+
 	let offsetX = 0, offsetY = 0, isDragging = false;
-
 	const dragHandles = document.querySelectorAll('.drag-handle'); // Tüm drag-handle öğelerini seç
-
 	dragHandles.forEach(dragHandle => {
 		dragHandle.addEventListener('mousedown', (e) => {
 			e.preventDefault(); // Varsayılan seçim davranışını durdur
@@ -293,71 +309,88 @@ function createQuickTableMenu(quickTableMenu) {
     }
 }
 function createTableQuick(rows, cols) {
-    let tableHTML = '<table style="border-collapse: collapse; margin: 0 auto; border: 1px solid black; width:500px">';
-    for (let i = 0; i < rows; i++) {tableHTML += '<tr>';for (let j = 0; j < cols; j++) {tableHTML += '<td style="border: 1px solid black;">&nbsp;</td>';}tableHTML += '</tr>';}
-    tableHTML += '</table>';
-    document.execCommand('insertHTML', false, tableHTML);
+    // Ana div oluştur
+    const tableDiv = document.createElement('div');
+    tableDiv.className = 'table-in-editor';
+    tableDiv.contentEditable = 'false';
+    tableDiv.style.cssText = `width: 650px; margin: 0 auto;`;
+    const table = document.createElement('table');
+    table.contentEditable = 'true';
+    table.style.cssText = `border-collapse: collapse;border: 1px solid black; width: 100%;height: 100%;`;
+    let trhight = 0;
+    for (let i = 0; i < rows; i++) {
+        trhight += 30;
+        const tr = document.createElement('tr');
+        for (let j = 0; j < cols; j++) {
+            const td = document.createElement('td');
+            td.style.border = '1px solid black';
+            td.innerHTML = '&nbsp;';
+            tr.appendChild(td);
+        }
+        table.appendChild(tr);
+    }
+    tableDiv.style.height = trhight+'px';
+    tableDiv.appendChild(table);
+    savedSelection.insertNode(tableDiv);
+    butonServisTable(tableDiv);
 }
+
 //Hızlı Tablo Oluştur Son//
 
 //Tablo Oluştur Baş//
 function createTable() {
-    const formData = gatherTableData();
-    const table = generateTableHTML(formData);
-    const selection = window.getSelection();
-    const range = selection.getRangeAt(0);
-    const tableWrapper = document.createElement('div');
-    tableWrapper.innerHTML = table;
-    savedSelection.insertNode(tableWrapper);
+    const title = document.getElementById('table-title').value;
+    const rows = parseInt(document.getElementById('table-rows').value);
+    const cols = parseInt(document.getElementById('table-cols').value);
+    const width = parseInt(document.getElementById('table-width').value);
+    const widthType = document.getElementById('table-width-type').value;
+    const borderWidth = parseInt(document.getElementById('border-width').value);
+    const borderColor = document.getElementById('border-color').value;
+    const borderStyle = document.getElementById('border-style').value;
+    const align = document.getElementById('table-alignment').value;
+    const tableDiv = document.createElement('div');
+    tableDiv.className = 'table-in-editor';
+    tableDiv.contentEditable = 'false';
+    tableDiv.style.cssText = `width: ${width}${widthType}; margin: ${align === "center" ? "0 auto" : align === "left" ? "0" : "0 0 0 auto"};`;
+    const table = document.createElement('table');
+    table.contentEditable = 'true';
+    if (title) {const caption = document.createElement('caption'); caption.textContent = title;table.appendChild(caption);}
+    let trhight = 0;
+    table.style.cssText = `border-collapse: collapse; border: ${borderWidth}px ${borderStyle} ${borderColor}; width: 100%; height: 100%;`;
+    for (let i = 0; i < rows; i++) {trhight += 30;const tr = document.createElement('tr');for (let j = 0; j < cols; j++) {const td = document.createElement('td');td.style.border = '1px solid black';td.innerHTML = '&nbsp;';tr.appendChild(td);}table.appendChild(tr);}
+    tableDiv.style.height = trhight+'px';
+    tableDiv.appendChild(table);
+    savedSelection.insertNode(tableDiv);
+    butonServisTable(tableDiv);
     closeModal();
 }
-function gatherTableData() {
-    return {
-        title: document.getElementById('table-title').value,
-        rows: parseInt(document.getElementById('table-rows').value),
-        cols: parseInt(document.getElementById('table-cols').value),
-        width: parseInt(document.getElementById('table-width').value),
-        borderWidth: parseInt(document.getElementById('border-width').value),
-        borderColor: document.getElementById('border-color').value,
-        borderStyle: document.getElementById('border-style').value,
-        alignment: document.getElementById('table-alignment').value,
-    };
-}
-function generateTableHTML(data) {
-    let table = `<table cellspacing="0" style="width: ${data.width}px; border: ${data.borderWidth}px ${data.borderStyle} ${data.borderColor}; margin:${data.alignment === "center" ? "0 auto" : data.alignment === "left" ? "0" : "0 0 0 auto"};">`;
-    if (data.title) {table += `<caption>${data.title}</caption>`;}
-    for (let r = 0; r < data.rows; r++) {table += '<tr>';
-	for (let c = 0; c < data.cols; c++) {table += `<td style="border: 1px solid black">&nbsp;</td>`;}table += '</tr>';}
-    table += '</table>';
-    return table;
-}
 //Tablo Oluştur Son//
-
 
 //Tablo Güncelleme Baş//
 function getDataFromTable(table) {
 	document.getElementById('edit-table-title').value = table.querySelector('caption') ? table.querySelector('caption').innerText : '';
 	document.getElementById('edit-table-rows').value = table.rows.length;
 	document.getElementById('edit-table-cols').value = table.rows[0] ? table.rows[0].cells.length : 0;
-	document.getElementById('edit-table-alignment').value = table.style.margin === '0px' ? 'left' : table.style.margin === '0px auto' ? 'center' : table.style.margin === '0px 0px 0px auto' ? 'right' : 'center';
-	document.getElementById('edit-table-width').value = window.getComputedStyle(table).width.replace('px', '');
+	document.getElementById('edit-table-alignment').value = table.parentNode.style.margin === '0px' ? 'left' : table.parentNode.style.margin === '0px auto' ? 'center' : table.parentNode.style.margin === '0px 0px 0px auto' ? 'right' : 'center';
+	document.getElementById('edit-table-width').value = table.parentNode.style.width.replace('px','').replace('%','');
+	document.getElementById('edit-table-width-type').value = table.parentNode.style.width.match(/[a-zA-Z%]+/)[0], document.getElementById('edit-table-width-type').dispatchEvent(new Event('change'));
 	document.getElementById('edit-border-width').value = parseInt(window.getComputedStyle(table).borderWidth);
 	document.getElementById('edit-border-style').value = window.getComputedStyle(table).borderStyle;
 	document.getElementById('edit-border-color').value = rgbToHex(window.getComputedStyle(table).borderColor);
 }
 function updateTable() {
-    // Form değerlerini alın
-    const title = document.getElementById('edit-table-title').value || "Tablo Başlığı";
+    const title = document.getElementById('edit-table-title').value;
     const rows = parseInt(document.getElementById('edit-table-rows').value) || 1;
     const cols = parseInt(document.getElementById('edit-table-cols').value) || 1;
     const width = parseInt(document.getElementById('edit-table-width').value) || 500;
+    const widthType = document.getElementById('edit-table-width-type').value;
     const borderWidth = parseInt(document.getElementById('edit-border-width').value) || 1;
     const borderColor = document.getElementById('edit-border-color').value || "black";
     const borderStyle = document.getElementById('edit-border-style').value || "solid";
     const alignment = document.getElementById('edit-table-alignment').value || "center";
-    selectedTable.style.width = `${width}px`;
+    selectedTable.parentNode.style.width = `${width+widthType}`;
     selectedTable.style.border = `${borderWidth}px ${borderStyle} ${borderColor}`;
-    selectedTable.style.margin = alignment === "center" ? "0 auto" : alignment === "left" ? "0" : "0 0 0 auto";
+    selectedTable.parentNode.style.margin = alignment === "center" ? "0 auto" : alignment === "left" ? "0" : "0 0 0 auto";
     let caption = selectedTable.querySelector('caption');
     if (caption) {caption.innerText = title;} else {selectedTable.insertAdjacentHTML('afterbegin', `<caption>${title}</caption>`);}
     while (selectedTable.rows.length < rows) {const row = selectedTable.insertRow();for (let i = 0; i < cols; i++) {const cell = row.insertCell();cell.innerHTML = "&nbsp;";cell.style = 'border: 1px solid black';}}
@@ -366,6 +399,97 @@ function updateTable() {
     closeModal();
 }
 //Tablo Güncelle Son//
+
+
+const tablesDivs = document.getElementsByClassName('table-in-editor');
+Array.from(tablesDivs).forEach(TableDiv => {
+    butonServisTable(TableDiv);
+});
+
+function butonServisTable(TableDiv) {
+	TableDiv.addEventListener('click', function(event) {
+        const topLeftButtonTable = document.createElement('button');
+        topLeftButtonTable.id = 'topLeftButtonTable';
+        topLeftButtonTable.classList.add('btnSrvsBtn');
+        topLeftButtonTable.innerHTML = '⏎';
+        topLeftButtonTable.title = 'Üste Bir Satır Ekle';
+        topLeftButtonTable.style.top = '0px';
+        topLeftButtonTable.style.left = '0px';
+        topLeftButtonTable.addEventListener('click', function(event) {
+            const newParagraph = document.createElement('p');
+			newParagraph.innerHTML = '&nbsp;';
+			TableDiv.parentNode.insertBefore(newParagraph, TableDiv);
+			moveCursorToEnd(newParagraph);
+			event.stopPropagation();
+        });
+		
+		const topRightButtonTable = document.createElement('button');
+        topRightButtonTable.id = 'topRightButtonTable';
+        topRightButtonTable.classList.add('btnSrvsBtn');
+        topRightButtonTable.innerHTML = '✖';
+        topRightButtonTable.title = 'Tableyu Sil';
+        topRightButtonTable.style.top = '0px';
+        topRightButtonTable.style.right = '0px';
+        topRightButtonTable.addEventListener('click', function(event) {
+            TableDiv.remove();
+        });
+		
+		
+		const bottomRightButtonTable = document.createElement('button');
+        bottomRightButtonTable.id = 'bottomRightButtonTable';
+        bottomRightButtonTable.classList.add('btnSrvsBtn');
+        bottomRightButtonTable.innerHTML = '⏎';
+        bottomRightButtonTable.title = 'Alta Bir Satır Ekle';
+        bottomRightButtonTable.style.bottom = '0px';
+        bottomRightButtonTable.style.right = '10px';
+        bottomRightButtonTable.addEventListener('click', function(event) {
+            const newParagraph = document.createElement('p');
+			newParagraph.innerHTML = '&nbsp;';
+			TableDiv.parentNode.insertBefore(newParagraph, TableDiv.nextSibling);
+			moveCursorToEnd(newParagraph);
+			event.stopPropagation();
+        });
+		
+		const bottomLeftButtonTable = document.createElement('button');
+        bottomLeftButtonTable.id = 'bottomLeftButtonTable';
+        bottomLeftButtonTable.classList.add('btnSrvsBtn');
+        bottomLeftButtonTable.innerHTML = '<i class="fas fa-cog fa-spin spinning-icon"></i>';
+        bottomLeftButtonTable.title = 'Ayarları Aç';
+        bottomLeftButtonTable.style.bottom = '0px';
+        bottomLeftButtonTable.style.left = '0px';
+        bottomLeftButtonTable.addEventListener('click', function(event) {
+            event.stopPropagation(); 
+            const rightClickEvent = new MouseEvent('contextmenu', {
+                bubbles: true,
+                cancelable: true,
+                view: window,
+                button: 2,
+                ctrlKey: true
+            });
+            TableDiv.querySelector('td').dispatchEvent(rightClickEvent);
+        });		
+		if (!document.getElementById('topLeftButtonTable')) {TableDiv.appendChild(topLeftButtonTable);}
+		if (!document.getElementById('topRightButtonTable')) {TableDiv.appendChild(topRightButtonTable);}
+		if (!document.getElementById('bottomLeftButtonTable')) {TableDiv.appendChild(bottomLeftButtonTable);}
+		if (!document.getElementById('bottomRightButtonTable')) {TableDiv.appendChild(bottomRightButtonTable);}
+		
+		
+		document.addEventListener('click', function handleClickOutside(event) {
+			if (!TableDiv.contains(event.target)) {
+				topLeftButtonTable.remove();
+				topRightButtonTable.remove();
+				bottomLeftButtonTable.remove();
+				bottomRightButtonTable.remove();
+				document.removeEventListener('click', handleClickOutside);
+			}
+		});
+	});
+}
+
+
+
+
+
 
 
 //Hücre Biçimlendirme Baş
@@ -844,7 +968,3 @@ function dikeyBol() {
     // Sağ tıklama menüsünü gizle
     document.getElementById('tablosagtusmenu').style.display = 'none';
 }
-
-
-
-
