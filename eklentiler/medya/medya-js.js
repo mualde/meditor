@@ -1,5 +1,4 @@
 function AddImageBtn() {
-    // Yeni image-container HTML yapısını oluşturuyoruz
     const imageContainer = document.createElement('div');
     imageContainer.id = 'medya-container';
     imageContainer.innerHTML = `
@@ -148,20 +147,23 @@ function AddImageBtn() {
 				<button onclick="this.parentNode.parentNode.style.display='none'">Kapat</button>
 			</div>
 		</div>
-
-		
     `;
-
-    // toolbar öğesini alıyoruz
     const toolbar = document.getElementById('toolbar');
     if (toolbar) {
-        // table-container'ı toolbar içerisine ekliyoruz
         toolbar.appendChild(imageContainer);
 		toolbar.addEventListener('mouseover', function(){
 			if (document.getElementById('topRightButton')) {document.getElementById('topRightButton').remove();}
 			if (document.getElementById('bottomLeftButton')) {document.getElementById('bottomLeftButton').remove();}
 			if (document.getElementById('topLeftButton')) {document.getElementById('topLeftButton').remove();}
 			if (document.getElementById('bottomRightButton')) {document.getElementById('bottomRightButton').remove();}
+			
+			if (document.getElementById('topRightButtonVideo')) {document.getElementById('topRightButtonVideo').remove();}
+			if (document.getElementById('bottomLeftButtonVideo')) {document.getElementById('bottomLeftButtonVideo').remove();}
+			if (document.getElementById('topLeftButtonVideo')) {document.getElementById('topLeftButtonVideo').remove();}
+			if (document.getElementById('bottomRightButtonVideo')) {document.getElementById('bottomRightButtonVideo').remove();}
+			
+			
+			
 		});
     }
 	var resimBtnCon = document.getElementById('medya-container');
@@ -169,19 +171,17 @@ function AddImageBtn() {
 	var resimDuzenle = document.getElementById('resimDuzenle');
 	let offsetX = 0, offsetY = 0, isDragging = false;
 
-	const dragHandles = document.querySelectorAll('.drag-handle'); // Tüm drag-handle öğelerini seç
+	const dragHandles = document.querySelectorAll('.drag-handle');
 
 	dragHandles.forEach(dragHandle => {
 		dragHandle.addEventListener('mousedown', (e) => {
-			e.preventDefault(); // Varsayılan seçim davranışını durdur
+			e.preventDefault();
 			isDragging = true;
 
-			const menu = dragHandle.closest('.sagtusmenu'); // En yakın .sagtusmenu öğesini bul
+			const menu = dragHandle.closest('.sagtusmenu');
 			offsetX = e.clientX - menu.offsetLeft;
 			offsetY = e.clientY - menu.offsetTop;
 			menu.style.cursor = "move";
-
-			// Sürüklemeyi başlatacak fonksiyonu tanımla
 			const moveMenu = (e) => {
 				if (isDragging) {
 					menu.style.left = `${e.clientX - offsetX}px`;
@@ -189,7 +189,6 @@ function AddImageBtn() {
 				}
 			};
 
-			// Sürükleme işlemi bittiğinde temizlik yap
 			const stopDragging = () => {
 				isDragging = false;
 				menu.style.cursor = "default";
@@ -206,7 +205,6 @@ function AddImageBtn() {
 
 let currentImage = null;
 
-
 function deleteImage(){
 	if(currentImage){
 		currentImage.parentNode.remove();
@@ -220,7 +218,6 @@ function deleteVideo(){
 	}
 	videoDuzenle.style.display = 'none';
 }
-
 
 function updateImage() {
     const width = document.getElementById('editWidth').value;
@@ -236,11 +233,8 @@ function updateImage() {
         currentImage.parentNode.style.margin = align === 'center' ? '0 auto' : align === 'right' ? '0 0 0 auto' : '0';
         currentImage.style.display = 'block';
     }
-
-    // Kapatma
     resimDuzenle.style.display = 'none';
 }
-
 
 function previewImage(event) {
 	const file = event.target.files[0];
@@ -261,10 +255,8 @@ function insertImage() {
     const height = document.getElementById('imageHeight').value || ' ';
     const title = document.getElementById('imageTitle').value;
     const align = document.getElementById('imageAlign').value;
-
     let img = new Image();
 
-    // URL veya dosya seçimine göre kaynağı belirle
     if (url) {
         img.src = url;
         finalizeImage(img, width, height, align, title);
@@ -279,27 +271,22 @@ function insertImage() {
         console.log('URL veya dosya belirtmeniz gerekiyor.');
         return;
     }
-
-
-     // Resmi oluşturup, özelliklerini ayarla ve imlecin bulunduğu öğeye ekle
-	 function finalizeImage(img, width, height, align, title) {
+	
+	function finalizeImage(img, width, height, align, title) {
         const imageDiv = document.createElement('div');
         imageDiv.classList.add('resim-in-editor');
         imageDiv.contentEditable = 'false';
         imageDiv.style.width = `${width}px`;
         imageDiv.style.height = `${height}px`;
         imageDiv.style.margin = align === "center" ? "0 auto" : align === "left" ? "0" : "0 0 0 auto";
-
         const image = document.createElement('img');
         image.src = img.src;
         image.title = title;
         image.style.width = '100%';
         image.style.height = '100%';
-
         imageDiv.appendChild(image);
-        savedSelection.insertNode(imageDiv); // Resmi eklediğiniz alanı belirleyin (örneğin editor alanı)
-
-        butonservisi(imageDiv); // Yeni eklenen div'e event listener ekle
+        savedSelection.insertNode(imageDiv);
+        butonServisImage(imageDiv);
     }
     resetImageForm();
 }
@@ -319,23 +306,35 @@ function resetImageForm() {
 editor.oncontextmenu = function (e) {
 	const toolbarWidthPercentage = (parseFloat(window.getComputedStyle(toolbar).width) / window.innerWidth) * 100;
 	const tolerance = 0.5; 
+	if (e.ctrlKey && e.target.classList.contains('video-in-editor')) {
+		e.preventDefault(); // Diğer olayların engellenmesi
+		const rightClickEvent = new MouseEvent('contextmenu', {
+			bubbles: true,
+			cancelable: true,
+			view: window,
+			button: 2,
+			ctrlKey: true
+		});
+		e.target.querySelector('iframe').dispatchEvent(rightClickEvent);
+	}
+
     if (e.ctrlKey && e.target.tagName === 'IFRAME') {
         e.preventDefault();
         currentVideo = e.target;
-        document.getElementById('editVideoWidth').value = currentVideo.style.width.replace('px', '').replace('%', '');
-        document.getElementById('editVideoWidthType').value = currentVideo.style.width.match(/[a-zA-Z%]+/)[0], document.getElementById('editVideoWidthType').dispatchEvent(new Event('change'));
-        document.getElementById('editVideoHeight').value = currentVideo.style.height.replace('px', '').replace('%', '');
-		document.getElementById('editVideoHeightType').value = currentVideo.style.height.match(/[a-zA-Z%]+/)[0], document.getElementById('editVideoHeightType').dispatchEvent(new Event('change'));
+        document.getElementById('editVideoWidth').value = currentVideo.parentNode.style.width.replace('px', '').replace('%', '');
+        document.getElementById('editVideoWidthType').value = currentVideo.parentNode.style.width.match(/[a-zA-Z%]+/)[0], document.getElementById('editVideoWidthType').dispatchEvent(new Event('change'));
+        document.getElementById('editVideoHeight').value = currentVideo.parentNode.style.height.replace('px', '').replace('%', '');
+		document.getElementById('editVideoHeightType').value = currentVideo.parentNode.style.height.match(/[a-zA-Z%]+/)[0], document.getElementById('editVideoHeightType').dispatchEvent(new Event('change'));
         document.getElementById('editVideoTitle').value = currentVideo.title || '';
-		document.getElementById('editAlign').value = currentVideo.style.margin === '0px' ? 'left' : currentVideo.style.margin === '0px auto' ? 'center' : currentVideo.style.margin === '0px 0px 0px auto' ? 'right' : 'center';
+		document.getElementById('editAlign').value = currentVideo.parentNode.style.margin === '0px' ? 'left' : currentVideo.parentNode.style.margin === '0px auto' ? 'center' : currentVideo.parentNode.style.margin === '0px 0px 0px auto' ? 'right' : 'center';
 		if (Math.abs(toolbarWidthPercentage - 100) < tolerance) {
 			videoDuzenle.style.position = 'fixed';
-			videoDuzenle.style.top = `${event.clientY}px`;  // Y koordinatını ayarla
-			videoDuzenle.style.left = `${event.clientX}px`; // X koordinatını ayarla
+			videoDuzenle.style.top = `${event.clientY || window.innerHeight / 2}px`;  // Y koordinatını ayarla
+			videoDuzenle.style.left = `${event.clientX || window.innerWidth / 2.6}px`; // X koordinatını ayarla
 		} else {
 			videoDuzenle.style.position = 'absolute';
-			videoDuzenle.style.top = `${event.clientY+window.scrollY}px`;  // Y koordinatını ayarla
-			videoDuzenle.style.left = `${event.clientX+window.scrollX}px`; // X koordinatını ayarla
+			videoDuzenle.style.top = `${event.clientY+window.scrollY || window.innerHeight / 2}px`;  // Y koordinatını ayarla
+			videoDuzenle.style.left = `${event.clientX+window.scrollX || window.innerWidth / 2.6}px`; // X koordinatını ayarla
 		}
 		videoDuzenle.style.display = 'flex';
 		
@@ -348,30 +347,24 @@ editor.oncontextmenu = function (e) {
 		if(currentImage.parentNode.style.height){
 		    document.getElementById('editHeightType').value = currentImage.parentNode.style.height.match(/[a-zA-Z%]+/)[0], document.getElementById('editHeightType').dispatchEvent(new Event('change'));
         }        document.getElementById('editTitle').value = currentImage.title || '';
-		document.getElementById('editAlign').value = currentImage.parentNode.style.margin === '0px' ? 'left' : currentImage.style.margin === '0px auto' ? 'center' : currentImage.style.margin === '0px 0px 0px auto' ? 'right' : 'center';
+		document.getElementById('editAlign').value = currentImage.parentNode.style.margin === '0px' ? 'left' : currentImage.parentNode.style.margin === '0px auto' ? 'center' : currentImage.parentNode.style.margin === '0px 0px 0px auto' ? 'right' : 'center';
 		if (Math.abs(toolbarWidthPercentage - 100) < tolerance) {
 			resimDuzenle.style.position = 'fixed';
-			resimDuzenle.style.top = `${event.clientY}px`;  // Y koordinatını ayarla
-			resimDuzenle.style.left = `${event.clientX}px`; // X koordinatını ayarla
+			resimDuzenle.style.top = `${event.clientY || window.innerHeight / 2}px`;  // Y koordinatını ayarla
+			resimDuzenle.style.left = `${event.clientX || window.innerWidth / 2.6}px`; // X koordinatını ayarla
 		} else {
 			resimDuzenle.style.position = 'absolute';
-			resimDuzenle.style.top = `${event.clientY+window.scrollY}px`;  // Y koordinatını ayarla
-			resimDuzenle.style.left = `${event.clientX+window.scrollX}px`; // X koordinatını ayarla
+			resimDuzenle.style.top = `${event.clientY+window.scrollY || window.innerHeight / 2}px`;  // Y koordinatını ayarla
+			resimDuzenle.style.left = `${event.clientX+window.scrollX || window.innerWidth / 2.6}px`; // X koordinatını ayarla
 		}
 		resimDuzenle.style.display = 'flex';
 	}
 };
 
-
-
-
-
 function previewVideo() {
     const videoUrl = document.getElementById('videoUrl').value;
     const videoPreview = document.getElementById('videoPreview');
     const previewIframe = document.getElementById('previewIframe');
-
-    // YouTube video ID'sini URL'den ayıklayın
     const videoIdMatch = videoUrl.match(/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]{11})/);
     if (videoIdMatch && videoIdMatch[1]) {
         const videoId = videoIdMatch[1];
@@ -390,23 +383,30 @@ function insertVideo() {
     const videoTitle = document.getElementById('videoTitle').value;
     const videoWidth = document.getElementById('videoWidth').value;
     const videoHeight = document.getElementById('videoHeight').value;
-
-    // YouTube URL'sini kontrol et
     const videoIdMatch = videoUrl.match(/(?:https?:\/\/)?(?:www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)([\w-]{11})/);
-	console.log('vid: '+videoIdMatch[1].includes('youtu'));
-    if (videoIdMatch[1].includes('youtu')) {
+    if (videoIdMatch && videoIdMatch[2]) {
         const videoId = videoIdMatch[2];
-        let iframeHTML = `<iframe src="https://www.youtube.com/embed/${videoId}" title="${videoTitle}" style="padding:10px; resize:both; overflow:auto; width: ${videoWidth}px; height:${videoHeight}px; margin:${videoAlign === "center" ? "0 auto" : videoAlign === "left" ? "0" : "0 0 0 auto"};"></iframe>`;
-		currentElement.insertAdjacentHTML('beforeend', iframeHTML);
-    }
-    
-    resetVideoForm();
+        const videoDiv = document.createElement('div');
+        videoDiv.classList.add('video-in-editor');
+        videoDiv.contentEditable = 'false';
+        videoDiv.style.width = `${videoWidth}px`;
+        videoDiv.style.height = `${videoHeight}px`;
+        videoDiv.style.margin = videoAlign === "center" ? "0 auto" : videoAlign === "left" ? "0" : "0 0 0 auto";
+        const iframe = document.createElement('iframe');
+        iframe.src = `https://www.youtube.com/embed/${videoId}`;
+        iframe.title = `${videoTitle}`;
+        iframe.style.width = '100%';
+        iframe.style.height = '100%';
+        videoDiv.appendChild(iframe);
+        savedSelection.insertNode(videoDiv);
+        butonServisVideo(videoDiv);
+		resetVideoForm();
+    } else {
+        console.log('Geçersiz YouTube video URL’si');
+    }	
 }
-		
-		
-		
-		
-		
+
+
 function resetVideoForm() {
     document.getElementById('videoUrl').value = '';
     document.getElementById('videoAlign').value = 'center';
@@ -425,46 +425,147 @@ function updateVideo() {
     const heighttype = document.getElementById('editVideoHeightType').value;
     const title = document.getElementById('editVideoTitle').value;
     const align = document.getElementById('editVideoAlign').value;
-
     if (currentVideo) {
-        // Genişlik ve yükseklik ayarlama
-        currentVideo.style.width = width ? `${width}${widthtype}` : '250px';
-        currentVideo.style.height = height ? `${height}${heighttype}` : '';
-        
-        // Başlık ayarlama
+        currentVideo.parentNode.style.width = width ? `${width}${widthtype}` : '250px';
+        currentVideo.parentNode.style.height = height ? `${height}${heighttype}` : '';
         currentVideo.title = title ? title : 'Video';
-
-        // Hizalama ayarlama
         if (align === 'left' || align === 'right') {
-            currentVideo.style.float = align;
+            currentVideo.parentNode.style.float = align;
         } else {
-            currentVideo.style.float = 'none'; // Ortalamak için
+            currentVideo.parentNode.style.float = 'none';
         }
-        
-        // Video hizalamayı merkezlemek
         currentVideo.style.display = align === 'center' ? 'block' : '';
-        currentVideo.style.margin = align === 'center' ? '0 auto' : '0';
+        currentVideo.parentNode.style.margin = align === 'center' ? '0 auto' : '0';
     }
-
     videoDuzenle.style.display = 'none';
 }
+
+
+const videosDivs = document.getElementsByClassName('video-in-editor');
+Array.from(videosDivs).forEach(VideoDiv => {
+    butonServisVideo(VideoDiv);
+});
+
+function butonServisVideo(VideoDiv) {
+	VideoDiv.addEventListener('click', function(event) {
+        const topLeftButtonVideo = document.createElement('button');
+        topLeftButtonVideo.id = 'topLeftButtonVideo';
+        topLeftButtonVideo.innerHTML = '⏎';
+        topLeftButtonVideo.style.border = 'none';
+        topLeftButtonVideo.title = 'Üste Bir Satır Ekle';
+        topLeftButtonVideo.style.cursor = 'pointer';
+        topLeftButtonVideo.style.fontSize = '16px';
+        topLeftButtonVideo.style.position = 'absolute';
+        topLeftButtonVideo.style.top = '15px';
+        topLeftButtonVideo.style.left = '5px';
+        topLeftButtonVideo.style.zIndex = '999';
+        topLeftButtonVideo.addEventListener('click', function(event) {
+            const newParagraph = document.createElement('p');
+			newParagraph.innerHTML = '&nbsp;';
+			VideoDiv.parentNode.insertBefore(newParagraph, VideoDiv);
+			moveCursorToEnd(newParagraph);
+			event.stopPropagation();
+        });
+		
+		const topRightButtonVideo = document.createElement('button');
+        topRightButtonVideo.id = 'topRightButtonVideo';
+        topRightButtonVideo.innerHTML = '✖';
+        topRightButtonVideo.style.border = 'none';
+        topRightButtonVideo.title = 'Videoyu Sil';
+        topRightButtonVideo.style.cursor = 'pointer';
+        topRightButtonVideo.style.fontSize = '16px';
+        topRightButtonVideo.style.position = 'absolute';
+        topRightButtonVideo.style.top = '15px';
+        topRightButtonVideo.style.right = '5px';
+        topRightButtonVideo.style.zIndex = '999';
+        topRightButtonVideo.addEventListener('click', function(event) {
+            VideoDiv.remove();
+        });
+		
+		
+		const bottomRightButtonVideo = document.createElement('button');
+        bottomRightButtonVideo.id = 'bottomRightButtonVideo';
+        bottomRightButtonVideo.innerHTML = '⏎';
+        bottomRightButtonVideo.style.border = 'none';
+        bottomRightButtonVideo.title = 'Alta Bir Satır Ekle';
+        bottomRightButtonVideo.style.cursor = 'pointer';
+        bottomRightButtonVideo.style.fontSize = '16px';
+        bottomRightButtonVideo.style.position = 'absolute';
+        bottomRightButtonVideo.style.bottom = '15px';
+        bottomRightButtonVideo.style.right = '5px';
+        bottomRightButtonVideo.style.zIndex = '999';
+        bottomRightButtonVideo.addEventListener('click', function(event) {
+            const newParagraph = document.createElement('p');
+			newParagraph.innerHTML = '&nbsp;';
+			VideoDiv.parentNode.insertBefore(newParagraph, VideoDiv.nextSibling);
+			moveCursorToEnd(newParagraph);
+			event.stopPropagation();
+        });
+		
+		const bottomLeftButtonVideo = document.createElement('button');
+        bottomLeftButtonVideo.id = 'bottomLeftButtonVideo';
+        bottomLeftButtonVideo.innerHTML = '<i class="fas fa-cog fa-spin spinning-icon"></i>';
+        bottomLeftButtonVideo.style.border = 'none';
+        bottomLeftButtonVideo.title = 'Ayarları Aç';
+        bottomLeftButtonVideo.style.cursor = 'pointer';
+        bottomLeftButtonVideo.style.fontSize = '16px';
+        bottomLeftButtonVideo.style.position = 'absolute';
+        bottomLeftButtonVideo.style.bottom = '15px';
+        bottomLeftButtonVideo.style.left = '5px';
+        bottomLeftButtonVideo.style.zIndex = '999';
+        bottomLeftButtonVideo.addEventListener('click', function(event) {
+            event.stopPropagation(); 
+            const rightClickEvent = new MouseEvent('contextmenu', {
+                bubbles: true,
+                cancelable: true,
+                view: window,
+                button: 2,
+                ctrlKey: true
+            });
+            VideoDiv.querySelector('iframe').dispatchEvent(rightClickEvent);
+        });		
+		if (!document.getElementById('topLeftButtonVideo')) {VideoDiv.appendChild(topLeftButtonVideo);}
+		if (!document.getElementById('topRightButtonVideo')) {VideoDiv.appendChild(topRightButtonVideo);}
+		if (!document.getElementById('bottomLeftButtonVideo')) {VideoDiv.appendChild(bottomLeftButtonVideo);}
+		if (!document.getElementById('bottomRightButtonVideo')) {VideoDiv.appendChild(bottomRightButtonVideo);}
+		
+		
+		document.addEventListener('click', function handleClickOutside(event) {
+			if (!VideoDiv.contains(event.target)) {
+				topLeftButtonVideo.remove();
+				topRightButtonVideo.remove();
+				bottomLeftButtonVideo.remove();
+				bottomRightButtonVideo.remove();
+				document.removeEventListener('click', handleClickOutside);
+			}
+		});
+	});
+}
+
+
+
+
+
+
+
+
+
 
 
 
 const imagesDivs = document.getElementsByClassName('resim-in-editor');
 Array.from(imagesDivs).forEach(imageDiv => {
-	butonservisi(imageDiv);
+	butonServisImage(imageDiv);
 });
 
-function butonservisi(imageDiv){
+function butonServisImage(imageDiv){
 	imageDiv.addEventListener('click', function(event) {
-		const existingBox = imageDiv.querySelector('.hover-box');
-		if (existingBox) return;
 
 		const bottomRightButton = document.createElement('button');
 		bottomRightButton.id = 'bottomRightButton';
 		bottomRightButton.innerHTML = '⏎';
 		bottomRightButton.style.border = 'none';
+		bottomRightButton.title = 'Altına Satır Ekle';
 		bottomRightButton.style.cursor = 'pointer';
 		bottomRightButton.style.fontSize = '16px';
 		bottomRightButton.style.position = 'absolute';
@@ -475,6 +576,7 @@ function butonservisi(imageDiv){
 		topLeftButton.id = 'topLeftButton';
 		topLeftButton.innerHTML = '⏎';
 		topLeftButton.style.border = 'none';
+		topLeftButton.title = 'Üstüne Satır Ekle';
 		topLeftButton.style.cursor = 'pointer';
 		topLeftButton.style.fontSize = '16px';
 		topLeftButton.style.position = 'absolute';
@@ -485,6 +587,7 @@ function butonservisi(imageDiv){
 		topRightButton.id = 'topRightButton';
 		topRightButton.innerHTML = '✖';
 		topRightButton.style.border = 'none';
+		topRightButton.title = 'Resmi Sil';
 		topRightButton.style.cursor = 'pointer';
 		topRightButton.style.fontSize = '16px';
 		topRightButton.style.position = 'absolute';
@@ -493,8 +596,9 @@ function butonservisi(imageDiv){
 
 		const bottomLeftButton = document.createElement('button');
 		bottomLeftButton.id = 'bottomLeftButton';
-		bottomLeftButton.innerHTML = '⚙️';
+		bottomLeftButton.innerHTML = '<i class="fas fa-cog fa-spin spinning-icon"></i>';
 		bottomLeftButton.style.border = 'none';
+		bottomLeftButton.title = 'Ayarları Aç';
 		bottomLeftButton.style.cursor = 'pointer';
 		bottomLeftButton.style.fontSize = '16px';
 		bottomLeftButton.style.position = 'absolute';
@@ -527,19 +631,16 @@ function butonservisi(imageDiv){
 		});
 
 		bottomLeftButton.addEventListener('click', function(event) {
-			// Sağ tıklama olayını oluştur
 			const rightClickEvent = new MouseEvent('contextmenu', {
-				bubbles: true, // Olayın kabarcıklanmasını sağlar
-				cancelable: true, // Olayın iptal edilebilir olmasını sağlar
-				view: window, // Olayın görüntüleme penceresi
-				button: 2, // Sağ tıklama butonu (2 = sağ tıklama)
-				ctrlKey: true // Ctrl tuşunun basılı olduğu durumu simüle et
+				bubbles: true,
+				cancelable: true,
+				view: window,
+				button: 2,
+				ctrlKey: true
 			});
-			// Resme sağ tıklama olayını tetikle
 			imageDiv.querySelector('img').dispatchEvent(rightClickEvent);
 		});
 		
-		// Kutucuğun dışında bir yere tıklanırsa kaldır
 		document.addEventListener('click', function handleClickOutside(event) {
 			if (!imageDiv.contains(event.target)) {
 				topRightButton.remove();
