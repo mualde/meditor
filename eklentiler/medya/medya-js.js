@@ -152,10 +152,10 @@ function AddImageBtn() {
     if (toolbar) {
         toolbar.appendChild(imageContainer);
 		toolbar.addEventListener('mouseover', function(){
-			if (document.getElementById('topRightButton')) {document.getElementById('topRightButton').remove();}
-			if (document.getElementById('bottomLeftButton')) {document.getElementById('bottomLeftButton').remove();}
-			if (document.getElementById('topLeftButton')) {document.getElementById('topLeftButton').remove();}
-			if (document.getElementById('bottomRightButton')) {document.getElementById('bottomRightButton').remove();}
+			if (document.getElementById('topRightButtonImage')) {document.getElementById('topRightButtonImage').remove();}
+			if (document.getElementById('bottomLeftButtonImage')) {document.getElementById('bottomLeftButtonImage').remove();}
+			if (document.getElementById('topLeftButtonImage')) {document.getElementById('topLeftButtonImage').remove();}
+			if (document.getElementById('bottomRightButtonImage')) {document.getElementById('bottomRightButtonImage').remove();}
 			
 			if (document.getElementById('topRightButtonVideo')) {document.getElementById('topRightButtonVideo').remove();}
 			if (document.getElementById('bottomLeftButtonVideo')) {document.getElementById('bottomLeftButtonVideo').remove();}
@@ -167,14 +167,12 @@ function AddImageBtn() {
 	var resimBtn = document.getElementById('resimBtn');
 	var resimDuzenle = document.getElementById('resimDuzenle');
 	let offsetX = 0, offsetY = 0, isDragging = false;
-
 	const dragHandles = document.querySelectorAll('.drag-handle');
 
 	dragHandles.forEach(dragHandle => {
 		dragHandle.addEventListener('mousedown', (e) => {
 			e.preventDefault();
 			isDragging = true;
-
 			const menu = dragHandle.closest('.sagtusmenu');
 			offsetX = e.clientX - menu.offsetLeft;
 			offsetY = e.clientY - menu.offsetTop;
@@ -403,7 +401,6 @@ function insertVideo() {
     }	
 }
 
-
 function resetVideoForm() {
     document.getElementById('videoUrl').value = '';
     document.getElementById('videoAlign').value = 'center';
@@ -437,7 +434,6 @@ function updateVideo() {
     videoDuzenle.style.display = 'none';
 }
 
-
 const videosDivs = document.getElementsByClassName('video-in-editor');
 Array.from(videosDivs).forEach(VideoDiv => {
     butonServisVideo(VideoDiv);
@@ -470,7 +466,6 @@ function butonServisVideo(VideoDiv) {
         topRightButtonVideo.addEventListener('click', function(event) {
             VideoDiv.remove();
         });
-		
 		
 		const bottomRightButtonVideo = document.createElement('button');
         bottomRightButtonVideo.id = 'bottomRightButtonVideo';
@@ -510,7 +505,6 @@ function butonServisVideo(VideoDiv) {
 		if (!document.getElementById('bottomLeftButtonVideo')) {VideoDiv.appendChild(bottomLeftButtonVideo);}
 		if (!document.getElementById('bottomRightButtonVideo')) {VideoDiv.appendChild(bottomRightButtonVideo);}
 		
-		
 		document.addEventListener('click', function handleClickOutside(event) {
 			if (!VideoDiv.contains(event.target)) {
 				topLeftButtonVideo.remove();
@@ -523,17 +517,6 @@ function butonServisVideo(VideoDiv) {
 	});
 }
 
-
-
-
-
-
-
-
-
-
-
-
 const imagesDivs = document.getElementsByClassName('resim-in-editor');
 Array.from(imagesDivs).forEach(imageDiv => {
 	butonServisImage(imageDiv);
@@ -541,49 +524,14 @@ Array.from(imagesDivs).forEach(imageDiv => {
 
 function butonServisImage(imageDiv){
 	imageDiv.addEventListener('click', function(event) {
-
-		const bottomRightButton = document.createElement('button');
-		bottomRightButton.id = 'bottomRightButton';
-		bottomRightButton.innerHTML = '⏎';
-		bottomRightButton.classList.add('btnSrvsBtn');
-		bottomRightButton.title = 'Altına Satır Ekle';
-		bottomRightButton.style.bottom = '5px';
-		bottomRightButton.style.right = '5px';
-
-		const topLeftButton = document.createElement('button');
-		topLeftButton.id = 'topLeftButton';
-		topLeftButton.innerHTML = '⏎';
-		topLeftButton.classList.add('btnSrvsBtn');
-		topLeftButton.title = 'Üstüne Satır Ekle';
-		topLeftButton.style.top = '5px';
-		topLeftButton.style.left = '5px';
-
-		const topRightButton = document.createElement('button');
-		topRightButton.id = 'topRightButton';
-		topRightButton.innerHTML = '✖';
-		topRightButton.classList.add('btnSrvsBtn');
-		topRightButton.title = 'Resmi Sil';
-		topRightButton.style.top = '5px';
-		topRightButton.style.right = '5px';
-
-		const bottomLeftButton = document.createElement('button');
-		bottomLeftButton.id = 'bottomLeftButton';
-		bottomLeftButton.innerHTML = '<i class="fas fa-cog fa-spin spinning-icon"></i>';
-		bottomLeftButton.classList.add('btnSrvsBtn');
-		bottomLeftButton.title = 'Ayarları Aç';
-		bottomLeftButton.style.bottom = '5px';
-		bottomLeftButton.style.left = '5px';
-
-		if (!document.getElementById('topRightButton')) {imageDiv.appendChild(topRightButton);}
-		if (!document.getElementById('bottomLeftButton')) {imageDiv.appendChild(bottomLeftButton);}
-		if (!document.getElementById('topLeftButton')) {imageDiv.appendChild(topLeftButton);}
-		if (!document.getElementById('bottomRightButton')) {imageDiv.appendChild(bottomRightButton);}
-
-		topRightButton.addEventListener('click', function(event) {
-			imageDiv.remove();
-		});
-
-		bottomRightButton.addEventListener('click', function(event) {
+		const bottomRightButtonImage = document.createElement('button');
+		bottomRightButtonImage.id = 'bottomRightButtonImage';
+		bottomRightButtonImage.innerHTML = '⏎';
+		bottomRightButtonImage.classList.add('btnSrvsBtn');
+		bottomRightButtonImage.title = 'Altına Satır Ekle';
+		bottomRightButtonImage.style.bottom = '5px';
+		bottomRightButtonImage.style.right = '5px';
+		bottomRightButtonImage.addEventListener('click', function(event) {
 			const newParagraph = document.createElement('p');
 			newParagraph.innerHTML = '&nbsp;';
 			imageDiv.parentNode.insertBefore(newParagraph, imageDiv.nextSibling);
@@ -591,7 +539,14 @@ function butonServisImage(imageDiv){
 			event.stopPropagation();
 		});
 
-		topLeftButton.addEventListener('click', function(event) {
+		const topLeftButtonImage = document.createElement('button');
+		topLeftButtonImage.id = 'topLeftButtonImage';
+		topLeftButtonImage.innerHTML = '⏎';
+		topLeftButtonImage.classList.add('btnSrvsBtn');
+		topLeftButtonImage.title = 'Üstüne Satır Ekle';
+		topLeftButtonImage.style.top = '5px';
+		topLeftButtonImage.style.left = '5px';
+		topLeftButtonImage.addEventListener('click', function(event) {
 			const newParagraph = document.createElement('p');
 			newParagraph.innerHTML = '&nbsp;';
 			imageDiv.parentNode.insertBefore(newParagraph, imageDiv);
@@ -599,7 +554,25 @@ function butonServisImage(imageDiv){
 			event.stopPropagation();
 		});
 
-		bottomLeftButton.addEventListener('click', function(event) {
+		const topRightButtonImage = document.createElement('button');
+		topRightButtonImage.id = 'topRightButtonImage';
+		topRightButtonImage.innerHTML = '✖';
+		topRightButtonImage.classList.add('btnSrvsBtn');
+		topRightButtonImage.title = 'Resmi Sil';
+		topRightButtonImage.style.top = '5px';
+		topRightButtonImage.style.right = '5px';
+		topRightButtonImage.addEventListener('click', function(event) {
+			imageDiv.remove();
+		});
+
+		const bottomLeftButtonImage = document.createElement('button');
+		bottomLeftButtonImage.id = 'bottomLeftButtonImage';
+		bottomLeftButtonImage.innerHTML = '<i class="fas fa-cog fa-spin spinning-icon"></i>';
+		bottomLeftButtonImage.classList.add('btnSrvsBtn');
+		bottomLeftButtonImage.title = 'Ayarları Aç';
+		bottomLeftButtonImage.style.bottom = '5px';
+		bottomLeftButtonImage.style.left = '5px';
+		bottomLeftButtonImage.addEventListener('click', function(event) {
 			const rightClickEvent = new MouseEvent('contextmenu', {
 				bubbles: true,
 				cancelable: true,
@@ -609,13 +582,18 @@ function butonServisImage(imageDiv){
 			});
 			imageDiv.querySelector('img').dispatchEvent(rightClickEvent);
 		});
+
+		if (!document.getElementById('topRightButtonImage')) {imageDiv.appendChild(topRightButtonImage);}
+		if (!document.getElementById('bottomLeftButtonImage')) {imageDiv.appendChild(bottomLeftButtonImage);}
+		if (!document.getElementById('topLeftButtonImage')) {imageDiv.appendChild(topLeftButtonImage);}
+		if (!document.getElementById('bottomRightButtonImage')) {imageDiv.appendChild(bottomRightButtonImage);}
 		
 		document.addEventListener('click', function handleClickOutside(event) {
 			if (!imageDiv.contains(event.target)) {
-				topRightButton.remove();
-				bottomLeftButton.remove();
-				topLeftButton.remove();
-				bottomRightButton.remove();
+				topRightButtonImage.remove();
+				bottomLeftButtonImage.remove();
+				topLeftButtonImage.remove();
+				bottomRightButtonImage.remove();
 				document.removeEventListener('click', handleClickOutside);
 			}
 		});
