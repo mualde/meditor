@@ -160,10 +160,7 @@ function AddImageBtn() {
 			if (document.getElementById('topRightButtonVideo')) {document.getElementById('topRightButtonVideo').remove();}
 			if (document.getElementById('bottomLeftButtonVideo')) {document.getElementById('bottomLeftButtonVideo').remove();}
 			if (document.getElementById('topLeftButtonVideo')) {document.getElementById('topLeftButtonVideo').remove();}
-			if (document.getElementById('bottomRightButtonVideo')) {document.getElementById('bottomRightButtonVideo').remove();}
-			
-			
-			
+			if (document.getElementById('bottomRightButtonVideo')) {document.getElementById('bottomRightButtonVideo').remove();}	
 		});
     }
 	var resimBtnCon = document.getElementById('medya-container');
@@ -451,14 +448,10 @@ function butonServisVideo(VideoDiv) {
         const topLeftButtonVideo = document.createElement('button');
         topLeftButtonVideo.id = 'topLeftButtonVideo';
         topLeftButtonVideo.innerHTML = '⏎';
-        topLeftButtonVideo.style.border = 'none';
+        topLeftButtonVideo.classList.add('btnSrvsBtn');
         topLeftButtonVideo.title = 'Üste Bir Satır Ekle';
-        topLeftButtonVideo.style.cursor = 'pointer';
-        topLeftButtonVideo.style.fontSize = '16px';
-        topLeftButtonVideo.style.position = 'absolute';
         topLeftButtonVideo.style.top = '15px';
         topLeftButtonVideo.style.left = '5px';
-        topLeftButtonVideo.style.zIndex = '999';
         topLeftButtonVideo.addEventListener('click', function(event) {
             const newParagraph = document.createElement('p');
 			newParagraph.innerHTML = '&nbsp;';
@@ -470,14 +463,10 @@ function butonServisVideo(VideoDiv) {
 		const topRightButtonVideo = document.createElement('button');
         topRightButtonVideo.id = 'topRightButtonVideo';
         topRightButtonVideo.innerHTML = '✖';
-        topRightButtonVideo.style.border = 'none';
+        topRightButtonVideo.classList.add('btnSrvsBtn');
         topRightButtonVideo.title = 'Videoyu Sil';
-        topRightButtonVideo.style.cursor = 'pointer';
-        topRightButtonVideo.style.fontSize = '16px';
-        topRightButtonVideo.style.position = 'absolute';
         topRightButtonVideo.style.top = '15px';
         topRightButtonVideo.style.right = '5px';
-        topRightButtonVideo.style.zIndex = '999';
         topRightButtonVideo.addEventListener('click', function(event) {
             VideoDiv.remove();
         });
@@ -485,15 +474,11 @@ function butonServisVideo(VideoDiv) {
 		
 		const bottomRightButtonVideo = document.createElement('button');
         bottomRightButtonVideo.id = 'bottomRightButtonVideo';
+		bottomRightButtonVideo.classList.add('btnSrvsBtn');
         bottomRightButtonVideo.innerHTML = '⏎';
-        bottomRightButtonVideo.style.border = 'none';
         bottomRightButtonVideo.title = 'Alta Bir Satır Ekle';
-        bottomRightButtonVideo.style.cursor = 'pointer';
-        bottomRightButtonVideo.style.fontSize = '16px';
-        bottomRightButtonVideo.style.position = 'absolute';
         bottomRightButtonVideo.style.bottom = '15px';
         bottomRightButtonVideo.style.right = '5px';
-        bottomRightButtonVideo.style.zIndex = '999';
         bottomRightButtonVideo.addEventListener('click', function(event) {
             const newParagraph = document.createElement('p');
 			newParagraph.innerHTML = '&nbsp;';
@@ -505,14 +490,10 @@ function butonServisVideo(VideoDiv) {
 		const bottomLeftButtonVideo = document.createElement('button');
         bottomLeftButtonVideo.id = 'bottomLeftButtonVideo';
         bottomLeftButtonVideo.innerHTML = '<i class="fas fa-cog fa-spin spinning-icon"></i>';
-        bottomLeftButtonVideo.style.border = 'none';
+        bottomLeftButtonVideo.classList.add('btnSrvsBtn');
         bottomLeftButtonVideo.title = 'Ayarları Aç';
-        bottomLeftButtonVideo.style.cursor = 'pointer';
-        bottomLeftButtonVideo.style.fontSize = '16px';
-        bottomLeftButtonVideo.style.position = 'absolute';
         bottomLeftButtonVideo.style.bottom = '15px';
         bottomLeftButtonVideo.style.left = '5px';
-        bottomLeftButtonVideo.style.zIndex = '999';
         bottomLeftButtonVideo.addEventListener('click', function(event) {
             event.stopPropagation(); 
             const rightClickEvent = new MouseEvent('contextmenu', {
@@ -564,44 +545,32 @@ function butonServisImage(imageDiv){
 		const bottomRightButton = document.createElement('button');
 		bottomRightButton.id = 'bottomRightButton';
 		bottomRightButton.innerHTML = '⏎';
-		bottomRightButton.style.border = 'none';
+		bottomRightButton.classList.add('btnSrvsBtn');
 		bottomRightButton.title = 'Altına Satır Ekle';
-		bottomRightButton.style.cursor = 'pointer';
-		bottomRightButton.style.fontSize = '16px';
-		bottomRightButton.style.position = 'absolute';
 		bottomRightButton.style.bottom = '5px';
 		bottomRightButton.style.right = '5px';
 
 		const topLeftButton = document.createElement('button');
 		topLeftButton.id = 'topLeftButton';
 		topLeftButton.innerHTML = '⏎';
-		topLeftButton.style.border = 'none';
+		topLeftButton.classList.add('btnSrvsBtn');
 		topLeftButton.title = 'Üstüne Satır Ekle';
-		topLeftButton.style.cursor = 'pointer';
-		topLeftButton.style.fontSize = '16px';
-		topLeftButton.style.position = 'absolute';
 		topLeftButton.style.top = '5px';
 		topLeftButton.style.left = '5px';
 
 		const topRightButton = document.createElement('button');
 		topRightButton.id = 'topRightButton';
 		topRightButton.innerHTML = '✖';
-		topRightButton.style.border = 'none';
+		topRightButton.classList.add('btnSrvsBtn');
 		topRightButton.title = 'Resmi Sil';
-		topRightButton.style.cursor = 'pointer';
-		topRightButton.style.fontSize = '16px';
-		topRightButton.style.position = 'absolute';
 		topRightButton.style.top = '5px';
 		topRightButton.style.right = '5px';
 
 		const bottomLeftButton = document.createElement('button');
 		bottomLeftButton.id = 'bottomLeftButton';
 		bottomLeftButton.innerHTML = '<i class="fas fa-cog fa-spin spinning-icon"></i>';
-		bottomLeftButton.style.border = 'none';
+		bottomLeftButton.classList.add('btnSrvsBtn');
 		bottomLeftButton.title = 'Ayarları Aç';
-		bottomLeftButton.style.cursor = 'pointer';
-		bottomLeftButton.style.fontSize = '16px';
-		bottomLeftButton.style.position = 'absolute';
 		bottomLeftButton.style.bottom = '5px';
 		bottomLeftButton.style.left = '5px';
 
