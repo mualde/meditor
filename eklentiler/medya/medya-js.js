@@ -512,6 +512,7 @@ function butonServisVideo(VideoDiv) {
 				topRightButtonVideo.remove();
 				bottomLeftButtonVideo.remove();
 				bottomRightButtonVideo.remove();
+				document.removeEventListener('click', handleClickOutside);
 			}
 		});
 	});
@@ -594,6 +595,7 @@ function butonServisImage(imageDiv){
 				bottomLeftButtonImage.remove();
 				topLeftButtonImage.remove();
 				bottomRightButtonImage.remove();
+				document.removeEventListener('click', handleClickOutside);
 			}
 		});
 	});
