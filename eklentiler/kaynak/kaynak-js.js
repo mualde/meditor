@@ -31,7 +31,6 @@ function getSelectionFromEditor() {
         const endPos = startPos + selectedText.length;
         return { editorHTML, selectedText, startPos, endPos };
     } else {
-        console.log("Seçim yapılmadı!");
         return null;
     }
 }
@@ -67,8 +66,6 @@ function toggleSourceCode() {
 			const { editorHTML, selectedText, startPos, endPos } = selectionData;
 			sourceCode.setSelectionRange(startPos, endPos);
 			sourceCode.focus();
-		} else {
-			console.log("Editörde seçili metin bulunamadı!");
 		}
         sourceCode.style.width = editor.offsetWidth + 'px';
         sourceCode.style.height = editor.offsetHeight + 'px';
