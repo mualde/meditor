@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		editor.insertAdjacentElement('beforebegin', toolbarDiv);
 		toolbar = document.getElementById('toolbar');
 		pEkle();
-		editor.focus();setTimeout(function() {editor.firstElementChild.click();}, 500); 
+		editor.focus();setTimeout(function() {editor.firstElementChild.click();}, 1500); 
 
     }
     if (toolbar) {	
@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-function organizeButtons(timeout = 1500) {
+function organizeButtons(timeout = 2500) {
     setTimeout(() => {
         const toolbar = document.getElementById('toolbar');
         if (toolbar) {
@@ -57,8 +57,6 @@ function organizeButtons(timeout = 1500) {
 }
 
 organizeButtons(500); 
-
-
 
 var range = null;
 var selection = null;
