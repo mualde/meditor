@@ -112,7 +112,7 @@ function AddImageBtn() {
 			<input type="text" id="editTitle" placeholder="Title bilgisi girin" style="width:100px" title="Title Bilgi">
 			<div class="modal-footer">
 				<button onclick="updateImage()">Güncelle</button>
-				<button onclick="deleteImage()">Resmi Kaldır</button>
+				<button onclick="deleteImage()">Kaldır</button>
 				<button onclick="this.parentNode.parentNode.style.display='none'">Kapat</button>
 			</div>
 		</div>
@@ -143,7 +143,7 @@ function AddImageBtn() {
 			<input type="text" id="editVideoTitle" placeholder="Başlık girin" style="width:100px" title="Video Başlığı">
 			<div class="modal-footer">
 				<button onclick="updateVideo()">Güncelle</button>
-				<button onclick="deleteVideo()">Videoyu Kaldır</button>
+				<button onclick="deleteVideo()">Kaldır</button>
 				<button onclick="this.parentNode.parentNode.style.display='none'">Kapat</button>
 			</div>
 		</div>
