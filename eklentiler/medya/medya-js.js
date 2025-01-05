@@ -499,11 +499,12 @@ function butonServisVideo(VideoDiv) {
                 ctrlKey: true
             });
             VideoDiv.querySelector('iframe').dispatchEvent(rightClickEvent);
-        });		
-		if (!document.getElementById('topLeftButtonVideo')) {VideoDiv.appendChild(topLeftButtonVideo);}
-		if (!document.getElementById('topRightButtonVideo')) {VideoDiv.appendChild(topRightButtonVideo);}
-		if (!document.getElementById('bottomLeftButtonVideo')) {VideoDiv.appendChild(bottomLeftButtonVideo);}
-		if (!document.getElementById('bottomRightButtonVideo')) {VideoDiv.appendChild(bottomRightButtonVideo);}
+        });
+
+		if (!VideoDiv.querySelector('#topLeftButtonVideo')) {VideoDiv.appendChild(topLeftButtonVideo);}
+		if (!VideoDiv.querySelector('#topRightButtonVideo')) {VideoDiv.appendChild(topRightButtonVideo);}
+		if (!VideoDiv.querySelector('#bottomLeftButtonVideo')) {VideoDiv.appendChild(bottomLeftButtonVideo);}
+		if (!VideoDiv.querySelector('#bottomRightButtonVideo')) {VideoDiv.appendChild(bottomRightButtonVideo);}
 		
 		document.addEventListener('click', function handleClickOutside(event) {
 			if (!VideoDiv.contains(event.target)) {
@@ -511,7 +512,6 @@ function butonServisVideo(VideoDiv) {
 				topRightButtonVideo.remove();
 				bottomLeftButtonVideo.remove();
 				bottomRightButtonVideo.remove();
-				document.removeEventListener('click', handleClickOutside);
 			}
 		});
 	});
@@ -583,10 +583,10 @@ function butonServisImage(imageDiv){
 			imageDiv.querySelector('img').dispatchEvent(rightClickEvent);
 		});
 
-		if (!document.getElementById('topRightButtonImage')) {imageDiv.appendChild(topRightButtonImage);}
-		if (!document.getElementById('bottomLeftButtonImage')) {imageDiv.appendChild(bottomLeftButtonImage);}
-		if (!document.getElementById('topLeftButtonImage')) {imageDiv.appendChild(topLeftButtonImage);}
-		if (!document.getElementById('bottomRightButtonImage')) {imageDiv.appendChild(bottomRightButtonImage);}
+		if (!imageDiv.querySelector('#topRightButtonImage')) {imageDiv.appendChild(topRightButtonImage);}
+		if (!imageDiv.querySelector('#bottomLeftButtonImage')) {imageDiv.appendChild(bottomLeftButtonImage);}
+		if (!imageDiv.querySelector('#topLeftButtonImage')) {imageDiv.appendChild(topLeftButtonImage);}
+		if (!imageDiv.querySelector('#bottomRightButtonImage')) {imageDiv.appendChild(bottomRightButtonImage);}
 		
 		document.addEventListener('click', function handleClickOutside(event) {
 			if (!imageDiv.contains(event.target)) {
@@ -594,7 +594,6 @@ function butonServisImage(imageDiv){
 				bottomLeftButtonImage.remove();
 				topLeftButtonImage.remove();
 				bottomRightButtonImage.remove();
-				document.removeEventListener('click', handleClickOutside);
 			}
 		});
 	});
