@@ -334,7 +334,6 @@ function createTableQuick(rows, cols) {
     savedSelection.insertNode(tableDiv);
     butonServisTable(tableDiv);
 }
-
 //Hızlı Tablo Oluştur Son//
 
 //Tablo Oluştur Baş//
@@ -399,7 +398,6 @@ function updateTable() {
     closeModal();
 }
 //Tablo Güncelle Son//
-
 
 const tablesDivs = document.getElementsByClassName('table-in-editor');
 Array.from(tablesDivs).forEach(TableDiv => {
@@ -468,11 +466,10 @@ function butonServisTable(TableDiv) {
             });
             TableDiv.querySelector('td').dispatchEvent(rightClickEvent);
         });		
-		if (!document.getElementById('topLeftButtonTable')) {TableDiv.appendChild(topLeftButtonTable);}
-		if (!document.getElementById('topRightButtonTable')) {TableDiv.appendChild(topRightButtonTable);}
-		if (!document.getElementById('bottomLeftButtonTable')) {TableDiv.appendChild(bottomLeftButtonTable);}
-		if (!document.getElementById('bottomRightButtonTable')) {TableDiv.appendChild(bottomRightButtonTable);}
-		
+		if (!TableDiv.querySelector('#topRightButtonTable')) {TableDiv.appendChild(topRightButtonTable);}
+		if (!TableDiv.querySelector('#bottomLeftButtonTable')) {TableDiv.appendChild(bottomLeftButtonTable);}
+		if (!TableDiv.querySelector('#topLeftButtonTable')) {TableDiv.appendChild(topLeftButtonTable);}
+		if (!TableDiv.querySelector('#bottomRightButtonTable')) {TableDiv.appendChild(bottomRightButtonTable);}
 		
 		document.addEventListener('click', function handleClickOutside(event) {
 			if (!TableDiv.contains(event.target)) {
@@ -485,12 +482,6 @@ function butonServisTable(TableDiv) {
 		});
 	});
 }
-
-
-
-
-
-
 
 //Hücre Biçimlendirme Baş
 function getDataFromCell() {
@@ -686,7 +677,6 @@ function deleteColumn() {
 }
 //Hücre Biçimlendirme Son//
 
-
 document.addEventListener('contextmenu', function(event) {
     const cell = event.target.closest('td, th');
     const etName = event.target.tagName;
@@ -716,11 +706,6 @@ document.addEventListener('contextmenu', function(event) {
 	}
     tstMenu.style.display = 'flex';
 });
-
-
-
-
-
 
 document.addEventListener('click', function (e) {
 	const quickTableMenu = document.getElementById('quick-table-menu');if (quickTableMenu && !quickTableMenu.contains(e.target)) {quickTableMenu.remove();infoDisplay.remove();}
@@ -832,10 +817,6 @@ function hucreBirlestir() {
 		}
     }
 }
-
-
-
-
 
 function yatayBol() {
     const selectedCells = document.querySelectorAll('.selectedcell');
