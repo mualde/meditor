@@ -734,25 +734,12 @@ td.selectedcell:before {
 .clearStil{
 	all: revert;
 }
-.resim-in-editor{
+.elm-in-editor{
 	resize: both;
-	overflow: auto;
-	border: 1px solid #00000000;
-	overflow: hidden;
-	position: relative;
-}
-.video-in-editor{
-	resize: both;
-	overflow: auto;
 	border: 1px solid #00000000;
 	overflow: hidden;
     position: relative;
-	Padding:15px 0 15px 0;
-}
-.table-in-editor{
-	resize: both;
-	overflow: hidden;
-    position: relative;
+
 }
 .btnSrvsBtn{
     opacity: 0.4;
