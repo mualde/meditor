@@ -170,8 +170,7 @@ function AddTableBtn() {
 			<div style="width:100%;text-align:center"></div>
 			<button id="delete-row" onclick="hucreBirlestir()" title="Hücreleri Birleştir">
 				<i class="fa-solid fa-object-group"></i><i class="fa-solid fa-border-all"></i>
-			</button>			
-			
+			</button>
 			<button id="delete-row" onclick="yatayBol()" title="Hücreyi Yatay Böl">
 				<i class="fa-solid fa-border-all"></i><i class="fa-solid fa-table-columns"></i>
 			</button>
@@ -182,18 +181,14 @@ function AddTableBtn() {
 			<button id="delete-column" onclick="deleteColumn()" title="Sütun Sil">
 				<i class="fa-solid fa-up-down"></i><i class="fa-solid fa-trash"></i>
 			</button>
+            <div style="width:100%;text-align:center"></div>
+            <button id="delete-column" onclick="this.parentNode.style.display='none';" title="Hücre Menüsünü Kapat">
+				Menüyü Kapat
+			</button>
 		</div>
     `;
 
-    if (toolbar) {
-        toolbar.appendChild(tableContainer);
-        toolbar.addEventListener('mouseover', function(){
-            if (document.getElementById('topRightButtonTable')) {document.getElementById('topRightButtonTable').remove();}
-            if (document.getElementById('bottomLeftButtonTable')) {document.getElementById('bottomLeftButtonTable').remove();}
-            if (document.getElementById('topLeftButtonTable')) {document.getElementById('topLeftButtonTable').remove();}
-            if (document.getElementById('bottomRightButtonTable')) {document.getElementById('bottomRightButtonTable').remove();}
-        });
-    }
+    if (toolbar) {toolbar.appendChild(tableContainer);}
 
 	let offsetX = 0, offsetY = 0, isDragging = false;
 	const dragHandles = document.querySelectorAll('.drag-handle'); // Tüm drag-handle öğelerini seç
@@ -311,7 +306,7 @@ function createQuickTableMenu(quickTableMenu) {
 function createTableQuick(rows, cols) {
     // Ana div oluştur
     const tableDiv = document.createElement('div');
-    tableDiv.className = 'table-in-editor';
+    tableDiv.className = 'elm-in-editor';
     tableDiv.contentEditable = 'false';
     tableDiv.style.cssText = `width: 650px; margin: 0 auto;`;
     const table = document.createElement('table');
@@ -332,7 +327,7 @@ function createTableQuick(rows, cols) {
     tableDiv.style.height = trhight+'px';
     tableDiv.appendChild(table);
     savedSelection.insertNode(tableDiv);
-    butonServisTable(tableDiv);
+    butonServis(tableDiv);
 }
 //Hızlı Tablo Oluştur Son//
 
@@ -348,7 +343,7 @@ function createTable() {
     const borderStyle = document.getElementById('border-style').value;
     const align = document.getElementById('table-alignment').value;
     const tableDiv = document.createElement('div');
-    tableDiv.className = 'table-in-editor';
+    tableDiv.className = 'elm-in-editor';
     tableDiv.contentEditable = 'false';
     tableDiv.style.cssText = `width: ${width}${widthType}; margin: ${align === "center" ? "0 auto" : align === "left" ? "0" : "0 0 0 auto"};`;
     const table = document.createElement('table');
@@ -360,7 +355,7 @@ function createTable() {
     tableDiv.style.height = trhight+'px';
     tableDiv.appendChild(table);
     savedSelection.insertNode(tableDiv);
-    butonServisTable(tableDiv);
+    butonServis(tableDiv);
     closeModal();
 }
 //Tablo Oluştur Son//
@@ -398,90 +393,6 @@ function updateTable() {
     closeModal();
 }
 //Tablo Güncelle Son//
-
-const tablesDivs = document.getElementsByClassName('table-in-editor');
-Array.from(tablesDivs).forEach(TableDiv => {
-    butonServisTable(TableDiv);
-});
-
-function butonServisTable(TableDiv) {
-	TableDiv.addEventListener('click', function(event) {
-        const topLeftButtonTable = document.createElement('button');
-        topLeftButtonTable.id = 'topLeftButtonTable';
-        topLeftButtonTable.classList.add('btnSrvsBtn');
-        topLeftButtonTable.innerHTML = '⏎';
-        topLeftButtonTable.title = 'Üste Bir Satır Ekle';
-        topLeftButtonTable.style.top = '0px';
-        topLeftButtonTable.style.left = '0px';
-        topLeftButtonTable.addEventListener('click', function(event) {
-            const newParagraph = document.createElement('p');
-			newParagraph.innerHTML = '&nbsp;';
-			TableDiv.parentNode.insertBefore(newParagraph, TableDiv);
-			moveCursorToEnd(newParagraph);
-			event.stopPropagation();
-        });
-		
-		const topRightButtonTable = document.createElement('button');
-        topRightButtonTable.id = 'topRightButtonTable';
-        topRightButtonTable.classList.add('btnSrvsBtn');
-        topRightButtonTable.innerHTML = '✖';
-        topRightButtonTable.title = 'Tableyu Sil';
-        topRightButtonTable.style.top = '0px';
-        topRightButtonTable.style.right = '0px';
-        topRightButtonTable.addEventListener('click', function(event) {
-            TableDiv.remove();
-        });
-		
-		
-		const bottomRightButtonTable = document.createElement('button');
-        bottomRightButtonTable.id = 'bottomRightButtonTable';
-        bottomRightButtonTable.classList.add('btnSrvsBtn');
-        bottomRightButtonTable.innerHTML = '⏎';
-        bottomRightButtonTable.title = 'Alta Bir Satır Ekle';
-        bottomRightButtonTable.style.bottom = '0px';
-        bottomRightButtonTable.style.right = '10px';
-        bottomRightButtonTable.addEventListener('click', function(event) {
-            const newParagraph = document.createElement('p');
-			newParagraph.innerHTML = '&nbsp;';
-			TableDiv.parentNode.insertBefore(newParagraph, TableDiv.nextSibling);
-			moveCursorToEnd(newParagraph);
-			event.stopPropagation();
-        });
-		
-		const bottomLeftButtonTable = document.createElement('button');
-        bottomLeftButtonTable.id = 'bottomLeftButtonTable';
-        bottomLeftButtonTable.classList.add('btnSrvsBtn');
-        bottomLeftButtonTable.innerHTML = '<i class="fas fa-cog fa-spin spinning-icon"></i>';
-        bottomLeftButtonTable.title = 'Ayarları Aç';
-        bottomLeftButtonTable.style.bottom = '0px';
-        bottomLeftButtonTable.style.left = '0px';
-        bottomLeftButtonTable.addEventListener('click', function(event) {
-            event.stopPropagation(); 
-            const rightClickEvent = new MouseEvent('contextmenu', {
-                bubbles: true,
-                cancelable: true,
-                view: window,
-                button: 2,
-                ctrlKey: true
-            });
-            TableDiv.querySelector('td').dispatchEvent(rightClickEvent);
-        });		
-		if (!TableDiv.querySelector('#topRightButtonTable')) {TableDiv.appendChild(topRightButtonTable);}
-		if (!TableDiv.querySelector('#bottomLeftButtonTable')) {TableDiv.appendChild(bottomLeftButtonTable);}
-		if (!TableDiv.querySelector('#topLeftButtonTable')) {TableDiv.appendChild(topLeftButtonTable);}
-		if (!TableDiv.querySelector('#bottomRightButtonTable')) {TableDiv.appendChild(bottomRightButtonTable);}
-		
-		document.addEventListener('click', function handleClickOutside(event) {
-			if (!TableDiv.contains(event.target)) {
-				topLeftButtonTable.remove();
-				topRightButtonTable.remove();
-				bottomLeftButtonTable.remove();
-				bottomRightButtonTable.remove();
-				document.removeEventListener('click', handleClickOutside);
-			}
-		});
-	});
-}
 
 //Hücre Biçimlendirme Baş
 function getDataFromCell() {
@@ -690,31 +601,34 @@ document.addEventListener('contextmenu', function(event) {
             openModal('editTableModal');
         }
     }
-    if (!cell || !event.ctrlKey || !cell.classList.contains('selectedcell')) return;
-    event.preventDefault();  // Varsayılan sağ tıklama menüsünü engelle
-    const tstMenu = document.getElementById('tablosagtusmenu');	
-	const toolbarWidthPercentage = (parseFloat(window.getComputedStyle(toolbar).width) / window.innerWidth) * 100;
-	const tolerance = 0.5; 
-	if (Math.abs(toolbarWidthPercentage - 100) < tolerance) {
-		tstMenu.style.position = 'fixed';
-		tstMenu.style.top = `${event.clientY}px`;  // Y koordinatını ayarla
-		tstMenu.style.left = `${event.clientX}px`; // X koordinatını ayarla
-	} else {
-		tstMenu.style.position = 'absolute';
-		tstMenu.style.top = `${event.clientY+window.scrollY}px`;  // Y koordinatını ayarla
-		tstMenu.style.left = `${event.clientX+window.scrollX}px`; // X koordinatını ayarla
-	}
-    tstMenu.style.display = 'flex';
+
+    if (cell && event.ctrlKey && cell.classList.contains('selectedcell')){
+        event.preventDefault(); 
+            const tstMenu = document.getElementById('tablosagtusmenu');	
+            tstMenu.style.top = `${Math.floor((window.innerHeight/3.5)+window.scrollY)}px`;  // Y koordinatını ayarla
+            tstMenu.style.left = `${Math.floor((window.innerWidth/2.6)+window.scrollX)}px`; // X koordinatını ayarla
+            tstMenu.style.display = 'flex';
+    } ;
+
+    
 });
 
 document.addEventListener('click', function (e) {
 	const quickTableMenu = document.getElementById('quick-table-menu');if (quickTableMenu && !quickTableMenu.contains(e.target)) {quickTableMenu.remove();infoDisplay.remove();}
-	const tstMenu = document.getElementById('tablosagtusmenu');if (tstMenu && !tstMenu.contains(e.target)) {tstMenu.style.display='none';}
+	//const tstMenu = document.getElementById('tablosagtusmenu');if (tstMenu && !tstMenu.contains(e.target)) {tstMenu.style.display='none';}
 	if (e.target.tagName === 'TD') {
 		if(e.ctrlKey){const cell = e.target;cell.classList.toggle('selectedcell');}
 		document.querySelectorAll('table').forEach(table => {table.classList.remove('selectedtable');});
 		e.target.closest('table').classList.add('selectedtable');
 	}
+});
+
+
+document.addEventListener('dblclick', function(event) {
+    // Eğer tıklanan öğe bir <td> hücresiyse
+    if (event.target.tagName.toLowerCase() === 'td') {
+        event.target.classList.toggle('selectedcell'); // Seçili hücreyi toggle et
+    }
 });
 
 
