@@ -67,9 +67,8 @@ function applyStyle(command) {
     const commonAncestor = range.commonAncestorContainer;
     const editor = document.getElementById('editor'); // Editör elementi
     if (editor.contains(commonAncestor)) {
-        // Stil uygula (execCommand yerine, document.style işlemleriyle güncellenmiş)
-        document.execCommand(command); // Bu eski bir yöntemdir, ama şimdilik kullanılıyor.
-        editor.focus();
+        document.execCommand(command);
+        moveCursorToEnd(commonAncestor);
     } else {
         console.log("Seçim yalnızca düzenleme alanında olmalıdır.");
     }
@@ -103,36 +102,3 @@ try {
         console.error('Yapıştırma işlemi başarısız oldu:', err);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
