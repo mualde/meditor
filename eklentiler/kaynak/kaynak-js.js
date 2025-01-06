@@ -71,10 +71,10 @@ function toggleSourceCode() {
         sourceCode.style.height = editor.offsetHeight + 'px';
         editor.style.display = "none";
     } else {
-
         editor.innerHTML = sourceCode.value;
         sourceCode.style.display = 'none';
         editor.style.display = "block";
+        const elmsDivs = document.querySelectorAll('.elm-in-editor');elmsDivs.forEach(elmDiv => {butonServis(elmDiv);});
     }
 }
 
@@ -87,4 +87,3 @@ function createTagNameBox() {
     }
     return tagNameBox;
 }
-
