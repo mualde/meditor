@@ -17,19 +17,27 @@ document.addEventListener("DOMContentLoaded", function () {
 		editor.focus();setTimeout(function() {editor.firstElementChild.click();}, 1500); 
 
     }
-    if (toolbar) {	
-		includeJS('eklentiler/baslik/baslik-js.js', function () {AddHeaderBtn();});
-		includeJS('eklentiler/fontsize/fontsize-js.js', function () {AddSizeBtn();});
-		includeJS('eklentiler/fontfamily/fontfamily-js.js', function () {AddFamilyBtn();});
-		includeJS('eklentiler/renkci/renkci-js.js', function () {AddColorBtn();});
-		includeJS('eklentiler/table/table-js.js', function () {AddTableBtn();});
-		includeJS('eklentiler/medya/medya-js.js', function () {AddImageBtn();});
-		includeJS('eklentiler/link/link-js.js', function () {AddLinkBtn();});
-		includeJS('eklentiler/kaynak/kaynak-js.js', function () {AddKaynakBtn();});
-		includeJS('eklentiler/tamekran/tamekran-js.js', function () {AddfullscreenBtn();});
-		includeJS('eklentiler/kaydet/kaydet-js.js', function () {AddkaydetBtn();});
-		includeJS('eklentiler/highlight/highlight-js.js', function () {AddVurgularBtn();});
+    if (toolbar) {
+		includeJS('meditor/eklentiler/baslik/baslik-js.js', function () {AddHeaderBtn();});
+		includeJS('meditor/eklentiler/fontsize/fontsize-js.js', function () {AddSizeBtn();});
+		includeJS('meditor/eklentiler/fontfamily/fontfamily-js.js', function () {AddFamilyBtn();});
+		includeJS('meditor/eklentiler/renkci/renkci-js.js', function () {AddColorBtn();});
+		includeJS('meditor/eklentiler/table/table-js.js', function () {AddTableBtn();});
+		includeJS('meditor/eklentiler/medya/medya-js.js', function () {AddImageBtn();});
+		includeJS('meditor/eklentiler/link/link-js.js', function () {AddLinkBtn();});
+		includeJS('meditor/eklentiler/kaynak/kaynak-js.js', function () {AddKaynakBtn();});
+		includeJS('meditor/eklentiler/tamekran/tamekran-js.js', function () {AddfullscreenBtn();});
+		includeJS('meditor/eklentiler/kaydet/kaydet-js.js', function () {AddkaydetBtn();});
+		includeJS('meditor/eklentiler/highlight/highlight-js.js', function () {AddVurgularBtn();});
+
+        toolbar.addEventListener('mouseover', function(){
+			if (document.getElementById('topLeftButton')) {document.getElementById('topLeftButton').remove();}
+			if (document.getElementById('topRightButton')) {document.getElementById('topRightButton').remove();}
+			if (document.getElementById('bottomLeftButton')) {document.getElementById('bottomLeftButton').remove();}
+			if (document.getElementById('bottomRightButton')) {document.getElementById('bottomRightButton').remove();}	
+		});
     }
+	
 });
 
 
@@ -57,6 +65,8 @@ function organizeButtons(timeout = 2500) {
 }
 
 organizeButtons(500); 
+
+
 
 var range = null;
 var selection = null;
@@ -148,7 +158,6 @@ function iVeriTopla(){
 		currentSize = fontSizePt;
 		tColor.value = rgbToHex(fontColor);
 		bgColor.value = rgbToHex(fontBgColor);
-
 		//console.log('Elementin adı: ' + tagName);console.log('Font Family: ' + fontFamilyName);console.log('Font Size (pt): ' + fontSizePt);console.log('Font Color (hex): ' + rgbToHex(fontColor));console.log('Background Color (hex): ' + rgbToHex(fontBgColor));
 	}
 
@@ -164,31 +173,29 @@ function iVeriTopla(){
 		//console.log("Seçim kaydedildi:", savedSelection.toString());
 		
 	}
-	createTagNameBox(editor).textContent = `<${tagName}>`;
-	currentElement = event.target;
 
+    if (typeof createTagNameBox === 'function') {createTagNameBox(editor).textContent = `<${tagName}>`;}
+	currentElement = event.target;
 }
 
-includeCSS('css/style.css');
+includeCSS('meditor/css/style.css');
 
 function includeCSS(cssFile) {
     const link = document.createElement('link');
-	var baseURL = "https://cdn.jsdelivr.net/gh/Mualde/meditor/";
     link.rel = 'stylesheet';
-    link.href = baseURL + cssFile;
+    link.href = cssFile;
     document.head.appendChild(link);
 }
 
-function includeJS(file, callback) {
-    var baseURL = "https://cdn.jsdelivr.net/gh/Mualde/meditor/";
-    var script = document.createElement('script');
-    script.src = baseURL + file;
+function includeJS(src, callback) {
+    const script = document.createElement('script');
+    script.src = src;
     script.type = 'text/javascript';
-    script.onload = callback;
+    script.onload = callback; // Dosya yüklendiğinde çalışacak işlev
     script.onerror = function () {
-        console.error("Dosya yüklenemedi: " + script.src);
+        console.error(`Dosya yüklenemedi: ${src}`);
     };
-    document.head.appendChild(script);
+    document.body.appendChild(script); // Script'i body'nin sonuna ekliyoruz
 }
 
 
@@ -199,29 +206,25 @@ function updateStyleProperty(element, property, value) {
 }
 
 function moveCursorToEnd(element) {
-    const range = document.createRange();
     const selection = window.getSelection();
-
-    // Elementin son içeriğine ulaşmak için textNode kullanmak daha güvenli
-    const lastChild = element.lastChild;
-
-    if (lastChild) {
-        // Eğer son çocuk varsa, son boşluktan önceki karaktere imleci taşı
-        const textContent = lastChild.textContent;
-        const lastNonSpaceIndex = textContent.trimEnd().length; // Boşlukları dikkate almadan son karakteri bul
-
-        range.setStart(lastChild, lastNonSpaceIndex); // Son boşluktan önceki karakterin sonrasına
-        range.collapse(true);  // İmleci son pozisyona getir
+    const range = document.createRange();
+    if (element.lastChild) {
+        let lastChild = element.lastChild;
+        while (lastChild && lastChild.nodeType !== 3) {
+            lastChild = lastChild.previousSibling;
+        }
+        if (lastChild) {
+            const textContent = lastChild.textContent;
+            const lastNonSpaceIndex = textContent.replace(/\s+$/, '').length;
+            range.setStart(lastChild, lastNonSpaceIndex);
+            range.collapse(true);
+        }
     } else {
-        // Eğer element boşsa, başlangıca taşır
         range.setStart(element, 0);
         range.collapse(true);
     }
-
-    // Mevcut seçimleri temizle ve yeni range ekle
     selection.removeAllRanges();
-	selection.addRange(range);
-	//setTimeout(() => { ... }, 500);
+    selection.addRange(range);
 }
 
 function moveCursorToStart(element) {
@@ -246,11 +249,6 @@ function moveCursorToStart(element) {
     selection.addRange(range);
     //setTimeout(() => { ... }, 500);
 }
-
-
-
-
-
 
 // RGB'yi hex'e dönüştürme
 function rgbToHex(rgb) {const result = rgb.match(/\d+/g).map(num => parseInt(num).toString(16).padStart(2, '0'));return `#${result.join('')}`;}
@@ -313,75 +311,154 @@ function temizle() {
 	});
 }
 
+let lastCursorPosition = null; // Toplam karakterler arasında imleç pozisyonunu saklamak için
 
+// Cursor pozisyonunu kaydetme işlevi
+function saveCursorPosition() {
+    const selection = window.getSelection();
+    if (selection.rangeCount > 0) {
+        const range = selection.getRangeAt(0);
 
+        // Tüm karakterleri düz bir metin olarak al
+        const allText = getFlatText(editor);
 
+        // İmlecin bulunduğu düğümdeki göreli pozisyonu al
+        const caretOffset = getCaretOffset(range);
 
+        // İmlecin editördeki toplam pozisyonunu hesapla
+        lastCursorPosition = allText.slice(0, caretOffset.nodeIndex).length + caretOffset.offsetInNode;
+        //console.log('Editördeki Toplam Pozisyon:', lastCursorPosition);
+    }
+}
 
-
-
-
-
-
-
-
-    let lastCursorPosition = null; // Toplam karakterler arasında imleç pozisyonunu saklamak için
-
-
-    // Cursor pozisyonunu kaydetme işlevi
-    function saveCursorPosition() {
-        const selection = window.getSelection();
-        if (selection.rangeCount > 0) {
-            const range = selection.getRangeAt(0);
-
-            // Tüm karakterleri düz bir metin olarak al
-            const allText = getFlatText(editor);
-
-            // İmlecin bulunduğu düğümdeki göreli pozisyonu al
-            const caretOffset = getCaretOffset(range);
-
-            // İmlecin editördeki toplam pozisyonunu hesapla
-            lastCursorPosition = allText.slice(0, caretOffset.nodeIndex).length + caretOffset.offsetInNode;
-			//console.log('Editördeki Toplam Pozisyon:', lastCursorPosition);
+// Editör içeriğini düz bir metin olarak döndürür
+function getFlatText(node) {
+    let text = "";
+    node.childNodes.forEach((child) => {
+        if (child.nodeType === Node.TEXT_NODE) {
+            text += child.textContent;
+        } else {
+            text += getFlatText(child); // Rekürsif olarak tüm çocukları dolaş
         }
-    }
+    });
+    return text;
+}
 
-    // Editör içeriğini düz bir metin olarak döndürür
-    function getFlatText(node) {
-        let text = "";
-        node.childNodes.forEach((child) => {
-            if (child.nodeType === Node.TEXT_NODE) {
-                text += child.textContent;
+// İmleç pozisyonunu düğümler arasında bulur
+function getCaretOffset(range) {
+    const caretNode = range.startContainer;
+    let nodeIndex = 0;
+
+    // İmlecin bulunduğu düğüme kadar olan tüm metin uzunluğunu hesapla
+    const traverseNodes = (node) => {
+        if (node === caretNode) return true;
+        if (node.nodeType === Node.TEXT_NODE) {
+            nodeIndex += node.textContent.length;
+        } else if (node.nodeType === Node.ELEMENT_NODE) {
+            for (const child of node.childNodes) {
+                if (traverseNodes(child)) return true;
+            }
+        }
+        return false;
+    };
+
+    traverseNodes(editor);
+    return { nodeIndex, offsetInNode: range.startOffset };
+}
+
+// Test için son pozisyonu ve karakteri konsola yazdırabilirsiniz
+//setInterval(() => { }, 3000);
+const elmsDivs = document.getElementsByClassName('elm-in-editor');
+Array.from(elmsDivs).forEach(elmDiv => {
+	butonServis(elmDiv);
+});
+
+function butonServis(elmDiv){
+	elmDiv.addEventListener('click', function(event) {
+		const bottomRightButton = document.createElement('button');
+		bottomRightButton.id = 'bottomRightButton';
+		bottomRightButton.innerHTML = '⏎';
+		bottomRightButton.classList.add('btnSrvsBtn');
+		bottomRightButton.title = 'Altına Satır Ekle';
+		bottomRightButton.style.bottom = '5px';
+		bottomRightButton.style.right = '5px';
+		bottomRightButton.addEventListener('click', function(event) {
+			const newParagraph = document.createElement('p');
+			newParagraph.innerHTML = '&nbsp;';
+			elmDiv.parentNode.insertBefore(newParagraph, elmDiv.nextSibling);
+			moveCursorToEnd(newParagraph);
+            newParagraph.click();
+			event.stopPropagation();
+		});
+
+		const topLeftButton = document.createElement('button');
+		topLeftButton.id = 'topLeftButton';
+		topLeftButton.innerHTML = '⏎';
+		topLeftButton.classList.add('btnSrvsBtn');
+		topLeftButton.title = 'Üstüne Satır Ekle';
+		topLeftButton.style.top = '5px';
+		topLeftButton.style.left = '5px';
+		topLeftButton.addEventListener('click', function(event) {
+			const newParagraph = document.createElement('p');
+			newParagraph.innerHTML = '&nbsp;';
+			elmDiv.parentNode.insertBefore(newParagraph, elmDiv);
+			moveCursorToEnd(newParagraph);
+            newParagraph.click();
+			event.stopPropagation();
+		});
+
+		const topRightButton = document.createElement('button');
+		topRightButton.id = 'topRightButton';
+		topRightButton.innerHTML = '✖';
+		topRightButton.classList.add('btnSrvsBtn');
+		topRightButton.title = 'Öğeyi Sil';
+		topRightButton.style.top = '5px';
+		topRightButton.style.right = '5px';
+		topRightButton.addEventListener('click', function(event) {
+			elmDiv.remove();
+		});
+
+		const bottomLeftButton = document.createElement('button');
+		bottomLeftButton.id = 'bottomLeftButton';
+		bottomLeftButton.innerHTML = '<i class="fas fa-cog fa-spin spinning-icon"></i>';
+		bottomLeftButton.classList.add('btnSrvsBtn');
+		bottomLeftButton.title = 'Ayarları Aç';
+		bottomLeftButton.style.bottom = '5px';
+		bottomLeftButton.style.left = '5px';
+		bottomLeftButton.addEventListener('click', function(event) {
+			const rightClickEvent = new MouseEvent('contextmenu', {
+				bubbles: true,
+				cancelable: true,
+				view: window,
+				button: 2,
+				ctrlKey: true
+			});
+            const divElm = elmDiv.firstElementChild;
+            if (divElm.tagName === 'TABLE') {
+                const selectedCell = elmDiv.querySelector('td.selectedcell');
+                const targetCell = selectedCell || elmDiv.querySelector('td');
+                targetCell.dispatchEvent(rightClickEvent);
             } else {
-                text += getFlatText(child); // Rekürsif olarak tüm çocukları dolaş
+                const elements = elmDiv.querySelectorAll('img, iframe');
+                elements.forEach(element => {
+                    element.dispatchEvent(rightClickEvent);
+                });
             }
-        });
-        return text;
-    }
+		});
 
-    // İmleç pozisyonunu düğümler arasında bulur
-    function getCaretOffset(range) {
-        const caretNode = range.startContainer;
-        let nodeIndex = 0;
-
-        // İmlecin bulunduğu düğüme kadar olan tüm metin uzunluğunu hesapla
-        const traverseNodes = (node) => {
-            if (node === caretNode) return true;
-            if (node.nodeType === Node.TEXT_NODE) {
-                nodeIndex += node.textContent.length;
-            } else if (node.nodeType === Node.ELEMENT_NODE) {
-                for (const child of node.childNodes) {
-                    if (traverseNodes(child)) return true;
-                }
-            }
-            return false;
-        };
-
-        traverseNodes(editor);
-        return { nodeIndex, offsetInNode: range.startOffset };
-    }
-
-    // Test için son pozisyonu ve karakteri konsola yazdırabilirsiniz
-    //setInterval(() => { }, 3000);
-        
-    
+		if (!elmDiv.querySelector('#topRightButton')) {elmDiv.appendChild(topRightButton);}
+		if (!elmDiv.querySelector('#bottomLeftButton')) {elmDiv.appendChild(bottomLeftButton);}
+		if (!elmDiv.querySelector('#topLeftButton')) {elmDiv.appendChild(topLeftButton);}
+		if (!elmDiv.querySelector('#bottomRightButton')) {elmDiv.appendChild(bottomRightButton);}
+		
+		document.addEventListener('click', function handleClickOutside(event) {
+			if (!elmDiv.contains(event.target)) {
+				topRightButton.remove();
+				bottomLeftButton.remove();
+				topLeftButton.remove();
+				bottomRightButton.remove();
+				document.removeEventListener('click', handleClickOutside);
+			}
+		});
+	});
+}
