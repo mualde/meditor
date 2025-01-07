@@ -28,6 +28,20 @@ function AddColorBtn() {
 	fontColorMenu = document.getElementById('font-color-menu');
 };
 
+editor.addEventListener('click', function(event){
+    const computedStyle = window.getComputedStyle(event.target);
+	const tColor = document.getElementById('textColor');
+	const bgColor = document.getElementById('bgColor');
+    const fontColor = computedStyle.color;
+    let fontBgColor = computedStyle.backgroundColor;
+    if (fontBgColor === 'rgba(0, 0, 0, 0)') {
+        fontBgColor = 'rgb(255, 255, 255)';
+    }
+    tColor.value = rgbToHex(fontColor);
+    bgColor.value = rgbToHex(fontBgColor);
+});
+
+
 function openColorMenu() {
     fontColorMenu.style.display = (fontColorMenu.style.display === 'none' || fontColorMenu.style.display === '') ? 'block' : 'none';
 };
@@ -122,4 +136,3 @@ function applyFontBgColor(event) {
         fontColorMenu.style.display = 'none';  // Renk menüsünü gizle
     }
 }
-
