@@ -1,55 +1,68 @@
 var editor = document.getElementById('editor');
 var toolbar = null;
 var sourceContainer = null;
-
 editor.contentEditable= true;
 
-// DOM yüklendiğinde çalıştır
+function includeCSS(cssFile) {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = cssFile;
+    document.head.appendChild(link);
+}
+function includeJS(src, callback) {
+    const script = document.createElement('script');
+    script.src = src;
+    script.type = 'text/javascript';
+    script.onload = callback; // Dosya yüklendiğinde çalışacak işlev
+    script.onerror = function () {
+        console.error(`Dosya yüklenemedi: ${src}`);
+    };
+    document.body.appendChild(script); // Script'i body'nin sonuna ekliyoruz
+}
+
 document.addEventListener("DOMContentLoaded", function () {
     if (editor) {
-		const toolbarDiv = document.createElement("div"); // Yeni bir div oluştur
+		const toolbarDiv = document.createElement("div");
 		toolbarDiv.style.display = "none";
 		toolbarDiv.className = "toolbar"; 
 		toolbarDiv.id = "toolbar";
 		editor.insertAdjacentElement('beforebegin', toolbarDiv);
 		toolbar = document.getElementById('toolbar');
-		pEkle();
-		editor.focus();setTimeout(function() {editor.firstElementChild.click();}, 1500); 
-
     }
     if (toolbar) {
-		includeJS('https://cdn.jsdelivr.net/gh/mualde/meditor/eklentiler/baslik/baslik-js.js', function () {AddHeaderBtn();});
-		includeJS('https://cdn.jsdelivr.net/gh/mualde/meditor/eklentiler/fontsize/fontsize-js.js', function () {AddSizeBtn();});
-		includeJS('https://cdn.jsdelivr.net/gh/mualde/meditor/eklentiler/fontfamily/fontfamily-js.js', function () {AddFamilyBtn();});
-		includeJS('https://cdn.jsdelivr.net/gh/mualde/meditor/eklentiler/renkci/renkci-js.js', function () {AddColorBtn();});
-		includeJS('https://cdn.jsdelivr.net/gh/mualde/meditor/eklentiler/table/table-js.js', function () {AddTableBtn();});
-		includeJS('https://cdn.jsdelivr.net/gh/mualde/meditor/eklentiler/medya/medya-js.js', function () {AddImageBtn();});
-		includeJS('https://cdn.jsdelivr.net/gh/mualde/meditor/eklentiler/link/link-js.js', function () {AddLinkBtn();});
-		includeJS('https://cdn.jsdelivr.net/gh/mualde/meditor/eklentiler/kaynak/kaynak-js.js', function () {AddKaynakBtn();});
-		includeJS('https://cdn.jsdelivr.net/gh/mualde/meditor/eklentiler/tamekran/tamekran-js.js', function () {AddfullscreenBtn();});
-		includeJS('https://cdn.jsdelivr.net/gh/mualde/meditor/eklentiler/kaydet/kaydet-js.js', function () {AddkaydetBtn();});
-		includeJS('https://cdn.jsdelivr.net/gh/mualde/meditor/eklentiler/highlight/highlight-js.js', function () {AddVurgularBtn();});
-
-        toolbar.addEventListener('mouseover', function(){
-			if (document.getElementById('topLeftButton')) {document.getElementById('topLeftButton').remove();}
-			if (document.getElementById('topRightButton')) {document.getElementById('topRightButton').remove();}
-			if (document.getElementById('bottomLeftButton')) {document.getElementById('bottomLeftButton').remove();}
-			if (document.getElementById('bottomRightButton')) {document.getElementById('bottomRightButton').remove();}	
-		});
+	includeJS('https://cdn.jsdelivr.net/gh/mualde/meditor/eklentiler/baslik/baslik-js.js', function () {AddHeaderBtn();});
+	includeJS('https://cdn.jsdelivr.net/gh/mualde/meditor/eklentiler/fontsize/fontsize-js.js', function () {AddSizeBtn();});
+	includeJS('https://cdn.jsdelivr.net/gh/mualde/meditor/eklentiler/fontfamily/fontfamily-js.js', function () {AddFamilyBtn();});
+	includeJS('https://cdn.jsdelivr.net/gh/mualde/meditor/eklentiler/renkci/renkci-js.js', function () {AddColorBtn();});
+	includeJS('https://cdn.jsdelivr.net/gh/mualde/meditor/eklentiler/table/table-js.js', function () {AddTableBtn();});
+	includeJS('https://cdn.jsdelivr.net/gh/mualde/meditor/eklentiler/medya/medya-js.js', function () {AddImageBtn();});
+	includeJS('https://cdn.jsdelivr.net/gh/mualde/meditor/eklentiler/link/link-js.js', function () {AddLinkBtn();});
+	includeJS('https://cdn.jsdelivr.net/gh/mualde/meditor/eklentiler/kaynak/kaynak-js.js', function () {AddKaynakBtn();});
+	includeJS('https://cdn.jsdelivr.net/gh/mualde/meditor/eklentiler/tamekran/tamekran-js.js', function () {AddfullscreenBtn();});
+	includeJS('https://cdn.jsdelivr.net/gh/mualde/meditor/eklentiler/kaydet/kaydet-js.js', function () {AddkaydetBtn();});
+	includeJS('https://cdn.jsdelivr.net/gh/mualde/meditor/eklentiler/highlight/highlight-js.js', function () {AddVurgularBtn();});
+    
+	includeCSS('https://cdn.jsdelivr.net/gh/mualde/meditor/css/style.css');
+	toolbar.addEventListener('mouseover', function(){
+		if (document.getElementById('topLeftButton')) {document.getElementById('topLeftButton').remove();}
+		if (document.getElementById('topRightButton')) {document.getElementById('topRightButton').remove();}
+		if (document.getElementById('bottomLeftButton')) {document.getElementById('bottomLeftButton').remove();}
+		if (document.getElementById('bottomRightButton')) {document.getElementById('bottomRightButton').remove();}	
+	});
     }
-	
+	if(editor && toolbar){
+		pEkle();editor.focus();setTimeout(function() {editor.firstElementChild.click();}, 1500); 
+	}
 });
-
 
 function organizeButtons(timeout = 2500) {
     setTimeout(() => {
         const toolbar = document.getElementById('toolbar');
         if (toolbar) {
-            // Değişiklik yapılacak butonların ID'lerini belirtiyoruz
             const buttonContainerOrder = [
-                'tamekran-container','baslik-container','hiza-container','size-container','family-container','color-container',
+                'baslik-container','hiza-container','size-container','family-container','color-container',
 				'medya-container','table-container','link-container','ilerigeri-container',
-				'kaynak-container','kaydet-container','highlight-container'
+				'kaydet-container','tamekran-container','kaynak-container','highlight-container'
             ];
             const fragment = document.createDocumentFragment();
             buttonContainerOrder.forEach(buttonId => {
@@ -66,39 +79,26 @@ function organizeButtons(timeout = 2500) {
 
 organizeButtons(500); 
 
-
-
 var range = null;
 var selection = null;
 var selectedText = null;
-var currentElement = null;
 var rect = null;
 var xPosition = null;
 var yPosition = null;
 var currentWord = null;
 var lineText = null;
 var targetElement = null;
-//var x = null;var y = null;editor.addEventListener('mousemove', (event) => {x = event.clientX;y = event.clientY;console.log(`Fare Pozisyonu: X: ${x}, Y: ${y}`);});
 
-
-// Click olayını dinle
 editor.addEventListener("click", function (event) {
 	pEkle();
 	iVeriTopla();
-	
 });
 
 editor.addEventListener("keydown", function (event) {
-    if (!event.ctrlKey) {  // Ctrl tuşu basılmadıysa
-        iVeriTopla();  // İşlemi yap
+    if (!event.ctrlKey) {
+        iVeriTopla();
     }
 });
-
-editor.addEventListener('input', function () {
-	//applyStyleToNextLine();
-});
-
-
 
 function pEkle(){
 		if (!editor.innerHTML.trim()) {
@@ -110,94 +110,28 @@ function pEkle(){
 }
 
 let savedSelection = null;
-function iVeriTopla(){
-	
-	
-	saveCursorPosition();
-
-	// Seçili metni al
-    selection = window.getSelection();
-    selectedText = selection.toString(); // Seçili metin
-	
-	if(selectedText){
-		targetElement = selection.getRangeAt(0).startContainer.parentElement;
-	}else{
-		targetElement = event.target;
-	}
-
-	// Hedefteki font-family ve font-size'yi atama
-	const fname = document.getElementById('font-family-name');
-	const fsize = document.getElementById('font-size-manuel');
-	const tColor = document.getElementById('textColor');
-	const bgColor = document.getElementById('bgColor');
-	const target = event.target; // Tıklanan element
-	const tagName = target.tagName;
-	
-	if (target !== this) {
-		// window.getComputedStyle sadece bir kez çağırılacak
-		const computedStyle = window.getComputedStyle(target);
-
-		// Font-family ve font-size değerlerini al
-		const fontFamilyName = computedStyle.fontFamily || '...'; // Font-family istenen değeri al
-		const fontSizePx = parseFloat(computedStyle.fontSize); // Font-size'ı px olarak al
-		const fontSizePt = Math.floor(fontSizePx / 1.3333); // pt'ye dönüştürme işlemi
-		const fontColor = computedStyle.color;
-
-		// Background color kontrolü ve dönüşüm
-		let fontBgColor = computedStyle.backgroundColor;
-		if (fontBgColor === 'rgba(0, 0, 0, 0)') {
-			// Eğer arka plan transparan ise varsayılan beyaz (#ffffff) rengini atayalım
-			fontBgColor = 'rgb(255, 255, 255)';
-		}
-
-		// Hedef elementlere atama
-		fname.style.fontFamily = fontFamilyName;
-		fname.innerText = fontFamilyName.replace('"','');
-		fname.title = fontFamilyName;
-		fsize.value = fontSizePt + 'pt';
-		currentSize = fontSizePt;
-		tColor.value = rgbToHex(fontColor);
-		bgColor.value = rgbToHex(fontBgColor);
-		//console.log('Elementin adı: ' + tagName);console.log('Font Family: ' + fontFamilyName);console.log('Font Size (pt): ' + fontSizePt);console.log('Font Color (hex): ' + rgbToHex(fontColor));console.log('Background Color (hex): ' + rgbToHex(fontBgColor));
-	}
-
-	if (selection.rangeCount > 0) {
-		const range = selection.getRangeAt(0); // Seçili alanı al
-		const rangeSatir = range;  // rangeSatir'ı sadece bir kere tanımlıyoruz
-		
-		currentWord = window.getSelection() && window.getSelection().anchorNode && window.getSelection().anchorNode.textContent.split(/\s+/).find(word => window.getSelection().anchorNode.textContent.indexOf(word) <= window.getSelection().anchorOffset && window.getSelection().anchorNode.textContent.indexOf(word) + word.length >= window.getSelection().anchorOffset) || '';
-		currentWord = currentWord.trim();
-		//console.log("İmlecin bulunduğu kelime:", currentWord);
-		
-		savedSelection = selection.getRangeAt(0).cloneRange();
-		//console.log("Seçim kaydedildi:", savedSelection.toString());
-		
-	}
-
-    if (typeof createTagNameBox === 'function') {createTagNameBox(editor).textContent = `<${tagName}>`;}
-	currentElement = event.target;
+function iVeriTopla() {
+    saveCursorPosition();
+    let selection = window.getSelection();
+    let selectedText = selection.toString();
+    let targetElement;
+	savedSelection = selection.getRangeAt(0).cloneRange();
+    if (selectedText) {
+        targetElement = selection.getRangeAt(0).startContainer.parentElement;
+    } else {
+        targetElement = event.target;
+    }
+    if (selection.rangeCount > 0) {
+        let anchorNodeText = window.getSelection().anchorNode ? window.getSelection().anchorNode.textContent : '';
+        let currentWord = '';
+        if (anchorNodeText) {
+            currentWord = anchorNodeText.split(/\s+/).find(word => {
+                return anchorNodeText.indexOf(word) <= window.getSelection().anchorOffset && anchorNodeText.indexOf(word) + word.length >= window.getSelection().anchorOffset;
+            }) || '';
+        }
+        currentWord = currentWord.trim();
+    }
 }
-
-includeCSS('https://cdn.jsdelivr.net/gh/mualde/meditor/css/style.css');
-
-function includeCSS(cssFile) {
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = cssFile;
-    document.head.appendChild(link);
-}
-
-function includeJS(src, callback) {
-    const script = document.createElement('script');
-    script.src = src;
-    script.type = 'text/javascript';
-    script.onload = callback; // Dosya yüklendiğinde çalışacak işlev
-    script.onerror = function () {
-        console.error(`Dosya yüklenemedi: ${src}`);
-    };
-    document.body.appendChild(script); // Script'i body'nin sonuna ekliyoruz
-}
-
 
 function updateStyleProperty(element, property, value) {
     if (element && typeof property === 'string' && typeof value === 'string') {
@@ -304,30 +238,21 @@ function  cancelModal() {
 }
 
 function temizle() {
-	// Tüm hedefyer spanlarını kaldır
 	document.querySelectorAll('.hedefyer').forEach(span => {
 		const parent = span.parentNode;
 		parent.replaceChild(document.createTextNode(span.textContent), span);
 	});
 }
 
-let lastCursorPosition = null; // Toplam karakterler arasında imleç pozisyonunu saklamak için
+let lastCursorPosition = null; 
 
-// Cursor pozisyonunu kaydetme işlevi
 function saveCursorPosition() {
     const selection = window.getSelection();
     if (selection.rangeCount > 0) {
         const range = selection.getRangeAt(0);
-
-        // Tüm karakterleri düz bir metin olarak al
         const allText = getFlatText(editor);
-
-        // İmlecin bulunduğu düğümdeki göreli pozisyonu al
         const caretOffset = getCaretOffset(range);
-
-        // İmlecin editördeki toplam pozisyonunu hesapla
         lastCursorPosition = allText.slice(0, caretOffset.nodeIndex).length + caretOffset.offsetInNode;
-        //console.log('Editördeki Toplam Pozisyon:', lastCursorPosition);
     }
 }
 
@@ -348,8 +273,6 @@ function getFlatText(node) {
 function getCaretOffset(range) {
     const caretNode = range.startContainer;
     let nodeIndex = 0;
-
-    // İmlecin bulunduğu düğüme kadar olan tüm metin uzunluğunu hesapla
     const traverseNodes = (node) => {
         if (node === caretNode) return true;
         if (node.nodeType === Node.TEXT_NODE) {
@@ -361,13 +284,10 @@ function getCaretOffset(range) {
         }
         return false;
     };
-
     traverseNodes(editor);
     return { nodeIndex, offsetInNode: range.startOffset };
 }
 
-// Test için son pozisyonu ve karakteri konsola yazdırabilirsiniz
-//setInterval(() => { }, 3000);
 const elmsDivs = document.getElementsByClassName('elm-in-editor');
 Array.from(elmsDivs).forEach(elmDiv => {
 	butonServis(elmDiv);
