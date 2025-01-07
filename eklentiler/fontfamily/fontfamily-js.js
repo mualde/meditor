@@ -47,20 +47,24 @@ function AddFamilyBtn() {
 document.querySelectorAll('li').forEach(function(li) {
     li.addEventListener('mouseover', function(event) {
 		var line = event.target;
-        // 2 saniye bekle, sonra opacity'yi değiştir
         li.timeoutId = setTimeout(function(event) {
-			//document.getElementById('font-family-menu').style.opacity = 0.5;
-        }, 5000); // 2000 milisaniye = 2 saniye
+        }, 5000);
     });
 
     li.addEventListener('mouseleave', function() {
-        // Eğer kullanıcı fareyi çeker, zaman aşımını iptal et
         clearTimeout(li.timeoutId);
-        // Opaklık hemen eski haline döner
         document.getElementById('font-family-menu').style.opacity = 1;
     });
 });
 
+editor.addEventListener('click', function(event){
+    const fname = document.getElementById('font-family-name');
+    const computedStyle = window.getComputedStyle(event.target);
+    const fontFamilyName = computedStyle.fontFamily || '...';
+    fname.style.fontFamily = fontFamilyName;
+    fname.innerText = fontFamilyName.replace('"','');
+    fname.title = fontFamilyName;
+});
 
 function openFontFamilyMenu() {
     fontFamilyMenu.style.display = (fontFamilyMenu.style.display === 'none' || fontFamilyMenu.style.display === '') ? 'block' : 'none';
@@ -70,8 +74,6 @@ function applyFontFamily(family) {
     const selection = window.getSelection();
     const range = selection.getRangeAt(0);
     const commonAncestor = range.commonAncestorContainer;
-
-    // Seçimin sadece "editor" içinde olmasını kontrol et
     if (editor.contains(commonAncestor)) {   
         const selectedText = selection.toString(); // Seçilen metni al
         const fontFamilyNameElement = document.getElementById('font-family-name');
@@ -79,14 +81,10 @@ function applyFontFamily(family) {
         fontFamilyNameElement.title = family;
         fontFamilyNameElement.style.fontFamily = family;
         fontFamilyMenu.style.display = 'none';
-
         if (selectedText) {
-            // Eğer seçilen kelimeden önce başka kelimeler varsa
             const selectedNode = range.startContainer;
             const parentElement = selectedNode.parentElement;
-
             if (range.startOffset > 0 || (selectedNode.previousSibling && selectedNode.previousSibling.nodeType === Node.TEXT_NODE)) {
-                // Seçilen kelimeyi bir span içine al
                 const newSpan = document.createElement('span');
                 newSpan.style.fontFamily = family;
                 newSpan.innerText = selectedText;
@@ -98,7 +96,6 @@ function applyFontFamily(family) {
                 moveCursorToEnd(parentElement);
             }
         } else {
-            // Eğer hiç metin seçilmemişse
             let selectedElement = commonAncestor;
             if (selectedElement.nodeType === Node.TEXT_NODE) {
                 selectedElement = selectedElement.parentElement;
@@ -108,4 +105,3 @@ function applyFontFamily(family) {
         }
     }
 }
-
