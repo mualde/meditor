@@ -259,7 +259,7 @@ function createQuickTableMenu(quickTableMenu) {
         for (let col = 1; col <= gridSize; col++) {
             const button = document.createElement('input');
             button.type = 'button';
-            button.className = 'table-cell';
+            button.className = 'quick-table-cell';
             button.dataset.row = row;
             button.dataset.col = col;
             button.style.width = '15px';
@@ -268,7 +268,7 @@ function createQuickTableMenu(quickTableMenu) {
             button.addEventListener('mouseover', (e) => {
                 const hoverRow = parseInt(e.target.dataset.row);
                 const hoverCol = parseInt(e.target.dataset.col);
-                quickTableMenu.querySelectorAll('.table-cell').forEach((cell) => {
+                quickTableMenu.querySelectorAll('.quick-table-cell').forEach((cell) => {
                     const cellRow = parseInt(cell.dataset.row);
                     const cellCol = parseInt(cell.dataset.col);
                     if (cellRow <= hoverRow && cellCol <= hoverCol) {
@@ -456,95 +456,75 @@ function addRowUp() {
     }
 }
 
-// Yeni satır ekleme fonksiyonu (Aşağıya)
 function addRowDown() {
     const selectedCells = document.querySelectorAll('.selectedcell');
-    
     if (selectedCells.length > 0) {
-        // Çoklu hücre seçimlerinde, en alttaki hücreyi baz alıyoruz
         const bottomMostCell = getBottomMostCell(selectedCells);
         const selectedRow = bottomMostCell.parentElement;
-
-        const newRow = selectedRow.cloneNode(false); // Yeni bir satır oluşturuyoruz (içeriksiz)
-        selectedRow.parentElement.insertBefore(newRow, selectedRow.nextSibling); // Yeni satırı aşağıya ekliyoruz
-
-        // Yeni satırdaki hücre sayısını mevcut satırın hücre sayısına göre ayarlıyoruz
+        const newRow = selectedRow.cloneNode(false);
+        selectedRow.parentElement.insertBefore(newRow, selectedRow.nextSibling);
         const cellCount = selectedRow.children.length;
         for (let i = 0; i < cellCount; i++) {
             const newCell = document.createElement('td');
-            newCell.style = 'border: 1px solid black'; // Varsayılan stil
-            newCell.innerHTML = '&nbsp;'; // Hücreye boşluk karakteri ekliyoruz
-            newRow.appendChild(newCell); // Yeni hücreyi ekliyoruz
+            newCell.style = 'border: 1px solid black';
+            newCell.innerHTML = '&nbsp;';
+            newRow.appendChild(newCell);
         }
-
-        // Yeni satırdaki hücrelere select class'ı eklemiyoruz
         newRow.querySelectorAll('td').forEach(cell => {
-            cell.classList.remove('selectedcell');  // Seçili sınıfı kaldırıyoruz
+            cell.classList.remove('selectedcell');
         });
     }
 }
 
-// Yeni sütun ekleme fonksiyonu (Sola)
 function addColumnLeft() {
     const selectedCells = document.querySelectorAll('.selectedcell');
-    
     if (selectedCells.length > 0) {
-        // Çoklu hücre seçimlerinde, en soldaki hücreyi baz alıyoruz
         const leftMostCell = getLeftMostCell(selectedCells);
         const columnIndex = Array.from(leftMostCell.parentElement.children).indexOf(leftMostCell);
-        
         const rows = leftMostCell.parentElement.parentElement.children;
         Array.from(rows).forEach(row => {
-            const newCell = row.insertBefore(document.createElement('td'), row.children[columnIndex]); // Yeni hücreyi sol tarafa ekliyoruz
-            newCell.style = 'border: 1px solid black'; // Varsayılan stil
-            newCell.innerHTML = '&nbsp;'; // Hücreye boşluk karakteri ekliyoruz
-            newCell.classList.remove('selectedcell');  // Seçili sınıfı kaldırıyoruz
+            const newCell = row.insertBefore(document.createElement('td'), row.children[columnIndex]);
+            newCell.style = 'border: 1px solid black';
+            newCell.innerHTML = '&nbsp;';
+            newCell.classList.remove('selectedcell');
         });
     }
 }
 
-// Yeni sütun ekleme fonksiyonu (Sağa)
 function addColumnRight() {
     const selectedCells = document.querySelectorAll('.selectedcell');
-    
     if (selectedCells.length > 0) {
-        // Çoklu hücre seçimlerinde, en sağdaki hücreyi baz alıyoruz
         const rightMostCell = getRightMostCell(selectedCells);
         const columnIndex = Array.from(rightMostCell.parentElement.children).indexOf(rightMostCell);
-
         const rows = rightMostCell.parentElement.parentElement.children;
         Array.from(rows).forEach(row => {
             const newCell = document.createElement('td');
-            row.insertBefore(newCell, row.children[columnIndex + 1]); // Yeni hücreyi sağ tarafa ekliyoruz
-            newCell.style = 'border: 1px solid black'; // Varsayılan stil
-            newCell.innerHTML = '&nbsp;'; // Hücreye boşluk karakteri ekliyoruz
-            newCell.classList.remove('selectedcell');  // Seçili sınıfı kaldırıyoruz
+            row.insertBefore(newCell, row.children[columnIndex + 1]);
+            newCell.style = 'border: 1px solid black';
+            newCell.innerHTML = '&nbsp;';
+            newCell.classList.remove('selectedcell');
         });
     }
 }
 
-// En üstteki hücreyi bulma
 function getTopMostCell(selectedCells) {
     return Array.from(selectedCells).reduce((topMost, current) => {
         return current.getBoundingClientRect().top < topMost.getBoundingClientRect().top ? current : topMost;
     });
 }
 
-// En alttaki hücreyi bulma
 function getBottomMostCell(selectedCells) {
     return Array.from(selectedCells).reduce((bottomMost, current) => {
         return current.getBoundingClientRect().bottom > bottomMost.getBoundingClientRect().bottom ? current : bottomMost;
     });
 }
 
-// En soldaki hücreyi bulma
 function getLeftMostCell(selectedCells) {
     return Array.from(selectedCells).reduce((leftMost, current) => {
         return current.getBoundingClientRect().left < leftMost.getBoundingClientRect().left ? current : leftMost;
     });
 }
 
-// En sağdaki hücreyi bulma
 function getRightMostCell(selectedCells) {
     return Array.from(selectedCells).reduce((rightMost, current) => {
         return current.getBoundingClientRect().right > rightMost.getBoundingClientRect().right ? current : rightMost;
@@ -554,12 +534,11 @@ function getRightMostCell(selectedCells) {
 function deleteRow() {
     const selectedCells = document.querySelectorAll('.selectedcell');
     const processedRows = new Set();
-
     selectedCells.forEach(cell => {
         const row = cell.parentElement;
         if (row && !processedRows.has(row)) {
-            processedRows.add(row); // Satırın daha önce işlenip işlenmediğini kontrol ediyoruz
-            row.remove(); // Satırı siliyoruz
+            processedRows.add(row);
+            row.remove();
         }
     });
 	 document.getElementById('tablosagtusmenu').style.display='none';
@@ -567,18 +546,17 @@ function deleteRow() {
 
 function deleteColumn() {
     const selectedCells = document.querySelectorAll('.selectedcell');
-    const table = selectedCells[0]?.closest('table'); // Seçilen hücrelerin ait olduğu tabloyu alıyoruz
+    const table = selectedCells[0]?.closest('table');
     const processedColumns = new Set();
-
     if (table) {
         selectedCells.forEach(cell => {
             const columnIndex = Array.from(cell.parentElement.children).indexOf(cell);
             if (columnIndex !== -1 && !processedColumns.has(columnIndex)) {
-                processedColumns.add(columnIndex); // Aynı sütunun tekrar işlenmesini önlüyoruz
+                processedColumns.add(columnIndex);
                 Array.from(table.rows).forEach(row => {
                     const targetCell = row.children[columnIndex];
                     if (targetCell) {
-                        targetCell.remove(); // Sütundaki hücreleri siliyoruz
+                        targetCell.remove();
                     }
                 });
             }
@@ -586,8 +564,6 @@ function deleteColumn() {
     }
 	 document.getElementById('tablosagtusmenu').style.display='none';
 }
-//Hücre Biçimlendirme Son//
-
 document.addEventListener('contextmenu', function(event) {
     const cell = event.target.closest('td, th');
     const etName = event.target.tagName;
@@ -605,124 +581,83 @@ document.addEventListener('contextmenu', function(event) {
     if (cell && event.ctrlKey && cell.classList.contains('selectedcell')){
         event.preventDefault(); 
             const tstMenu = document.getElementById('tablosagtusmenu');	
-            tstMenu.style.top = `${Math.floor((window.innerHeight/3.5)+window.scrollY)}px`;  // Y koordinatını ayarla
-            tstMenu.style.left = `${Math.floor((window.innerWidth/2.6)+window.scrollX)}px`; // X koordinatını ayarla
+            tstMenu.style.top = `${Math.floor((window.innerHeight/3.5)+window.scrollY)}px`; 
+            tstMenu.style.left = `${Math.floor((window.innerWidth/2.6)+window.scrollX)}px`;
             tstMenu.style.display = 'flex';
     } ;
-
-    
 });
 
 document.addEventListener('click', function (e) {
 	const quickTableMenu = document.getElementById('quick-table-menu');if (quickTableMenu && !quickTableMenu.contains(e.target)) {quickTableMenu.remove();infoDisplay.remove();}
-	//const tstMenu = document.getElementById('tablosagtusmenu');if (tstMenu && !tstMenu.contains(e.target)) {tstMenu.style.display='none';}
-	if (e.target.tagName === 'TD') {
+	if (e.target.closest('td')) {
 		if(e.ctrlKey){const cell = e.target;cell.classList.toggle('selectedcell');}
 		document.querySelectorAll('table').forEach(table => {table.classList.remove('selectedtable');});
 		e.target.closest('table').classList.add('selectedtable');
 	}
+    if (!e.target.closest('table')) {
+        document.querySelectorAll('table').forEach(table => {
+            table.classList.remove('selectedtable');
+        });
+    }    
 });
 
-
 document.addEventListener('dblclick', function(event) {
-    // Eğer tıklanan öğe bir <td> hücresiyse
     if (event.target.tagName.toLowerCase() === 'td') {
-        event.target.classList.toggle('selectedcell'); // Seçili hücreyi toggle et
+        event.target.classList.toggle('selectedcell');
     }
 });
 
-
-
-
 function dikeyBirlestir() {
-    // Seçili hücreleri al
     const selectedCells = document.querySelectorAll('.selectedcell');
-
-    // İlk hücreyi birleştirilecek hücre olarak seç
     const firstCell = selectedCells[0];
-    const cellContents = [];  // Hücre içeriklerini saklamak için
-    let totalRowSpan = selectedCells.length;  // Seçilen hücre sayısı kadar rowSpan
-    let totalRowSpanGreaterThanOne = 0; // RowSpan'ı 1'den büyük olan hücrelerin sayısı
-
-    // Seçilen hücrelerin tümünü kontrol et
+    const cellContents = [];
+    let totalRowSpan = selectedCells.length;
+    let totalRowSpanGreaterThanOne = 0;
     selectedCells.forEach(cell => {
-        // İçeriği sakla
         cellContents.push(cell.innerHTML);
-
-        // Eğer rowSpan'ı 1'den büyükse, toplam rowSpan'ı artır
         if (cell.rowSpan > 1) {
-            totalRowSpanGreaterThanOne += cell.rowSpan - 1;  // RowSpan'dan 1 çıkar çünkü zaten ilk hücreyi hesaba katıyoruz
+            totalRowSpanGreaterThanOne += cell.rowSpan - 1;
         }
-
-        // 'selectedcell' sınıfını kaldır
         cell.classList.remove('selectedcell');
     });
-
-    // İlk hücreyi ayarla: rowSpan = Seçilen hücre sayısı + rowSpan'ı 1'den büyük olan hücrelerin toplamı
     firstCell.setAttribute('rowspan', totalRowSpan + totalRowSpanGreaterThanOne);
-    firstCell.innerHTML = cellContents.join(' ');  // İçerikleri birleştirip ilk hücreye ekle
-
-    // Diğer hücreleri kaldır
+    firstCell.innerHTML = cellContents.join(' ');
     selectedCells.forEach(cell => {
         if (cell !== firstCell) {
             const row = cell.parentElement;
-            row.deleteCell(cell.cellIndex);  // Birleştirilen hücreyi sil
+            row.deleteCell(cell.cellIndex);
         }
     });
-    // Sağ tıklama menüsünü gizle
     document.getElementById('tablosagtusmenu').style.display = 'none';
 }
 
 function yatayBirlestir() {
-    // Seçili hücreleri al
     const selectedCells = document.querySelectorAll('.selectedcell');
-
-
-    // İlk hücreyi birleştirilecek hücre olarak seç
     const firstCell = selectedCells[0];
-    const cellContents = [];  // Hücre içeriklerini saklamak için
-    let totalColSpan = selectedCells.length;  // Seçilen hücre sayısı kadar colSpan
-    let totalColSpanGreaterThanOne = 0; // ColSpan'ı 1'den büyük olan hücrelerin sayısı
-
-    // Seçilen hücrelerin tümünü kontrol et
+    const cellContents = [];
+    let totalColSpan = selectedCells.length;
+    let totalColSpanGreaterThanOne = 0;
     selectedCells.forEach(cell => {
-        // İçeriği sakla
         cellContents.push(cell.innerHTML);
-
-        // Eğer colSpan'ı 1'den büyükse, toplam colSpan'ı artır
         if (cell.colSpan > 1) {
-            totalColSpanGreaterThanOne += cell.colSpan - 1;  // ColSpan'dan 1 çıkar çünkü zaten ilk hücreyi hesaba katıyoruz
+            totalColSpanGreaterThanOne += cell.colSpan - 1;
         }
-
-        // 'selectedcell' sınıfını kaldır
         cell.classList.remove('selectedcell');
     });
-
-    // İlk hücreyi ayarla: colSpan = Seçilen hücre sayısı + colSpan'ı 1'den büyük olan hücrelerin toplamı
     firstCell.setAttribute('colspan', totalColSpan + totalColSpanGreaterThanOne);
-    firstCell.innerHTML = cellContents.join(' ');  // İçerikleri birleştirip ilk hücreye ekle
-
-    // Diğer hücreleri kaldır
+    firstCell.innerHTML = cellContents.join(' ');
     selectedCells.forEach(cell => {
         if (cell !== firstCell) {
             const row = cell.parentElement;
-            row.deleteCell(cell.cellIndex);  // Birleştirilen hücreyi sil
+            row.deleteCell(cell.cellIndex);
         }
     });
-
-    // Sağ tıklama menüsünü gizle
     document.getElementById('tablosagtusmenu').style.display = 'none';
 }
 
-
 function hucreBirlestir() {
-    // 'selectedcell' sınıfına sahip tüm hücreleri seç
     const selectedCells = document.querySelectorAll('.selectedcell');
-
-    // İlk hücrenin ebeveynini al
     const firstParent = selectedCells[0].parentNode;
-
-    // Tüm hücrelerin ebeveynlerini kontrol et
     for (let i = 1; i < selectedCells.length; i++) {
         if (selectedCells[i].parentNode !== firstParent) {
 			dikeyBirlestir();
@@ -734,7 +669,7 @@ function hucreBirlestir() {
 
 function yatayBol() {
     const selectedCells = document.querySelectorAll('.selectedcell');
-    const selectedTable = document.querySelector('.selectedtable'); // Tabloyu seç
+    const selectedTable = document.querySelector('.selectedtable');
 
     if (selectedCells.length === 0) {
         alert("Lütfen bölmek istediğiniz hücreyi seçin.");
@@ -742,37 +677,25 @@ function yatayBol() {
     }
 
     selectedCells.forEach((cell) => {
-        const row = cell.parentElement; // Hücrenin bulunduğu satır
-        const colIndex = Array.from(row.children).indexOf(cell); // Hücrenin sütun indeksi
-        let colSpan = parseFloat(cell.getAttribute('colspan')) || 1; // Mevcut colspan değeri
+        const row = cell.parentElement;
+        const colIndex = Array.from(row.children).indexOf(cell);
+        let colSpan = parseFloat(cell.getAttribute('colspan')) || 1;
 
         if (colSpan > 1) {
-            // Eğer colspan virgüllü ise, sadece tam kısmını al
-            const intColSpan = Math.floor(colSpan); // Virgülden önceki kısmı al
-
-            // Mevcut hücrenin colspan'ını ikiye bölelim
+            const intColSpan = Math.floor(colSpan);
             const newColSpan = Math.floor(intColSpan / 2);
             const remainingColSpan = intColSpan - newColSpan;
-
-            // Mevcut hücrenin colspan'ını güncelle
             cell.setAttribute('colspan', newColSpan);
-
-            // Yeni hücreyi oluştur
             const newCell = document.createElement('td');
             newCell.setAttribute('colspan', remainingColSpan);
             newCell.style= "border: 1px solid black";
-            newCell.innerHTML = "&nbsp;"; // Yeni hücre içeriği
-
-            // Mevcut hücrenin hemen sağına ekle
+            newCell.innerHTML = "&nbsp;";
             row.insertBefore(newCell, cell.nextSibling);
         } else {
-            // Eğer colspan yoksa veya 1'se, sadece bir yeni hücre ekle
             const newCell = document.createElement('td');
             newCell.innerHTML = "&nbsp;";
             newCell.style= "border: 1px solid black";
             row.insertBefore(newCell, cell.nextSibling);
-
-            // Diğer satırlardaki aynı sütundaki hücrelere colspan ekle
             const rows = Array.from(selectedTable.rows);
             rows.forEach((currentRow) => {
                 if (currentRow !== row) {
@@ -784,66 +707,47 @@ function yatayBol() {
                 }
             });
         }
-
-        // 'selectedcell' sınıfını temizle
         cell.classList.remove('selectedcell');
     });
-
-    // Sağ tıklama menüsünü gizle
     document.getElementById('tablosagtusmenu').style.display = 'none';
 }
 
 
 function dikeyBol() {
     const selectedCells = document.querySelectorAll('.selectedcell');
-    const selectedTable = document.querySelector('.selectedtable'); // Tabloyu seç
-
+    const selectedTable = document.querySelector('.selectedtable');
     if (selectedCells.length === 0) {
         alert("Lütfen bölmek istediğiniz hücreyi seçin.");
         return;
     }
 
     selectedCells.forEach((cell) => {
-        const row = cell.parentElement; // Hücrenin bulunduğu satır
-        const colIndex = Array.from(row.children).indexOf(cell); // Hücrenin sütun indeksi
-        let rowSpan = parseFloat(cell.getAttribute('rowspan')) || 1; // Mevcut rowspan değeri
-
+        const row = cell.parentElement;
+        const colIndex = Array.from(row.children).indexOf(cell);
+        let rowSpan = parseFloat(cell.getAttribute('rowspan')) || 1;
         if (rowSpan > 1) {
-            // Eğer rowspan virgüllü ise, sadece tam kısmını al
-            const intRowSpan = Math.floor(rowSpan); // Virgülden önceki kısmı al
-
-            // Mevcut hücrenin rowspan'ını ikiye bölelim
+            const intRowSpan = Math.floor(rowSpan);
             const newRowSpan = Math.floor(intRowSpan / 2);
             const remainingRowSpan = intRowSpan - newRowSpan;
-
-            // Mevcut hücrenin rowspan'ını güncelle
             cell.setAttribute('rowspan', newRowSpan);
-
-            // Yeni hücreyi oluştur
             const newCell = document.createElement('td');
             newCell.setAttribute('rowspan', remainingRowSpan);
             newCell.style = "border: 1px solid black";
-            newCell.innerHTML = "&nbsp;"; // Yeni hücre içeriği
-
-            // Yeni hücreyi, mevcut hücrenin hemen altına ekle
+            newCell.innerHTML = "&nbsp;";
             let nextRow = row;
             for (let i = 0; i < newRowSpan; i++) {
                 nextRow = nextRow.nextElementSibling;
                 if (!nextRow) {
-                    // Eğer satır yoksa, yeni bir satır ekleyelim
                     nextRow = document.createElement('tr');
                     row.parentElement.appendChild(nextRow);
                 }
                 nextRow.insertBefore(newCell.cloneNode(true), nextRow.children[colIndex]);
             }
         } else {
-            // Eğer rowspan yoksa veya 1'se, sadece bir yeni hücre ekle
             const newCell = document.createElement('td');
             newCell.innerHTML = "&nbsp;";
             newCell.style = "border: 1px solid black";
             row.insertBefore(newCell, cell.nextSibling);
-
-            // Diğer satırlardaki aynı sütundaki hücrelere rowspan ekle
             const rows = Array.from(selectedTable.rows);
             rows.forEach((currentRow) => {
                 if (currentRow !== row) {
@@ -855,11 +759,7 @@ function dikeyBol() {
                 }
             });
         }
-
-        // 'selectedcell' sınıfını temizle
         cell.classList.remove('selectedcell');
     });
-
-    // Sağ tıklama menüsünü gizle
     document.getElementById('tablosagtusmenu').style.display = 'none';
 }
