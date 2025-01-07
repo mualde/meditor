@@ -6,7 +6,7 @@ function AddSizeBtn() {
         <button title="Yazı Tipi Boyutu">
             <i class="fa-solid fa-text-height" onclick="openFontSizeMenu()"></i>
             <input id="font-size-minus" type="button" title="Yazı Tipi Boyutunu Küçült" value="-" onclick="applyFontSize(parseInt(this.nextElementSibling.value)-2+'pt');">
-            <input id="font-size-manuel" type="text" style="width:70px;text-align:center;" onclick="this.value=''" onblur="this.value=currentSize+'pt'" onchange="updateFontSize(this.value.replace(/[^0-9]/g, ''));">
+            <input id="font-size-manuel" type="text" style="width:70px;text-align:center;" onclick="this.value='';" onmousedown="secimiKoru();" onblur="this.value=currentSize+'pt'" onchange="updateFontSize(this.value.replace(/[^0-9]/g, ''));">
             <input id="font-size-plus" type="button" title="Yazı Tipi Boyutunu Büyüt" value="+" onclick="applyFontSize(parseInt(this.previousElementSibling.value)+2+'pt');">
         </button>
         <div id="font-size-menu" style="display:none">
@@ -29,31 +29,55 @@ function AddSizeBtn() {
 
 let currentSize = 12;
 
+function secimiKoru() {
+    const selection = window.getSelection(); // Kullanıcının yaptığı metin seçimini al
+    if (selection.rangeCount > 0) {
+        const range = selection.getRangeAt(0); // Seçilen aralığı al
+        const selectedText = selection.toString(); // Seçilen metni al ve boşlukları temizle
+        const words = selectedText.trim().split(/\s+/); // Boşluklara göre ayır
+
+        if (words.length === 1) { // Yalnızca bir kelime seçiliyse
+            const parentNode = range.commonAncestorContainer;
+
+            // Eğer zaten bir span içindeyse kontrol et
+            if (parentNode.nodeType === Node.TEXT_NODE && parentNode.parentElement.tagName === 'SPAN') {
+                parentNode.parentElement.classList.add('secilenkelime');
+            } else {
+                // Yeni bir span ekle
+                const span = document.createElement('span');
+                span.classList.add('secilenkelime');
+                span.textContent = selectedText; // Seçilen kelimenin sonuna boşluk ekle
+                range.deleteContents(); // Seçili metni sil
+                range.insertNode(span); // Yeni span'i ekle
+            }
+        }
+    }
+    editor.addEventListener('click', function removeHighlight(event) {
+        const sk = editor.querySelector('.secilenkelime');
+        if(sk){
+            sk.classList.remove('secilenkelime');
+        }
+    });
+}
+
+editor.addEventListener('click', function(event){
+    event.target.parentElement.classList.remove('secilenkelime');
+
+	const fsize = document.getElementById('font-size-manuel');
+    const computedStyle = window.getComputedStyle(event.target);
+	const fontSizePx = parseFloat(computedStyle.fontSize);
+	const fontSizePt = Math.floor(fontSizePx / 1.3333);
+    fsize.value = fontSizePt + 'pt';
+    currentSize = fontSizePt;
+});
 
 function updateFontSize(size) {
-	
-	if (!savedSelection) {
-        console.error("Kaydedilmiş bir seçim bulunamadı.");
-        return;
-    }
-
-    const selectedText = savedSelection.toString(); // Kaydedilen metni al
-    if (!selectedText) {
-        console.error("Seçili bir metin bulunamadı.");
-        return;
-    }
-    const newSpan = document.createElement('span');
-    newSpan.style.fontSize = `${size}px`;
-    newSpan.innerText = selectedText;
-
-    savedSelection.deleteContents();
-    savedSelection.insertNode(newSpan);
-    moveCursorToEnd(newSpan);
-	
-	
+    const sk = editor.querySelector('.secilenkelime');
+    sk.style.fontSize = `${size}px`;
+    sk.classList.remove('secilenkelime');
+    moveCursorToEnd(sk);
     currentSize = parseInt(size);
-	document.getElementById('font-size-manuel').value = size + 'pt';
-	
+    document.getElementById('font-size-manuel').value = size + 'pt';
 }
 
 function changeFontSize(increment, manualSize = null) {
@@ -117,4 +141,3 @@ function applyFontSize(size) {
         }
     }
 }
-
