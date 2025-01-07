@@ -4,6 +4,7 @@ function AddKaynakBtn() {
     kaynakContainer.innerHTML = `
         <button id="kaynakBtn" title="Kaynağı Göster" onclick="toggleSourceCode();">
             <i class="fa-solid fa-code"></i>
+            <span id="tagName"><editor></span>
         </button>
     `;
     if (toolbar) {toolbar.appendChild(kaynakContainer);}
@@ -20,6 +21,11 @@ function AddKaynakBtn() {
 	}
 };
 
+editor.addEventListener('click', function(event) {
+    tagName.textContent = `<${event.target.tagName}>`;
+});
+
+
 function getSelectionFromEditor() {
     const selection = window.getSelection();
     if (!selection.isCollapsed) {
@@ -33,7 +39,8 @@ function getSelectionFromEditor() {
     } else {
         return null;
     }
-}
+};
+
 function getTextPositionInHTML(editorHTML, selectedText) {
     const range = document.createRange();
     const div = document.createElement('div');
@@ -45,14 +52,16 @@ function getTextPositionInHTML(editorHTML, selectedText) {
         return range;
     }
     return null;
-}
+};
+
 function applySelectionToSourceCode(startPos, endPos) {
     const sourceCode = document.getElementById('sourceCode');
     if (sourceCode) {
         sourceCode.setSelectionRange(startPos, endPos);
         sourceCode.focus();
     }
-}
+};
+
 function toggleSourceCode() {
     if (!editor || !sourceCode) {
         console.error('Editor veya sourceCode öğesi bulunamadı!');
@@ -76,14 +85,4 @@ function toggleSourceCode() {
         editor.style.display = "block";
         const elmsDivs = document.querySelectorAll('.elm-in-editor');elmsDivs.forEach(elmDiv => {butonServis(elmDiv);});
     }
-}
-
-function createTagNameBox() {
-    let tagNameBox = document.getElementById('tagnamebox');
-    if (!tagNameBox) {
-        tagNameBox = document.createElement('span');
-        tagNameBox.id = 'tagnamebox';
-		document.getElementById("kaynakBtn").appendChild(tagNameBox);
-    }
-    return tagNameBox;
 }
