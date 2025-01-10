@@ -91,12 +91,12 @@ var targetElement = null;
 
 editor.addEventListener("click", function (event) {
 	pEkle();
-	iVeriTopla();
+	iVeriTopla(event);
 });
 
 editor.addEventListener("keydown", function (event) {
     if (!event.ctrlKey) {
-        iVeriTopla();
+        iVeriTopla(event);
     }
 });
 
@@ -116,20 +116,13 @@ function iVeriTopla(event) {
         const range = selection.getRangeAt(0);
         savedSelection = range.cloneRange();
         const selectedText = selection.toString();
-        let targetElement = selectedText
-            ? range.startContainer.parentElement
-            : event.target;
-        console.log("Selected Text:", selectedText);
-        console.log("Target Element:", targetElement);
+        let targetElement = selectedText ? range.startContainer.parentElement : event.target;
         const anchorNode = selection.anchorNode;
         if (anchorNode && anchorNode.textContent) {
             const anchorText = anchorNode.textContent;
             const anchorOffset = selection.anchorOffset;
             const currentWord = anchorText.split(/\s+/).find(word => {const start = anchorText.indexOf(word);const end = start + word.length;return start <= anchorOffset && end >= anchorOffset;}) || '';
-            console.log("Current Word:", currentWord.trim());
         }
-    } else {
-        console.warn("No selection made.");
     }
 }
 
