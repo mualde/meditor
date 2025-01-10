@@ -110,26 +110,26 @@ function pEkle(){
 }
 
 let savedSelection = null;
-function iVeriTopla() {
-    saveCursorPosition();
-    let selection = window.getSelection();
-    let selectedText = selection.toString();
-    let targetElement;
-	savedSelection = selection.getRangeAt(0).cloneRange();
-    if (selectedText) {
-        targetElement = selection.getRangeAt(0).startContainer.parentElement;
-    } else {
-        targetElement = event.target;
-    }
+function iVeriTopla(event) {
+    const selection = window.getSelection();
     if (selection.rangeCount > 0) {
-        let anchorNodeText = window.getSelection().anchorNode ? window.getSelection().anchorNode.textContent : '';
-        let currentWord = '';
-        if (anchorNodeText) {
-            currentWord = anchorNodeText.split(/\s+/).find(word => {
-                return anchorNodeText.indexOf(word) <= window.getSelection().anchorOffset && anchorNodeText.indexOf(word) + word.length >= window.getSelection().anchorOffset;
-            }) || '';
+        const range = selection.getRangeAt(0);
+        savedSelection = range.cloneRange();
+        const selectedText = selection.toString();
+        let targetElement = selectedText
+            ? range.startContainer.parentElement
+            : event.target;
+        console.log("Selected Text:", selectedText);
+        console.log("Target Element:", targetElement);
+        const anchorNode = selection.anchorNode;
+        if (anchorNode && anchorNode.textContent) {
+            const anchorText = anchorNode.textContent;
+            const anchorOffset = selection.anchorOffset;
+            const currentWord = anchorText.split(/\s+/).find(word => {const start = anchorText.indexOf(word);const end = start + word.length;return start <= anchorOffset && end >= anchorOffset;}) || '';
+            console.log("Current Word:", currentWord.trim());
         }
-        currentWord = currentWord.trim();
+    } else {
+        console.warn("No selection made.");
     }
 }
 
