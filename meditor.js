@@ -77,7 +77,7 @@ function organizeButtons(timeout = 2500) {
     }, timeout);
 }
 
-organizeButtons(500); 
+organizeButtons(1500); 
 
 var range = null;
 var selection = null;
