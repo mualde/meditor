@@ -58,6 +58,7 @@ function AddLinkBtn() {
 };
 
 function openLinkModal(event) {
+	const selection = window.getSelection();
   const range = selection.getRangeAt(0);
   if (range) {
     const selectedText = range.toString();
