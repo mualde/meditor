@@ -1,11 +1,12 @@
 var editor = document.getElementById('editor');
 var toolbar = null;
 var sourceContainer = null;
+var baseUrl = "https://cdn.jsdelivr.net/gh/mualde/"; // https://cdn.jsdelivr.net/gh/mualde/
 
 editor.contentEditable = true;
 
-function includeCSS(cssFile) {const link = document.createElement('link');link.rel = 'stylesheet';link.href = cssFile;document.head.appendChild(link);}
-function includeJS(src, callback) {const script = document.createElement('script');script.src = src;script.type = 'text/javascript';script.onload = callback;document.body.appendChild(script);}
+function includeCSS(cssFile) {const link = document.createElement('link');link.rel = 'stylesheet';link.href = baseUrl+cssFile;document.head.appendChild(link);}
+function includeJS(src, callback) {const script = document.createElement('script');script.src = baseUrl+src;script.type = 'text/javascript';script.onload = callback;document.body.appendChild(script);}
 
 document.addEventListener("DOMContentLoaded", function () {
     if (editor) {
@@ -17,18 +18,18 @@ document.addEventListener("DOMContentLoaded", function () {
 		toolbar = document.getElementById('toolbar');
     }
     if (toolbar) {
-		includeJS('https://cdn.jsdelivr.net/gh/mualde/meditor/eklentiler/baslik/baslik-js.js', function () {AddHeaderBtn();});
-		includeJS('https://cdn.jsdelivr.net/gh/mualde/meditor/eklentiler/fontsize/fontsize-js.js', function () {AddSizeBtn();});
-		includeJS('https://cdn.jsdelivr.net/gh/mualde/meditor/eklentiler/fontfamily/fontfamily-js.js', function () {AddFamilyBtn();});
-		includeJS('https://cdn.jsdelivr.net/gh/mualde/meditor/eklentiler/renkci/renkci-js.js', function () {AddColorBtn();});
-		includeJS('https://cdn.jsdelivr.net/gh/mualde/meditor/eklentiler/table/table-js.js', function () {AddTableBtn();});
-		includeJS('https://cdn.jsdelivr.net/gh/mualde/meditor/eklentiler/medya/medya-js.js', function () {AddImageBtn();});
-		includeJS('https://cdn.jsdelivr.net/gh/mualde/meditor/eklentiler/link/link-js.js', function () {AddLinkBtn();});
-		includeJS('https://cdn.jsdelivr.net/gh/mualde/meditor/eklentiler/kaynak/kaynak-js.js', function () {AddKaynakBtn();});
-		includeJS('https://cdn.jsdelivr.net/gh/mualde/meditor/eklentiler/tamekran/tamekran-js.js', function () {AddfullscreenBtn();});
-		includeJS('https://cdn.jsdelivr.net/gh/mualde/meditor/eklentiler/kaydet/kaydet-js.js', function () {AddkaydetBtn();});
-		includeJS('https://cdn.jsdelivr.net/gh/mualde/meditor/eklentiler/highlight/highlight-js.js', function () {AddVurgularBtn();});
-		includeCSS('https://cdn.jsdelivr.net/gh/mualde/meditor/css/style.css');
+		includeJS('meditor/eklentiler/baslik/baslik-js.js', function () {AddHeaderBtn();});
+		includeJS('meditor/eklentiler/fontsize/fontsize-js.js', function () {AddSizeBtn();});
+		includeJS('meditor/eklentiler/fontfamily/fontfamily-js.js', function () {AddFamilyBtn();});
+		includeJS('meditor/eklentiler/renkci/renkci-js.js', function () {AddColorBtn();});
+		includeJS('meditor/eklentiler/table/table-js.js', function () {AddTableBtn();});
+		includeJS('meditor/eklentiler/medya/medya-js.js', function () {AddImageBtn();});
+		includeJS('meditor/eklentiler/link/link-js.js', function () {AddLinkBtn();});
+		includeJS('meditor/eklentiler/kaynak/kaynak-js.js', function () {AddKaynakBtn();});
+		includeJS('meditor/eklentiler/tamekran/tamekran-js.js', function () {AddfullscreenBtn();});
+		includeJS('meditor/eklentiler/kaydet/kaydet-js.js', function () {AddkaydetBtn();});
+		includeJS('meditor/eklentiler/highlight/highlight-js.js', function () {AddVurgularBtn();});
+		includeCSS('meditor/css/style.css');
 		toolbar.addEventListener('mouseover', function(){
 			if (document.getElementById('topLeftButton')) {document.getElementById('topLeftButton').remove();}
 			if (document.getElementById('topRightButton')) {document.getElementById('topRightButton').remove();}
@@ -36,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
 			if (document.getElementById('bottomRightButton')) {document.getElementById('bottomRightButton').remove();}	
 		});
     }
-	if(editor && toolbar){editor.click();editor.focus();setTimeout(function() {editor.firstElementChild.click();}, 1500); }
+	if(editor && toolbar){editor.focus();editor.click();}
 });
 
 function organizeButtons(timeout = 2500) {
