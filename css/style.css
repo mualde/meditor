@@ -538,7 +538,6 @@ resize: none;
 	padding:10px;
 	border: 1px solid #ddd;
 	min-height: 800px;
-	background-color: #fff;
 	border-radius: 8px;
 	resize: both;
 	overflow: auto;
@@ -546,30 +545,19 @@ resize: none;
 #editor i {
 	user-select: none;
 }
+/* kaynak Bölümü baş------------------------------------------------------------------- */
 #sourceCode {
 	margin-top:20px;
-	padding:10px;
 	border: 1px solid #ddd;
 	min-height: 800px;
-	background-color: #fff;
 	border-radius: 8px;
 	resize: both;
 	overflow: auto;
 	font-family: courier new;
-}
-/* kaynak Bölümü baş------------------------------------------------------------------- */
-#sourceCode {
 	display: none;
-	margin-top:20px;
 	padding:10px;
-	border: 1px solid #ddd;
-	min-height: 300px;
-	background-color: #fff;
 	font-size: 16px;
 	line-height: 1.6;
-	border-radius: 8px;
-	resize: both;
-	overflow: auto;
 }
 /* kaynak Bölümü son------------------------------------------------------------------- */
 
@@ -757,4 +745,7 @@ resize: none;
 .btnSrvsBtn:hover{
     background-color: rgb(104, 164, 204);
     opacity: 1;
+}
+.bosRenk {
+    background: linear-gradient(to bottom right, #FFFFFF, #000000) !important;
 }
