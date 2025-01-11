@@ -1,5 +1,4 @@
 function AddfullscreenBtn() {
-    // Yeni tamekran-container HTML yapısını oluşturuyoruz
     const fullscreenContainer = document.createElement('div');
     fullscreenContainer.id = 'tamekran-container';
     fullscreenContainer.innerHTML = `<button id="fullscreenBtn" title="Tam Ekran Yap" onclick="toggleFullscreen();"><i class="fa-solid fa-maximize" style="color:red;"></i></button>`;
@@ -45,10 +44,10 @@ function toggleFullscreen() {
 		editor.style.backgroundColor = currentBackground;
 
 	} else {
-		editor.style = '';  // Tüm stilleri sıfırla
+		editor.style = '';
 		editor.style.backgroundColor = currentBackground;
-		toolbar.style = '';  // Tüm stilleri sıfırla
-		sourceCode.style = '';  // Tüm stilleri sıfırla
+		toolbar.style = '';
+		sourceCode.style = '';
 
 		editor.classList.remove('tamekraneditor');
 		toolbar.classList.remove('tamekrantoolbar');
