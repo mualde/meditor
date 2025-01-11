@@ -2,7 +2,8 @@ var editor = document.getElementById('editor');
 var toolbar = null;
 var sourceContainer = null;
 var baseUrl = "https://cdn.jsdelivr.net/gh/mualde/"; // https://cdn.jsdelivr.net/gh/mualde/
-
+var bodyBgColor = window.getComputedStyle(document.body).backgroundColor;
+editor.style.color = negColor(bodyBgColor);
 editor.contentEditable = true;
 
 function includeCSS(cssFile) {const link = document.createElement('link');link.rel = 'stylesheet';link.href = baseUrl+cssFile;document.head.appendChild(link);}
@@ -124,6 +125,14 @@ function moveCursorToStart(element) {
     }
     selection.removeAllRanges();
     selection.addRange(range);
+}
+
+function negColor(color) {
+    let hexMatch = color.match(/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i);    
+	let rgbMatch = color.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+    if (hexMatch) {let r = 255 - parseInt(hexMatch[1], 16);let g = 255 - parseInt(hexMatch[2], 16);let b = 255 - parseInt(hexMatch[3], 16);return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase()}`;}
+    if (rgbMatch) {let r = 255 - parseInt(rgbMatch[1]);let g = 255 - parseInt(rgbMatch[2]);let b = 255 - parseInt(rgbMatch[3]);return `rgb(${r}, ${g}, ${b})`;}
+    throw new Error("Geçersiz renk formatı! #hex veya rgb kullanılmalıdır.");
 }
 
 function rgbToHex(rgb) {const result = rgb.match(/\d+/g).map(num => parseInt(num).toString(16).padStart(2, '0'));return `#${result.join('')}`;}
