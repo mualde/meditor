@@ -1,5 +1,4 @@
 function AddTableBtn() {
-    // Yeni table-container HTML yapısını oluşturuyoruz
     const tableContainer = document.createElement('div');
     tableContainer.id = 'table-container';
     tableContainer.innerHTML = `
@@ -49,7 +48,7 @@ function AddTableBtn() {
 							<option value="dashed">- - - - -</option>
 							<option value="dotted">٠٠٠٠٠٠</option>
 						</select>
-						<input type="color" title="Kenar Rengi" id="border-color" value="#000000" list>
+						<input type="color" title="Kenar Rengi" id="border-color" value="${negColor(bodyBgColor)}" list>
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -110,7 +109,6 @@ function AddTableBtn() {
 				</div>
 			</div>
 		</div>
-		
 		<div id="editCellModal" class="modal" style="display:none">
 			<div id="modal-content" class="modal-content">
 				<div class="modal-header">
@@ -130,13 +128,9 @@ function AddTableBtn() {
 						<br>
 
 						<i class="fas fa-fill-drip"></i><input type="color" id="edit-cell-bg-color" value="#ffffff" title="Hücre Arka Plan Rengi" list>
-
 						<i class="fas fa-pen"></i><input type="color" id="edit-cell-text-color" value="#000000" title="Hücre Yazı Rengi" list>
-
 						<i class="fas fa-text-height"></i><input type="number" id="edit-cell-font-size" value="14" style="width:50px" title="Yazı Boyutu">
-
 						<i class="fas fa-border-style"></i><input type="number" id="edit-cell-border-width" value="1" style="width:50px" title="Kenar Kalınlığı">
-
 						<i class="fas fa-border-style"></i><input type="color" id="edit-cell-border-color" value="#000000" title="Kenar Rengi" list>
 					</div>
 					<br>
@@ -147,7 +141,6 @@ function AddTableBtn() {
 				</div>
 			</div>
 		</div>
-		
 		<div id="tablosagtusmenu" class="sagtusmenu" style="display:none;width:250px">
 			<div id="dragHandle" class="drag-handle" style="width:100%;text-align:center">
 				<i class="fas fa-arrows-alt"></i> Hücre Ayarı Menüsü <i class="fas fa-arrows-alt"></i> 
@@ -189,35 +182,28 @@ function AddTableBtn() {
     `;
 
     if (toolbar) {toolbar.appendChild(tableContainer);}
-
 	let offsetX = 0, offsetY = 0, isDragging = false;
-	const dragHandles = document.querySelectorAll('.drag-handle'); // Tüm drag-handle öğelerini seç
+	const dragHandles = document.querySelectorAll('.drag-handle');
 	dragHandles.forEach(dragHandle => {
 		dragHandle.addEventListener('mousedown', (e) => {
-			e.preventDefault(); // Varsayılan seçim davranışını durdur
+			e.preventDefault();
 			isDragging = true;
-
-			const menu = dragHandle.closest('.sagtusmenu'); // En yakın .sagtusmenu öğesini bul
+			const menu = dragHandle.closest('.sagtusmenu');
 			offsetX = e.clientX - menu.offsetLeft;
 			offsetY = e.clientY - menu.offsetTop;
 			menu.style.cursor = "move";
-
-			// Sürüklemeyi başlatacak fonksiyonu tanımla
 			const moveMenu = (e) => {
 				if (isDragging) {
 					menu.style.left = `${e.clientX - offsetX}px`;
 					menu.style.top = `${e.clientY - offsetY}px`;
 				}
 			};
-
-			// Sürükleme işlemi bittiğinde temizlik yap
 			const stopDragging = () => {
 				isDragging = false;
 				menu.style.cursor = "default";
 				document.removeEventListener('mousemove', moveMenu);
 				document.removeEventListener('mouseup', stopDragging);
 			};
-
 			document.addEventListener('mousemove', moveMenu);
 			document.addEventListener('mouseup', stopDragging);
 		});
@@ -225,7 +211,6 @@ function AddTableBtn() {
 }
 
 let infoDisplay = null;
-//Hızlı Tablo Oluştur Baş//
 function quickTableMenu(e) {
     const tableBtnCon = document.getElementById('table-container');
     if (!tableBtnCon) {
@@ -304,7 +289,6 @@ function createQuickTableMenu(quickTableMenu) {
     }
 }
 function createTableQuick(rows, cols) {
-    // Ana div oluştur
     const tableDiv = document.createElement('div');
     tableDiv.className = 'elm-in-editor';
     tableDiv.contentEditable = 'false';
@@ -318,7 +302,7 @@ function createTableQuick(rows, cols) {
         const tr = document.createElement('tr');
         for (let j = 0; j < cols; j++) {
             const td = document.createElement('td');
-            td.style.border = '1px solid black';
+            td.style.border = `1px solid ${negColor(bodyBgColor)}`;
             td.innerHTML = '&nbsp;';
             tr.appendChild(td);
         }
@@ -329,9 +313,6 @@ function createTableQuick(rows, cols) {
     savedSelection.insertNode(tableDiv);
     butonServis(tableDiv);
 }
-//Hızlı Tablo Oluştur Son//
-
-//Tablo Oluştur Baş//
 function createTable() {
     const title = document.getElementById('table-title').value;
     const rows = parseInt(document.getElementById('table-rows').value);
@@ -351,16 +332,13 @@ function createTable() {
     if (title) {const caption = document.createElement('caption'); caption.textContent = title;table.appendChild(caption);}
     let trhight = 0;
     table.style.cssText = `border-collapse: collapse; border: ${borderWidth}px ${borderStyle} ${borderColor}; width: 100%; height: 100%;`;
-    for (let i = 0; i < rows; i++) {trhight += 30;const tr = document.createElement('tr');for (let j = 0; j < cols; j++) {const td = document.createElement('td');td.style.border = '1px solid black';td.innerHTML = '&nbsp;';tr.appendChild(td);}table.appendChild(tr);}
+    for (let i = 0; i < rows; i++) {trhight += 30;const tr = document.createElement('tr');for (let j = 0; j < cols; j++) {const td = document.createElement('td');td.style.border = `1px solid ${negColor(bodyBgColor)}`;td.innerHTML = '&nbsp;';tr.appendChild(td);}table.appendChild(tr);}
     tableDiv.style.height = trhight+'px';
     tableDiv.appendChild(table);
     savedSelection.insertNode(tableDiv);
     butonServis(tableDiv);
     closeModal();
 }
-//Tablo Oluştur Son//
-
-//Tablo Güncelleme Baş//
 function getDataFromTable(table) {
 	document.getElementById('edit-table-title').value = table.querySelector('caption') ? table.querySelector('caption').innerText : '';
 	document.getElementById('edit-table-rows').value = table.rows.length;
@@ -392,9 +370,6 @@ function updateTable() {
     for (let row of selectedTable.rows) {while (row.cells.length < cols) {const cell = row.insertCell();cell.innerHTML = "&nbsp;";cell.style = 'border: 1px solid black';}while (row.cells.length > cols) {row.deleteCell(row.cells.length - 1);}}
     closeModal();
 }
-//Tablo Güncelle Son//
-
-//Hücre Biçimlendirme Baş
 function getDataFromCell() {
     const selectedCells = document.querySelectorAll('.selectedcell');
     const selectedCell = selectedCells[0]; // Eğer bir hücre seçildiyse, ilkini alıyoruz.
@@ -427,31 +402,22 @@ function updateCell() {
         closeModal();
     }
 }
-
-// Yeni satır ekleme fonksiyonu (Yukarıya)
 function addRowUp() {
     const selectedCells = document.querySelectorAll('.selectedcell');
-    
     if (selectedCells.length > 0) {
-        // Çoklu hücre seçimlerinde, en üstteki hücreyi baz alıyoruz
         const topMostCell = getTopMostCell(selectedCells);
         const selectedRow = topMostCell.parentElement;
-
-        const newRow = selectedRow.cloneNode(false); // Yeni bir satır oluşturuyoruz (içeriksiz)
-        selectedRow.parentElement.insertBefore(newRow, selectedRow); // Yeni satırı yukarıya ekliyoruz
-
-        // Yeni satırdaki hücre sayısını mevcut satırın hücre sayısına göre ayarlıyoruz
+        const newRow = selectedRow.cloneNode(false);
+        selectedRow.parentElement.insertBefore(newRow, selectedRow);
         const cellCount = selectedRow.children.length;
         for (let i = 0; i < cellCount; i++) {
             const newCell = document.createElement('td');
-            newCell.style = 'border: 1px solid black'; // Varsayılan stil
-            newCell.innerHTML = '&nbsp;'; // Hücreye boşluk karakteri ekliyoruz
-            newRow.appendChild(newCell); // Yeni hücreyi ekliyoruz
+            newCell.style = 'border: 1px solid black';
+            newCell.innerHTML = '&nbsp;';
+            newRow.appendChild(newCell);
         }
-
-        // Yeni satırdaki hücrelere select class'ı eklemiyoruz
         newRow.querySelectorAll('td').forEach(cell => {
-            cell.classList.remove('selectedcell');  // Seçili sınıfı kaldırıyoruz
+            cell.classList.remove('selectedcell');
         });
     }
 }
@@ -670,12 +636,10 @@ function hucreBirlestir() {
 function yatayBol() {
     const selectedCells = document.querySelectorAll('.selectedcell');
     const selectedTable = document.querySelector('.selectedtable');
-
     if (selectedCells.length === 0) {
         alert("Lütfen bölmek istediğiniz hücreyi seçin.");
         return;
     }
-
     selectedCells.forEach((cell) => {
         const row = cell.parentElement;
         const colIndex = Array.from(row.children).indexOf(cell);
@@ -712,7 +676,6 @@ function yatayBol() {
     document.getElementById('tablosagtusmenu').style.display = 'none';
 }
 
-
 function dikeyBol() {
     const selectedCells = document.querySelectorAll('.selectedcell');
     const selectedTable = document.querySelector('.selectedtable');
@@ -720,7 +683,6 @@ function dikeyBol() {
         alert("Lütfen bölmek istediğiniz hücreyi seçin.");
         return;
     }
-
     selectedCells.forEach((cell) => {
         const row = cell.parentElement;
         const colIndex = Array.from(row.children).indexOf(cell);
