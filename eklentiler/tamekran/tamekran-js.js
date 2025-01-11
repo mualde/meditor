@@ -7,7 +7,7 @@ function AddfullscreenBtn() {
 };
 
 function toggleFullscreen() {
-	var currentBackground = editor.style.backgroundColor;
+	var currentBackground = document.body.style.backgroundColor || bodyBgColor || 'White';
 	if (!editor.classList.contains('tamekraneditor')) {
 		
 		toolbar.style.zIndex = '999';
@@ -27,8 +27,6 @@ function toggleFullscreen() {
 		editor.style.margin = '0';
 		editor.style.boxSizing = 'border-box';
 
-		
-
 		sourceCode = document.getElementById("sourceCode");
 		sourceCode.style.zIndex = '99';
 		sourceCode.style.width = '100%';
@@ -39,13 +37,13 @@ function toggleFullscreen() {
 		sourceCode.style.margin = '0';
 		sourceCode.style.boxSizing = 'border-box';
 
-
-		
 		document.body.style.overflow = 'hidden';
 
 		editor.classList.add('tamekraneditor');
 		toolbar.classList.add('tamekrantoolbar');
 		sourceCode.classList.add('tamekrankaynak');
+		editor.style.backgroundColor = currentBackground;
+
 	} else {
 		editor.style = '';  // Tüm stilleri sıfırla
 		editor.style.backgroundColor = currentBackground;
@@ -62,4 +60,3 @@ function toggleFullscreen() {
 	moveCursorToStart(editor);
 	
 }
-
