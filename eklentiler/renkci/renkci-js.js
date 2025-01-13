@@ -11,14 +11,14 @@ function AddColorBtn() {
 			<!-- Metin rengi ikonu ve renk seçici -->
 			<div class="color-picker-item">
 				<i class="fa-solid fa-pen" title="Metin Rengi"></i>
-				<input title="Metin Rengi" type="color" id="textColor" value="#000000" list style="width:70px">
+				<input title="Metin Rengi" type="color" id="textColor" value="${negColor(bodyBgColor)}" list style="width:70px">
 				<button id="applyColors" onclick="applyFontColor(event)" title="Metin Rengini Değiştir" style="width:70px;margin-left:15px"> Uygula </button>
 			</div>
 			
 			<!-- Arka plan rengi ikonu ve renk seçici -->
 			<div class="color-picker-item">
 				<i class="fa-solid fa-paint-roller" title="Arka Plan Rengi"></i>
-				<input title="Arka Plan Rengi" type="color" id="bgColor" value="#ffffff" list style="width:70px">
+				<input title="Arka Plan Rengi" type="color" id="bgColor" value="${bodyBgColor}" list style="width:70px">
 				<button id="applyColors" onclick="applyFontBgColor(event)" title="Arkaplan Rengini Değiştir" style="width:70px;margin-left:15px"> Uygula </button>
 			</div>
 		</div>
