@@ -32,13 +32,11 @@ editor.addEventListener('click', function(event){
     const computedStyle = window.getComputedStyle(event.target);
 	const tColor = document.getElementById('textColor');
 	const bgColor = document.getElementById('bgColor');
-    const fontColor = computedStyle.color;
-    let fontBgColor = computedStyle.backgroundColor;
-    if (fontBgColor === 'rgba(0, 0, 0, 0)') {
-        fontBgColor = 'rgb(255, 255, 255)';
-    }
-    tColor.value = rgbToHex(fontColor);
-    bgColor.value = rgbToHex(fontBgColor);
+    let fontColor = rgbToHex(computedStyle.color) || negColor(rgbToHex(bodyBgColor));
+    let fontBgColor = rgbToHex(computedStyle.backgroundColor) || rgbToHex(bodyBgColor);
+
+    tColor.value = fontColor;
+    bgColor.value = fontBgColor;
 });
 
 
