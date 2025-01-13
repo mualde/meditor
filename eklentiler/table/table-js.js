@@ -48,7 +48,7 @@ function AddTableBtn() {
 							<option value="dashed">- - - - -</option>
 							<option value="dotted">٠٠٠٠٠٠</option>
 						</select>
-						<input type="color" title="Kenar Rengi" id="border-color" value="${negColor(bodyBgColor)}" list>
+						<input type="color" title="Kenar Rengi" id="border-color" value="${negColor(rgbToHex(bodyBgColor))}" list>
 					</div>
 				</div>
 				<div class="modal-footer">
