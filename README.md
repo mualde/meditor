@@ -9,6 +9,6 @@ AdGuard Çalışmasını engelliyor
 
 
 
-&lt;div id="editor" contenteditable="true" placeholder="text here"&gt;&lt;/div&gt;
+&lt;div id="editor" placeholder="text here"&gt;&lt;/div&gt;
 <script src="meditor.js"></script>
 
