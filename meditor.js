@@ -2,7 +2,7 @@ var editor = document.getElementById('editor');
 var toolbar = null;
 var sourceContainer = null;
 var baseUrl = "https://cdn.jsdelivr.net/gh/mualde/"; // https://cdn.jsdelivr.net/gh/mualde/
-var bodyBgColor = window.getComputedStyle(document.body).backgroundColor;
+var bodyBgColor = rgbaToRgb(window.getComputedStyle(document.body).backgroundColor);
 editor.style.color = negColor(bodyBgColor);
 editor.contentEditable = true;
 
@@ -127,6 +127,7 @@ function moveCursorToStart(element) {
     selection.addRange(range);
 }
 
+
 function negColor(color) {
     let hexMatch = color.match(/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i);    
 	let rgbMatch = color.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
@@ -135,8 +136,17 @@ function negColor(color) {
     throw new Error("Geçersiz renk formatı! #hex veya rgb kullanılmalıdır.");
 }
 
-function rgbToHex(rgb) {if(rgb){const result = rgb.match(/\d+/g).map(num => parseInt(num).toString(16).padStart(2, '0'));return `#${result.join('')}`;}}
-function hexToRgb(hex) {if(hex){let r = parseInt(hex.slice(1, 3), 16);let g = parseInt(hex.slice(3, 5), 16);let b = parseInt(hex.slice(5, 7), 16);return `rgb(${r}, ${g}, ${b})`;}}
+function rgbaToRgb(rgba) {if(rgba){
+	rgba = rgba.replace(/^rgba\((\d+),\s*(\d+),\s*(\d+),.*\)$/, "rgb($1, $2, $3)");return rgba;
+}}
+function rgbToHex(rgb) {if(rgb){
+	const tempElement = document.createElement('div');tempElement.style.color = rgb;document.body.appendChild(tempElement);const computedColor = window.getComputedStyle(tempElement).color;document.body.removeChild(tempElement);rgb = computedColor;
+	const result = rgb.match(/\d+/g).map(num => parseInt(num).toString(16).padStart(2, '0'));return `#${result.join('')}`;
+}}
+function hexToRgb(hex) {if(hex){
+	const tempElement = document.createElement('div');tempElement.style.color = hex;document.body.appendChild(tempElement);const computedColor = window.getComputedStyle(tempElement).color;document.body.removeChild(tempElement);hex = computedColor;
+	return rgbaToRgb(hex);
+}}
 
 function openModal(modalid) {var modal = document.getElementById(modalid);if (modal.style.display === 'none' || modal.style.display === '') {modal.style.display = 'flex';}}
 function closeModalDelay() {const modals = document.querySelectorAll('.modal');setTimeout(function() {modals.forEach(element => {element.style.display = 'none';});}, 5);}
