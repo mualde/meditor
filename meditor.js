@@ -140,7 +140,7 @@ function rgbaToRgb(rgba) {if(rgba){
 	rgba = rgba.replace(/^rgba\((\d+),\s*(\d+),\s*(\d+),.*\)$/, "rgb($1, $2, $3)");return rgba;
 }}
 function rgbToHex(rgb) {if(rgb){
-	const tempElement = document.createElement('div');tempElement.style.color = rgb;document.body.appendChild(tempElement);const computedColor = window.getComputedStyle(tempElement).color;document.body.removeChild(tempElement);rgb = computedColor;
+	const tempElement = document.createElement('div');tempElement.style.color = rgb;document.body.appendChild(tempElement);const computedColor = window.getComputedStyle(tempElement).color;document.body.removeChild(tempElement);rgb = rgbaToRgb(computedColor);
 	const result = rgb.match(/\d+/g).map(num => parseInt(num).toString(16).padStart(2, '0'));return `#${result.join('')}`;
 }}
 function hexToRgb(hex) {if(hex){
