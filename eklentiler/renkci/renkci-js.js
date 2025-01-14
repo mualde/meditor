@@ -22,7 +22,10 @@ function AddColorBtn() {
     if (toolbar) {toolbar.appendChild(colorContainer);}
 };
 
-editor.addEventListener('click', function(event){document.getElementById('textColor').value = rgbToHex(event.target.style.color) || rgbToHex(negColor(bodyBgColor));document.getElementById('bgColor').value = rgbToHex(event.target.style.backgroundColor) || rgbToHex(bodyBgColor);});
+editor.addEventListener('click', function(event){
+    document.getElementById('textColor').value = rgbToHex(event.target.style.color) || rgbToHex(negColor(bodyBgColor));
+    document.getElementById('bgColor').value = rgbToHex(event.target.style.backgroundColor) || rgbToHex(bodyBgColor);
+});
 
 function openColorMenu() {document.getElementById('font-color-menu').style.display = (document.getElementById('font-color-menu').style.display === 'none' || document.getElementById('font-color-menu').style.display === '') ? 'block' : 'none';};
 
