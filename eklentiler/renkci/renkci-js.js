@@ -1,6 +1,5 @@
 var fontColorMenu = null;
 function AddColorBtn() {
-    // Yeni color-container HTML yapısını oluşturuyoruz
     const colorContainer = document.createElement('div');
     colorContainer.id = 'color-container';
     colorContainer.innerHTML = `
@@ -29,16 +28,9 @@ function AddColorBtn() {
 };
 
 editor.addEventListener('click', function(event){
-    const computedStyle = window.getComputedStyle(event.target);
-	const tColor = document.getElementById('textColor');
-	const bgColor = document.getElementById('bgColor');
-    let fontColor = rgbToHex(computedStyle.color) || negColor(rgbToHex(bodyBgColor));
-    let fontBgColor = rgbToHex(computedStyle.backgroundColor) || rgbToHex(bodyBgColor);
-
-    tColor.value = fontColor;
-    bgColor.value = fontBgColor;
+    document.getElementById('textColor').value = rgbToHex(event.target.style.color) || rgbToHex(negColor(bodyBgColor));
+    document.getElementById('bgColor').value = rgbToHex(event.target.style.backgroundColor) || rgbToHex(bodyBgColor);
 });
-
 
 function openColorMenu() {
     fontColorMenu.style.display = (fontColorMenu.style.display === 'none' || fontColorMenu.style.display === '') ? 'block' : 'none';
