@@ -135,8 +135,9 @@ function negColor(color) {
     throw new Error("Geçersiz renk formatı! #hex veya rgb kullanılmalıdır.");
 }
 
-function rgbToHex(rgb) {const result = rgb.match(/\d+/g).map(num => parseInt(num).toString(16).padStart(2, '0'));return `#${result.join('')}`;}
-function hexToRgb(hex) {let r = parseInt(hex.slice(1, 3), 16);let g = parseInt(hex.slice(3, 5), 16);let b = parseInt(hex.slice(5, 7), 16);return `rgb(${r}, ${g}, ${b})`;}
+function rgbToHex(rgb) {if(rgb){const result = rgb.match(/\d+/g).map(num => parseInt(num).toString(16).padStart(2, '0'));return `#${result.join('')}`;}}
+function hexToRgb(hex) {if(hex){let r = parseInt(hex.slice(1, 3), 16);let g = parseInt(hex.slice(3, 5), 16);let b = parseInt(hex.slice(5, 7), 16);return `rgb(${r}, ${g}, ${b})`;}}
+
 function openModal(modalid) {var modal = document.getElementById(modalid);if (modal.style.display === 'none' || modal.style.display === '') {modal.style.display = 'flex';}}
 function closeModalDelay() {const modals = document.querySelectorAll('.modal');setTimeout(function() {modals.forEach(element => {element.style.display = 'none';});}, 5);}
 function closeModal() {const modals = document.querySelectorAll('.modal');modals.forEach(element => {element.style.display = 'none';});}
