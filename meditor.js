@@ -35,7 +35,8 @@ document.addEventListener("DOMContentLoaded", function () {
 			if (document.getElementById('topLeftButton')) {document.getElementById('topLeftButton').remove();}
 			if (document.getElementById('topRightButton')) {document.getElementById('topRightButton').remove();}
 			if (document.getElementById('bottomLeftButton')) {document.getElementById('bottomLeftButton').remove();}
-			if (document.getElementById('bottomRightButton')) {document.getElementById('bottomRightButton').remove();}	
+			if (document.getElementById('bottomRightButton')) {document.getElementById('bottomRightButton').remove();}
+			document.querySelector('#editor').querySelectorAll('[contenteditable="true"]').forEach(function(element) {element.removeAttribute('contenteditable');});
 		});
     }
 	if(editor && toolbar){editor.focus();editor.click();}
@@ -157,6 +158,9 @@ const elmsDivs = document.getElementsByClassName('elm-in-editor');
 Array.from(elmsDivs).forEach(elmDiv => {butonServis(elmDiv);});
 
 function butonServis(elmDiv){
+	elmDiv.addEventListener('mousemove', function(event) {
+		elmDiv.firstChild.setAttribute('contenteditable', 'true');
+	});
 	elmDiv.addEventListener('click', function(event) {
 		const bottomRightButton = document.createElement('button');
 		bottomRightButton.id = 'bottomRightButton';
