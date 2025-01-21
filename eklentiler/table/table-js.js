@@ -233,7 +233,7 @@ function quickTableMenu(e) {
 	tableBtnCon.appendChild(quickTableMenu);
 	infoDisplay = document.createElement('span');
 	infoDisplay.id = 'infoDisplay';
-    infoDisplay.style.cssText = 'position: relative; margin-top: -93px; margin-left: 37px; font-size: 25pt; opacity: 0.3;';
+    infoDisplay.style.cssText = 'pointer-events: none; position: relative; margin-top: -93px; margin-left: 37px; font-size: 25pt; opacity: 0.3;';
 	quickTableMenu.appendChild(infoDisplay);
 	infoDisplay = document.getElementById('infoDisplay');
 }
