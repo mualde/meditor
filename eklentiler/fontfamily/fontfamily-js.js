@@ -18,10 +18,10 @@ function AddFamilyBtn() {
                 <li onclick="applyFontFamily(this.style.fontFamily)" style="font-family: 'Dancing Script', cursive;">Dancing Script</li>
                 <li onclick="applyFontFamily(this.style.fontFamily)" style="font-family: 'Fredericka the Great', cursive;">Fredericka Great</li>
                 <li onclick="applyFontFamily(this.style.fontFamily)" style="font-family: 'Impact', sans-serif;">Impact</li>
-				<li onclick="applyFontFamily(this.style.fontFamily)" style="font-family: 'Pacifico', cursive;">Pacifico</li>
-				<li onclick="applyFontFamily(this.style.fontFamily)" style="font-family: 'Lobster', cursive;">Lobster</li>
+		<li onclick="applyFontFamily(this.style.fontFamily)" style="font-family: 'Pacifico', cursive;">Pacifico</li>
+		<li onclick="applyFontFamily(this.style.fontFamily)" style="font-family: 'Lobster', cursive;">Lobster</li>
                 <li onclick="applyFontFamily(this.style.fontFamily)" style="font-family: 'Oswald', sans-serif;">Oswald</li>
-				<li onclick="applyFontFamily(this.style.fontFamily)" style="font-family: 'Ubuntu', sans-serif;">Ubuntu</li>
+		<li onclick="applyFontFamily(this.style.fontFamily)" style="font-family: 'Ubuntu', sans-serif;">Ubuntu</li>
                 <li onclick="applyFontFamily(this.style.fontFamily)" style="font-family: 'Courier New', monospace;">Courier New</li>
                 <li onclick="applyFontFamily(this.style.fontFamily)" style="font-family: 'Georgia', serif;">Georgia</li>
                 <li onclick="applyFontFamily(this.style.fontFamily)" style="font-family: 'Times New Roman', serif;">Times New Roman</li>
