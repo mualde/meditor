@@ -3,20 +3,22 @@ var toolbar = null;
 var sourceContainer = null;
 var baseUrl = "https://cdn.jsdelivr.net/gh/mualde/"; // https://cdn.jsdelivr.net/gh/mualde/
 var bodyBgColor = '#000000';
-editor.style.color = negColor(bodyBgColor);
-editor.contentEditable = true;
 
 function includeCSS(cssFile) {const link = document.createElement('link');link.rel = 'stylesheet';link.href = baseUrl+cssFile;document.head.appendChild(link);}
 function includeJS(src, callback) {const script = document.createElement('script');script.src = baseUrl+src;script.type = 'text/javascript';script.onload = callback;document.body.appendChild(script);}
 
+includeCSS('meditor/css/style.css');
+
 document.addEventListener("DOMContentLoaded", function () {
     if (editor) {
-		const toolbarDiv = document.createElement("div");
-		toolbarDiv.style.display = "none";
-		toolbarDiv.className = "toolbar"; 
-		toolbarDiv.id = "toolbar";
-		editor.insertAdjacentElement('beforebegin', toolbarDiv);
-		toolbar = document.getElementById('toolbar');
+      editor.style.color = negColor(bodyBgColor);
+      editor.contentEditable = true;
+		  const toolbarDiv = document.createElement("div");
+		  toolbarDiv.style.display = "none";
+		  toolbarDiv.className = "toolbar"; 
+		  toolbarDiv.id = "toolbar";
+		  editor.insertAdjacentElement('beforebegin', toolbarDiv);
+		  toolbar = document.getElementById('toolbar');
     }
     if (toolbar) {
 		includeJS('meditor/eklentiler/baslik/baslik-js.js', function () {AddHeaderBtn();});
@@ -30,7 +32,6 @@ document.addEventListener("DOMContentLoaded", function () {
 		includeJS('meditor/eklentiler/tamekran/tamekran-js.js', function () {AddfullscreenBtn();});
 		includeJS('meditor/eklentiler/kaydet/kaydet-js.js', function () {AddkaydetBtn();});
 		includeJS('meditor/eklentiler/highlight/highlight-js.js', function () {AddVurgularBtn();});
-		includeCSS('meditor/css/style.css');
 		toolbar.addEventListener('mouseover', function(){
 			if (document.getElementById('topLeftButton')) {document.getElementById('topLeftButton').remove();}
 			if (document.getElementById('topRightButton')) {document.getElementById('topRightButton').remove();}
@@ -39,7 +40,11 @@ document.addEventListener("DOMContentLoaded", function () {
 			document.querySelector('#editor').querySelectorAll('[contenteditable="true"]').forEach(function(element) {element.removeAttribute('contenteditable');});
 		});
     }
-	if(editor && toolbar){editor.focus();editor.click();}
+	if(editor && toolbar){
+    editor.addEventListener("click", function (event) {if (!editor.innerHTML.trim()) {editor.innerHTML = '<p>&nbsp;</p>'};iVeriTopla(event);});
+    editor.addEventListener("keydown", function (event) {if (!event.ctrlKey) {iVeriTopla(event);}});
+    editor.focus();editor.click();
+  }
 });
 
 function organizeButtons(timeout = 2500) {
@@ -71,9 +76,6 @@ var selectedText = null;
 var currentWord = null;
 var targetElement = null;
 var savedSelection = null;
-
-editor.addEventListener("click", function (event) {if (!editor.innerHTML.trim()) {editor.innerHTML = '<p>&nbsp;</p>'};iVeriTopla(event);});
-editor.addEventListener("keydown", function (event) {if (!event.ctrlKey) {iVeriTopla(event);}});
 
 function iVeriTopla(event) {
     const selection = window.getSelection();
