@@ -108,7 +108,7 @@ function AddImageBtn() {
 				<option value="right">Sağ</option>
 			</select>
 			<div style="width:100%"></div>
-			<label for="editAlt">Alt Bilgisi:</label>
+			<label for="editTitle">Alt Bilgisi:</label>
 			<input type="text" id="editTitle" placeholder="Title bilgisi girin" style="width:100px" title="Title Bilgi">
 			<div class="modal-footer">
 				<button onclick="updateImage()">Güncelle</button>
