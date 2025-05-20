@@ -428,7 +428,7 @@ resize: none;
 }
 
 @font-face {
-  font-family: 'Slabo';
+  font-family: 'Slabo 27px';
   src: url(https://cdn.jsdelivr.net/gh/mualde/meditor/css/fonts/slabo.woff2) format('woff2');
   font-style: var(--font-normal);
   font-weight: var(--font-weight-400);
