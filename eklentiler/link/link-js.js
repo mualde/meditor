@@ -5,12 +5,12 @@ function AddLinkBtn() {
     <button id="linkBtn" title="Link Ekle" onclick="openLinkModal()">
         <i class="fa-solid fa-link"></i>
     </button>
-    <div id="linkModal" class="modal" style="display:none">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Bağlantı Ekle</h5>
+    <div id="linkModal" class="me-modal" style="display:none">
+      <div class="me-modal-content">
+        <div class="me-modal-header">
+          <h5 class="me-modal-title">Bağlantı Ekle</h5>
         </div>
-        <div class="modal-body">
+        <div class="me-modal-body">
           <div class="mb-3" style="border: 1px solid #ccc; padding: 10px; border-radius: 5px;">
             <span style="position: absolute; top: -19px; left: 10px; padding:5px;background-color:#2e2e2e;color:white;border-radius:5px;font-size:10pt"> Link Özellikleri </span>
             <input type="text" id="linkText" placeholder="Köprü" style="width: 100%; user-select: none;">
@@ -21,18 +21,18 @@ function AddLinkBtn() {
             </select>
           </div>
         </div>
-        <div class="modal-footer">
+        <div class="me-modal-footer">
           <button onclick="InsertLink();">Uygula</button>
           <button onclick="closeModal();">İptal Et</button>
         </div>
       </div>
     </div>
-    <div id="editLinkModal" class="modal" style="display:none">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Bağlantıyı Güncelle</h5>
+    <div id="editLinkModal" class="me-modal" style="display:none">
+      <div class="me-modal-content">
+        <div class="me-modal-header">
+          <h5 class="me-modal-title">Bağlantıyı Güncelle</h5>
         </div>
-        <div class="modal-body">
+        <div class="me-modal-body">
           <div class="mb-3" style="border: 1px solid #ccc; padding: 10px; border-radius: 5px;">
           <span style="position: absolute; top: -19px; left: 10px; padding:5px;background-color:#2e2e2e;color:white;border-radius:5px;font-size:10pt"> Link Özellikleri </span>
             <input type="text" id="editLinkText" placeholder="Köprü" style="width:100%; user-select: none;">
@@ -43,7 +43,7 @@ function AddLinkBtn() {
             </select>
           </div>
         </div>
-        <div class="modal-footer">
+        <div class="me-modal-footer">
           <button onclick="UpdateLink();">Güncelle</button>
           <button onclick="kaldirLink();">Linki Kaldır</button>
           <button onclick="closeModal()">İptal</button>
