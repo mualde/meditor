@@ -6,13 +6,13 @@ function AddImageBtn() {
         <button id="resimBtn" title="Resim Ekle" onclick="openModal('resimModal')">
             <i class="fa-solid fa-image"></i>
         </button>
-		<div id="resimModal" class="modal">
-			<div id="modal-content" class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">Resim Ekle</h5>
+		<div id="resimModal" class="me-modal">
+			<div id="me-modal-content" class="me-modal-content">
+				<div class="me-modal-header">
+					<h5 class="me-modal-title">Resim Ekle</h5>
 					<button type="button" class="closeButton" onclick="closeModal();">&times;</button>
 				</div>
-				<div class="modal-body">
+				<div class="me-modal-body">
 					<div class="form-group">
 						<input type="url" id="imageUrl" placeholder="Resim URL'sini girin" style="width: 40%;"> veya 
 						<input type="file" id="imageFile" accept="image/*" onchange="previewImage(event)" style="width: 40%;">
@@ -34,7 +34,7 @@ function AddImageBtn() {
 					</div>
 
 				</div>
-				<div class="modal-footer">
+				<div class="me-modal-footer">
 					<div class="form-actions">
 						<button onclick="insertImage()">Editöre Ekle</button>
 						<button class="cancelButton" onclick="resetImageForm()">İptal Et</button>
