@@ -5,12 +5,12 @@ function AddTableBtn() {
         <button id="tableBtn" title="Tablo Ekle" onclick="openModal('tableModal')" onmousedown="quickTableMenu();">
             <i class="fa-solid fa-table"></i>
         </button>
-		<div id="tableModal" class="modal" style="display:none">
-			<div id="modal-content" class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">Tablo Ekle</h5>
+		<div id="tableModal" class="me-modal" style="display:none">
+			<div id="me-modal-content" class="me-modal-content">
+				<div class="me-modal-header">
+					<h5 class="me-modal-title">Tablo Ekle</h5>
 				</div>
-				<div class="modal-body">
+				<div class="me-modal-body">
 					<div class="form-group" style="border: 1px solid #ccc; padding: 10px; border-radius: 5px; position: relative;">
 						<span style="position: absolute; top: -19px; left: 10px; padding:5px;background-color:#2e2e2e;color:white;border-radius:5px;font-size:10pt"> Tablo Başlığı </span>
 						<br>
@@ -51,18 +51,18 @@ function AddTableBtn() {
 						<input type="color" title="Kenar Rengi" id="border-color" value="${negColor(rgbToHex(bodyBgColor))}" list>
 					</div>
 				</div>
-				<div class="modal-footer">
+				<div class="me-modal-footer">
 					<button onclick="createTable()">Tablo Oluştur</button>
 					<button onclick="cancelModal();">İptal Et</button>
 				</div>
 			</div>
 		</div>
-		<div id="editTableModal" class="modal" style="display:none">
-			<div id="modal-content" class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">Tabloyu Düzenle</h5>
+		<div id="editTableModal" class="me-modal" style="display:none">
+			<div id="me-modal-content" class="me-modal-content">
+				<div class="me-modal-header">
+					<h5 class="me-modal-title">Tabloyu Düzenle</h5>
 				</div>
-				<div class="modal-body">
+				<div class="me-modal-body">
 					<div class="form-group" style="border: 1px solid #ccc; padding: 10px; border-radius: 5px; position: relative;">
 						<span style="position: absolute; top: -19px; left: 10px; padding:5px;background-color:#2e2e2e;color:white;border-radius:5px;font-size:10pt"> Tablo Başlığı </span>
 						<br>
@@ -103,18 +103,18 @@ function AddTableBtn() {
 						<input type="color" title="Kenar Rengi" id="edit-border-color" value="#000000" list>
 					</div>
 				</div>
-				<div class="modal-footer">
+				<div class="me-modal-footer">
 					<button onclick="updateTable()">Güncelle</button>
 					<button onclick="cancelModal();">İptal Et</button>
 				</div>
 			</div>
 		</div>
-		<div id="editCellModal" class="modal" style="display:none">
-			<div id="modal-content" class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">Hücreyi Düzenle</h5>
+		<div id="editCellModal" class="me-modal" style="display:none">
+			<div id="me-modal-content" class="me-modal-content">
+				<div class="me-modal-header">
+					<h5 class="me-modal-title">Hücreyi Düzenle</h5>
 				</div>
-				<div class="modal-body">
+				<div class="me-modal-body">
 					<!-- Hücre İçeriği -->
 					<div class="form-group" style="border: 1px solid #ccc; padding: 10px; border-radius: 5px; position: relative;">
 						<span style="position: absolute; top: -19px; left: 10px; padding:5px;background-color:#2e2e2e;color:white;border-radius:5px;font-size:10pt"> Hücre İçeriği </span>
@@ -135,7 +135,7 @@ function AddTableBtn() {
 					</div>
 					<br>
 				</div>
-				<div class="modal-footer">
+				<div class="me-modal-footer">
 					<button onclick="updateCell()">Hücreyi Güncelle</button>
 					<button onclick="cancelModal();">İptal Et</button>
 				</div>
