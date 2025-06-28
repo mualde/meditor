@@ -760,7 +760,7 @@ resize: none;
 }
 
 /* Modal için stil */
-.modal {
+.me-modal {
     display: none;
     position: fixed;
     z-index: 1000;
@@ -779,7 +779,7 @@ resize: none;
     -ms-user-select: none;     /* Eski Internet Explorer */
 }
 
-.modal-content {
+.me-modal-content {
     background-color: rgba(255, 255, 255, 0.9);
     padding: 20px;
     border-radius: 10px;
@@ -789,11 +789,11 @@ resize: none;
     animation: slideIn 0.3s ease-out;
     text-align: center; /* Yazıları ortalar */
 }
-.modal-content input[type='color']{
+.me-modal-content input[type='color']{
 	width:60px;
 }
 
-.modal-header {
+.me-modal-header {
     background-color: #2e2e2e;
     color: white;
     padding: 10px;
@@ -804,7 +804,7 @@ resize: none;
     margin-bottom: 15px;
 }
 
-.modal-body {
+.me-modal-body {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -828,50 +828,13 @@ resize: none;
     width: 100%;
 }
 
-.modal-footer {
+.me-modal-footer {
     display: flex;
     justify-content: space-between; /* Butonları iki yana yaslar */
     gap: 10px;
     padding-top: 15px;
     width: 100%; /* Modal-footer genişliğini ayarlıyoruz */
     margin-top: 15px;
-}
-
-.btn {
-    padding: 10px 15px;
-    border-radius: 5px;
-    font-size: 14px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center; /* Buton içeriğini ortalar */
-    width: 35%; /* Butonları daha düzgün hizalamak için genişliği ayarlıyoruz */
-}
-
-.btn-primary {
-    background-color: #007bff;
-    color: white;
-    border: none;
-}
-
-.btn-primary:hover {
-    background-color: #0056b3;
-}
-
-.btn-secondary {
-    background-color: #6c757d;
-    color: white;
-    border: none;
-}
-
-.btn-secondary:hover {
-    background-color: #5a6268;
-}
-
-/* İkon hover efekti */
-.modal button:hover {
-    transform: scale(1.1); /* Hoverda ikonlar büyür */
-    color: #0078d4; /* Metalik mavi ikon rengi */
 }
 
 /* Animasyon */
