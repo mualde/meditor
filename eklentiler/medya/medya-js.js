@@ -8,12 +8,12 @@ function AddImageBtn() {
 		<button id="videoBtn" title="Video Ekle" onclick="openModal('videoModal')">
 			<i class="fa-brands fa-youtube"></i>
         </button>
-		<div id="resimModal" class="modal" style="display:none">
-			<div id="modal-content" class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">Resim Ekle</h5>
+		<div id="resimModal" class="me-modal" style="display:none">
+			<div id="me-modal-content" class="me-modal-content">
+				<div class="me-modal-header">
+					<h5 class="me-modal-title">Resim Ekle</h5>
 				</div>
-				<div class="modal-body">
+				<div class="me-modal-body">
 					<div class="form-group" style="border: 1px solid #ccc; padding: 10px; border-radius: 5px; position: relative;">
 						<span style="position: absolute; top: -19px; left: 10px; padding:5px;background-color:#2e2e2e;color:white;border-radius:5px;font-size:10pt"> Resim Yükleme Bölümü </span>
 						<br>
@@ -40,18 +40,18 @@ function AddImageBtn() {
 						<i class="fa-solid fa-circle-info"></i><input type="text" id="imageTitle" placeholder="Alt Bilgisi" style="width: 76%" title="Alt Bilgi">
 					</div>
 				</div>
-				<div class="modal-footer">
+				<div class="me-modal-footer">
 					<button onclick="insertImage()">Resim Ekle</button>
 					<button onclick="resetImageForm()">İptal Et</button>
 				</div>
 			</div>
 		</div>
-		<div id="videoModal" class="modal" style="display:none">
-			<div id="modal-content" class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">Video URL Ekle</h5>
+		<div id="videoModal" class="me-modal" style="display:none">
+			<div id="me-modal-content" class="me-modal-content">
+				<div class="me-modal-header">
+					<h5 class="me-modal-title">Video URL Ekle</h5>
 				</div>
-				<div class="modal-body">
+				<div class="me-modal-body">
 					<div class="form-group" style="border: 1px solid #ccc; padding: 10px; border-radius: 5px; position: relative;">
 						<span style="position: absolute; top: -19px; left: 10px; padding:5px;background-color:#2e2e2e;color:white;border-radius:5px;font-size:10pt"> Video Yükleme Bölümü </span>
 						<br>
@@ -78,7 +78,7 @@ function AddImageBtn() {
 
 					</div>
 				</div>
-				<div class="modal-footer">
+				<div class="me-modal-footer">
 					<button onclick="previewVideo()">Önizleme Yap</button>
 					<button onclick="insertVideo()">Video Ekle</button>
 					<button onclick="resetVideoForm()">İptal Et</button>
@@ -110,7 +110,7 @@ function AddImageBtn() {
 			<div style="width:100%"></div>
 			<label for="editTitle">Alt Bilgisi:</label>
 			<input type="text" id="editTitle" placeholder="Title bilgisi girin" style="width:100px" title="Title Bilgi">
-			<div class="modal-footer">
+			<div class="me-modal-footer">
 				<button onclick="updateImage()">Güncelle</button>
 				<button onclick="deleteImage()">Kaldır</button>
 				<button onclick="this.parentNode.parentNode.style.display='none'">Kapat</button>
@@ -141,7 +141,7 @@ function AddImageBtn() {
 			<div style="width:100%"></div>
 			<label for="editVideoTitle">Başlığı:</label>
 			<input type="text" id="editVideoTitle" placeholder="Başlık girin" style="width:100px" title="Video Başlığı">
-			<div class="modal-footer">
+			<div class="me-modal-footer">
 				<button onclick="updateVideo()">Güncelle</button>
 				<button onclick="deleteVideo()">Kaldır</button>
 				<button onclick="this.parentNode.parentNode.style.display='none'">Kapat</button>
