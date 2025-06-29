@@ -285,7 +285,7 @@ resize: none;
 
 @font-face {
   font-family: 'Anton';
-  src: url(https://cdn.jsdelivr.net/gh/mualde/meditor/css/fonts/anton.woff2) format('woff2');
+  src: url(https://cdn.jsdelivr.net/gh/mualde/meditor/fonts/anton.woff2) format('woff2');
   font-style: var(--font-normal);
   font-weight: var(--font-weight-400);
   font-display: var(--font-display-swap);
@@ -294,7 +294,7 @@ resize: none;
 
 @font-face {
   font-family: 'Bitter';
-  src: url(https://cdn.jsdelivr.net/gh/mualde/meditor/css/fonts/bitter.woff2) format('woff2');
+  src: url(https://cdn.jsdelivr.net/gh/mualde/meditor/fonts/bitter.woff2) format('woff2');
   font-style: var(--font-normal);
   font-weight: var(--font-weight-400);
   font-display: var(--font-display-swap);
@@ -303,7 +303,7 @@ resize: none;
 
 @font-face {
   font-family: 'Cinzel';
-  src: url(https://cdn.jsdelivr.net/gh/mualde/meditor/css/fonts/cinzel.woff2) format('woff2');
+  src: url(https://cdn.jsdelivr.net/gh/mualde/meditor/fonts/cinzel.woff2) format('woff2');
   font-style: var(--font-normal);
   font-weight: var(--font-weight-400);
   font-display: var(--font-display-swap);
@@ -312,7 +312,7 @@ resize: none;
 
 @font-face {
   font-family: 'Dancing Script';
-  src: url(https://cdn.jsdelivr.net/gh/mualde/meditor/css/fonts/dancing-script.woff2) format('woff2');
+  src: url(https://cdn.jsdelivr.net/gh/mualde/meditor/fonts/dancing-script.woff2) format('woff2');
   font-style: var(--font-normal);
   font-weight: var(--font-weight-400);
   font-display: var(--font-display-swap);
@@ -321,7 +321,7 @@ resize: none;
 
 @font-face {
   font-family: 'Droid Sans';
-  src: url(https://cdn.jsdelivr.net/gh/mualde/meditor/css/fonts/droid-sans.woff2) format('woff2');
+  src: url(https://cdn.jsdelivr.net/gh/mualde/meditor/fonts/droid-sans.woff2) format('woff2');
   font-style: var(--font-normal);
   font-weight: var(--font-weight-400);
   font-display: var(--font-display-swap);
@@ -330,7 +330,7 @@ resize: none;
 
 @font-face {
   font-family: 'Fredericka the Great';
-  src: url(https://cdn.jsdelivr.net/gh/mualde/meditor/css/fonts/fredericka-the-great.woff2) format('woff2');
+  src: url(https://cdn.jsdelivr.net/gh/mualde/meditor/fonts/fredericka-the-great.woff2) format('woff2');
   font-style: var(--font-normal);
   font-weight: var(--font-weight-400);
   font-display: var(--font-display-swap);
@@ -339,7 +339,7 @@ resize: none;
 
 @font-face {
   font-family: 'Georgia';
-  src: url(https://cdn.jsdelivr.net/gh/mualde/meditor/css/fonts/georgia.woff2) format('woff2');
+  src: url(https://cdn.jsdelivr.net/gh/mualde/meditor/fonts/georgia.woff2) format('woff2');
   font-style: var(--font-normal);
   font-weight: var(--font-weight-400);
   font-display: var(--font-display-swap);
@@ -348,7 +348,7 @@ resize: none;
 
 @font-face {
   font-family: 'Impact';
-  src: url(https://cdn.jsdelivr.net/gh/mualde/meditor/css/fonts/impact.woff2) format('woff2');
+  src: url(https://cdn.jsdelivr.net/gh/mualde/meditor/fonts/impact.woff2) format('woff2');
   font-style: var(--font-normal);
   font-weight: var(--font-weight-400);
   font-display: var(--font-display-swap);
@@ -357,7 +357,7 @@ resize: none;
 
 @font-face {
   font-family: 'Lobster';
-  src: url(https://cdn.jsdelivr.net/gh/mualde/meditor/css/fonts/lobster.woff2) format('woff2');
+  src: url(https://cdn.jsdelivr.net/gh/mualde/meditor/fonts/lobster.woff2) format('woff2');
   font-style: var(--font-normal);
   font-weight: var(--font-weight-400);
   font-display: var(--font-display-swap);
@@ -366,7 +366,7 @@ resize: none;
 
 @font-face {
   font-family: 'Montserrat';
-  src: url(https://cdn.jsdelivr.net/gh/mualde/meditor/css/fonts/montserrat.woff2) format('woff2');
+  src: url(https://cdn.jsdelivr.net/gh/mualde/meditor/fonts/montserrat.woff2) format('woff2');
   font-style: var(--font-normal);
   font-weight: var(--font-weight-400);
   font-display: var(--font-display-swap);
@@ -375,7 +375,7 @@ resize: none;
 
 @font-face {
   font-family: 'Oswald';
-  src: url(https://cdn.jsdelivr.net/gh/mualde/meditor/css/fonts/oswald.woff2) format('woff2');
+  src: url(https://cdn.jsdelivr.net/gh/mualde/meditor/fonts/oswald.woff2) format('woff2');
   font-style: var(--font-normal);
   font-weight: var(--font-weight-400);
   font-display: var(--font-display-swap);
@@ -384,7 +384,7 @@ resize: none;
 
 @font-face {
   font-family: 'Pacifico';
-  src: url(https://cdn.jsdelivr.net/gh/mualde/meditor/css/fonts/pacifico.woff2) format('woff2');
+  src: url(https://cdn.jsdelivr.net/gh/mualde/meditor/fonts/pacifico.woff2) format('woff2');
   font-style: var(--font-normal);
   font-weight: var(--font-weight-400);
   font-display: var(--font-display-swap);
@@ -393,7 +393,7 @@ resize: none;
 
 @font-face {
   font-family: 'Playfair Display';
-  src: url(https://cdn.jsdelivr.net/gh/mualde/meditor/css/fonts/playfair-display.woff2) format('woff2');
+  src: url(https://cdn.jsdelivr.net/gh/mualde/meditor/fonts/playfair-display.woff2) format('woff2');
   font-style: var(--font-normal);
   font-weight: var(--font-weight-400);
   font-display: var(--font-display-swap);
@@ -402,7 +402,7 @@ resize: none;
 
 @font-face {
   font-family: 'Quicksand';
-  src: url(https://cdn.jsdelivr.net/gh/mualde/meditor/css/fonts/quicksand.woff2) format('woff2');
+  src: url(https://cdn.jsdelivr.net/gh/mualde/meditor/fonts/quicksand.woff2) format('woff2');
   font-style: var(--font-normal);
   font-weight: var(--font-weight-400);
   font-display: var(--font-display-swap);
@@ -411,7 +411,7 @@ resize: none;
 
 @font-face {
   font-family: 'Raleway';
-  src: url(https://cdn.jsdelivr.net/gh/mualde/meditor/css/fonts/raleway.woff2) format('woff2');
+  src: url(https://cdn.jsdelivr.net/gh/mualde/meditor/fonts/raleway.woff2) format('woff2');
   font-style: var(--font-normal);
   font-weight: var(--font-weight-400);
   font-display: var(--font-display-swap);
@@ -420,7 +420,7 @@ resize: none;
 
 @font-face {
   font-family: 'Roboto';
-  src: url(https://cdn.jsdelivr.net/gh/mualde/meditor/css/fonts/roboto.woff2) format('woff2');
+  src: url(https://cdn.jsdelivr.net/gh/mualde/meditor/fonts/roboto.woff2) format('woff2');
   font-style: var(--font-normal);
   font-weight: var(--font-weight-400);
   font-display: var(--font-display-swap);
@@ -429,7 +429,7 @@ resize: none;
 
 @font-face {
   font-family: 'Slabo 27px';
-  src: url(https://cdn.jsdelivr.net/gh/mualde/meditor/css/fonts/slabo.woff2) format('woff2');
+  src: url(https://cdn.jsdelivr.net/gh/mualde/meditor/fonts/slabo.woff2) format('woff2');
   font-style: var(--font-normal);
   font-weight: var(--font-weight-400);
   font-display: var(--font-display-swap);
@@ -438,7 +438,7 @@ resize: none;
 
 @font-face {
   font-family: 'Ubuntu';
-  src: url(https://cdn.jsdelivr.net/gh/mualde/meditor/css/fonts/ubuntu.woff2) format('woff2');
+  src: url(https://cdn.jsdelivr.net/gh/mualde/meditor/fonts/ubuntu.woff2) format('woff2');
   font-style: var(--font-normal);
   font-weight: var(--font-weight-400);
   font-display: var(--font-display-swap);
@@ -447,7 +447,7 @@ resize: none;
 
 @font-face {
   font-family: 'Verdana';
-  src: url(https://cdn.jsdelivr.net/gh/mualde/meditor/css/fonts/verdana.woff2) format('woff2');
+  src: url(https://cdn.jsdelivr.net/gh/mualde/meditor/fonts/verdana.woff2) format('woff2');
   font-style: var(--font-normal);
   font-weight: var(--font-weight-400);
   font-display: var(--font-display-swap);
@@ -456,7 +456,7 @@ resize: none;
 
 @font-face {
   font-family: 'Zilla Slab';
-  src: url(https://cdn.jsdelivr.net/gh/mualde/meditor/css/fonts/zilla-slab.woff2) format('woff2');
+  src: url(https://cdn.jsdelivr.net/gh/mualde/meditor/fonts/zilla-slab.woff2) format('woff2');
   font-style: var(--font-normal);
   font-weight: var(--font-weight-400);
   font-display: var(--font-display-swap);
@@ -810,22 +810,6 @@ resize: none;
     gap: 10px;
     padding: 10px 0;
     text-align: center; /* İçeriği ortalar */
-}
-
-.mb-3 {
-    border: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.form-control {
-    padding: 8px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    width: 100%;
 }
 
 .me-modal-footer {
